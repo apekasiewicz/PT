@@ -1,6 +1,8 @@
 # Programming Technology Lab
 
-## Team
+## Team:
+
+K. Maciejewska ****96 and A. Pekasiewicz ****97
 
 | Name Surname (initials) | GUID                                     |
 | ----------------------- | ---------------------------------------- |
