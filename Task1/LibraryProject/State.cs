@@ -5,28 +5,18 @@ using System.Text;
 namespace LibraryProject
 {
 	class State
-	{
-		private Book book;
-		private DateTime borrowDate;
-		private DateTime dueDate;
+    {
+        private Book book;
 
-		public State(Book sBook, DateTime bDate, DateTime dDate)
+        public State(Book sBook, DateTime bDate, DateTime dDate)
 		{
 			book = sBook;
-			borrowDate = bDate;
-			dueDate = dDate;
+			BorrowDate = bDate;
+			DueDate = dDate;
 		}
 
-		public DateTime BorrowDate
-		{
-			get { return borrowDate; }
-			set { borrowDate = value; }
-		}
+        public DateTime BorrowDate { get; set; }
 
-		public DateTime DueDate
-		{
-			get { return dueDate; }
-			set { dueDate = value; }
-		}
-	}
+        public DateTime DueDate { get; set; }
+    }
 }
