@@ -6,16 +6,20 @@ namespace LibraryProject
 {
 	class BorrowingEvent
 	{
-		private Reader reader;
-        private State state;
-
-        public BorrowingEvent(Reader eReader, State eState, DateTime date)
+        public BorrowingEvent(Reader eReader, State eState, DateTime bDate, DateTime dDate)
 		{
-			reader = eReader;
-			state = eState;
-			Borrow_date = date;
+			Reader = eReader;
+			State = eState;
+			Borrow_date = bDate;
+			Due_date = dDate;
 		}
 
         public DateTime Borrow_date { get; set; }
+
+        public Reader Reader { get; set; }
+
+        public State State { get; set; }
+
+		public DateTime Due_date { get; set; }
     }
 }
