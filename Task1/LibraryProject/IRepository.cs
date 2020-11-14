@@ -9,7 +9,7 @@ namespace LibraryProject
     interface IRepository
     {
         //Products
-        List<Book> GetAllBooks();
+        Dictionary<int, Book> GetAllBooks();
         Book GetBookById(int id);
         Book GetBookByGenre(BookGenre genre);
         void UpdateBookInfo(Book book);
