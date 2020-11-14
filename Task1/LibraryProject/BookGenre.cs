@@ -12,6 +12,7 @@ namespace LibraryProject
         SciFi,
         Criminal,
         Kids, 
-        Adventure
+        Adventure,
+        Fantasy
     }
 }

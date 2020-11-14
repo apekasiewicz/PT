@@ -6,7 +6,6 @@ namespace LibraryProject
 {
 	class State
     {
-        
         public State(Book sBook, DateTime bDate, DateTime dDate)
 		{
 			Book = sBook;

@@ -7,7 +7,7 @@ namespace LibraryProject
 	class DataRepository : IRepository
 	{
 		private DataContext context;
-	
+
 		public DataRepository(DataContext context)
 		{
 			this.context = context;
