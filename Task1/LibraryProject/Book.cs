@@ -25,7 +25,7 @@ namespace LibraryProject
 
 		public BookGenre Genre { get; set; }
 
-        public override bool Equals(object obj)
+        /*public override bool Equals(object obj)
         {
             return obj is Book book &&
                    Id == book.Id &&
@@ -33,6 +33,6 @@ namespace LibraryProject
                    Author == book.Author &&
                    PublishmentYear == book.PublishmentYear &&
                    Genre == book.Genre;
-        }
+        }*/
     }
 }
