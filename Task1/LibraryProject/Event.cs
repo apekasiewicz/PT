@@ -6,24 +6,35 @@ namespace LibraryProject
 {
     abstract class Event
     {
-        private Reader reader;
-        private State state;
-        private DateTime date;
-        private int id;
-
         protected Event(int id, Reader reader, State state, DateTime date)
         {
-            this.id = id;
-            this.reader = reader;
-            this.state = state;
-            this.date = date;
+            Id = id;
+            Reader = reader;
+            State = state;
+            Date = date;
         }
 
-        public Reader Reader { get => reader; set => reader = value; }
-        public State State { get => state; set => state = value; }
+        public Reader Reader { get; set; }
+        public State State { get; set; }
 
-        public DateTime Date { get => date; set => date = value; }
+        public DateTime Date { get; set; }
 
-        public int Id { get => id; set => id = value; }
+        public int Id { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || !(obj is Event))
+            {
+                return false;
+            }
+
+            Event e = (Event) obj;
+            return Id == e.Id && Date == e.Date && Reader == e.Reader && State == e.State;      
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode() ^ Date.GetHashCode() ^ Reader.GetHashCode() ^ State.GetHashCode();
+        }
     }
 }
