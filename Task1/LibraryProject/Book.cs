@@ -6,12 +6,13 @@ namespace LibraryProject
 {
 	class Book
 	{
-		public Book(int bookId, string bookTitle, string bookAuthor, int bookYear)
+		public Book(int bookId, string bookTitle, string bookAuthor, int bookYear, BookGenre genre)
 		{
 			Id = bookId;
 			Title = bookTitle;
 			Author = bookAuthor;
 			PublishmentYear = bookYear;
+			Genre = genre;
 		}
 
 		public int Id { get; set; }
