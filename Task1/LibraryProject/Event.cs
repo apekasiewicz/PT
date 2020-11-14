@@ -19,11 +19,11 @@ namespace LibraryProject
             this.date = date;
         }
 
-        public Reader Reader { get => reader; private set => reader = value; }
-        public State State { get => state; private set => state = value; }
+        public Reader Reader { get => reader; set => reader = value; }
+        public State State { get => state; set => state = value; }
 
-        public DateTime Date { get => date; private set => date = value; }
+        public DateTime Date { get => date; set => date = value; }
 
-        public int Id { get => id; private set => id = value; }
+        public int Id { get => id; set => id = value; }
     }
 }

@@ -13,9 +13,9 @@ namespace LibraryProject
             this.repository = repository;
         }
 
-        public List<Book> GetAllBooks()
+        public Dictionary<int, Book> GetAllBooks()
         {
-            List<Book> books = repository.GetAllBooks();
+            Dictionary<int, Book> books = repository.GetAllBooks();
             if(books.Count == 0)
             {
                 return null;

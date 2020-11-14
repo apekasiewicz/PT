@@ -24,11 +24,11 @@ namespace LibraryProject
         void DeleteReader(int id);
 
         //Events
-        List<BorrowingEvent> GetAllBorrowingEvents();
-        BorrowingEvent GetBorrowingEventById(int id);
-        void UpdateEventInfo(BorrowingEvent e);
-        void AddBorrowingEvent(BorrowingEvent e);
-        void DeleteBorrowingEvent(int id);
+        List<Event> GetAllEvents();
+        Event GetEventById(int id);
+        void UpdateEventInfo(Event e);
+        void AddEvent(Event e);
+        void DeleteEvent(int id);
 
         //States?
     }

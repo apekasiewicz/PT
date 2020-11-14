@@ -10,6 +10,6 @@ namespace LibraryProject
         public List<Reader> readers = new List<Reader>();
         public Dictionary<int, Book> books = new Dictionary<int, Book>();
         public List<State> states = new List<State>();
-        public List<BorrowingEvent> events = new List<BorrowingEvent>();
+        public List<Event> events = new List<Event>();
     }
 }

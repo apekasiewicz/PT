@@ -116,12 +116,12 @@ namespace LibraryProject
 
 
 		//Events
-		public List<BorrowingEvent> GetAllBorrowingEvents()
+		public List<Event> GetAllEvents()
 		{
 			return context.events;
 		}
 
-		public BorrowingEvent GetBorrowingEventById(int id)
+		public Event GetEventById(int id)
 		{
 			for (int i = 0; i < context.events.Count; i++)
 			{
@@ -130,16 +130,16 @@ namespace LibraryProject
 					return context.events[i];
 				}
 			}
-			throw new Exception("BorrowingEvent with such id does not exist");
+			throw new Exception("Event with such id does not exist");
 		}
 
 
-		public void AddBorrowingEvent(BorrowingEvent e)
+		public void AddEvent(Event e)
 		{
 			context.events.Add(e);
 		}
 
-		public void DeleteBorrowingEvent(int id)
+		public void DeleteEvent(int id)
 		{
 			for (int i = 0; i < context.events.Count; i++)
 			{
@@ -151,14 +151,13 @@ namespace LibraryProject
 			throw new Exception("Event with such id does not exist");
 		}
 
-		public void UpdateEventInfo(BorrowingEvent e)
+		public void UpdateEventInfo(Event e)
 		{
 			for (int i = 0; i < context.events.Count; i++)
 			{
 				if (context.events[i].Id == e.Id)
 				{
-					context.events[i].Borrow_date = e.Borrow_date;
-					context.events[i].Due_date = e.Borrow_date;
+					context.events[i].Date = e.Date;
 					context.events[i].Reader = e.Reader;
 					context.events[i].State = e.State;
 				}
