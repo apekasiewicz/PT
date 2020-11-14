@@ -87,10 +87,10 @@ namespace LibraryProject
             repository.AddReader(reader);
         }
 
-     /*  public void AddEvent(Event event)
+        public void AddEvent(Event e)
         {
-            repository.AddEvent(event);
-        } */
+            repository.AddEvent(e);
+        } 
 
         //EDIT
         public void EditBook(Book book)
@@ -103,10 +103,10 @@ namespace LibraryProject
             repository.UpdateReaderInfo(reader);
         }
 
-       /* public void EditEvent(Event event)
+        public void EditEvent(Event e)
         {
-            repository.UpdateReaderInfo(Event);
-        } */
+            repository.UpdateEventInfo(e);
+        } 
 
 
         //REMOVE
