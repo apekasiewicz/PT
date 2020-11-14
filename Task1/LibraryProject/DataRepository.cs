@@ -33,8 +33,14 @@ namespace LibraryProject
 
 		public Book GetBookByGenre(BookGenre genre)
 		{
-			//TO DO
-			throw new NotImplementedException();
+			for (int i = 0; i < context.books.Count; i++)
+			{
+				if (context.books[i].Genre == genre)
+				{
+					return context.books[i];
+				}
+			}
+			throw new Exception("There are no books of this genre in the library.");
 		}
 
 		public void UpdateBookInfo(Book book)
