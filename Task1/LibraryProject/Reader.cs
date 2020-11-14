@@ -19,5 +19,21 @@ namespace LibraryProject
         public string LastName { get; set; }
 
         public int Id { get; set; }
-    }
+
+		public override bool Equals(object obj)
+		{
+			if ((obj == null) || !(obj is Reader))
+			{
+				return false;
+			}
+
+			Reader reader = (Reader) obj;
+			return Id == reader.Id && FirstName == reader.FirstName && LastName == reader.LastName;
+		}
+
+		public override int GetHashCode()
+		{
+			return Id.GetHashCode() ^ FirstName.GetHashCode() ^ LastName.GetHashCode();
+		}
+	}
 }

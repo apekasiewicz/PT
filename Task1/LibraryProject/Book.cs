@@ -25,14 +25,22 @@ namespace LibraryProject
 
 		public BookGenre Genre { get; set; }
 
-        /*public override bool Equals(object obj)
-        {
-            return obj is Book book &&
-                   Id == book.Id &&
-                   Title == book.Title &&
-                   Author == book.Author &&
-                   PublishmentYear == book.PublishmentYear &&
-                   Genre == book.Genre;
-        }*/
-    }
+		public override bool Equals(object obj)
+		{
+			if ((obj == null) || !(obj is Book))
+			{
+				return false;
+			}
+			
+			Book book = (Book) obj;
+			return Id == book.Id && Title == book.Title && Author == book.Author &&
+				PublishmentYear == book.PublishmentYear && Genre == book.Genre;
+		}
+
+		public override int GetHashCode()
+		{
+			return Id.GetHashCode() ^ Title.GetHashCode() ^ Author.GetHashCode() 
+				^ PublishmentYear.GetHashCode() ^ Genre.GetHashCode();
+		}
+	}
 }
