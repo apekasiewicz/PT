@@ -6,7 +6,7 @@ namespace LibraryProject
 {
     internal class BorrowingEvent : Event
 	{
-        public BorrowingEvent(Reader reader, State state, DateTime borrow_date) : base(reader, state, borrow_date)
+        public BorrowingEvent(int id, Reader reader, State state, DateTime borrow_date) : base(id, reader, state, borrow_date)
         {
         }
     }
