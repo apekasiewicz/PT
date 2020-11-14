@@ -87,6 +87,10 @@ namespace LibraryProject
             repository.AddReader(reader);
         }
 
+     /*  public void AddEvent(Event event)
+        {
+            repository.AddEvent(event);
+        } */
 
         //EDIT
         public void EditBook(Book book)
@@ -99,6 +103,11 @@ namespace LibraryProject
             repository.UpdateReaderInfo(reader);
         }
 
+       /* public void EditEvent(Event event)
+        {
+            repository.UpdateReaderInfo(Event);
+        } */
+
 
         //REMOVE
         public void DeleteBook(int id)
@@ -109,6 +118,11 @@ namespace LibraryProject
         public void DeleteReader(int id)
         {
             repository.DeleteReader(id);
+        }
+
+        public void DeleteEvent(int id)
+        {
+            repository.DeleteEvent(id);
         }
     }
 }
