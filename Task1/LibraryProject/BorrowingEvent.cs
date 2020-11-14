@@ -4,22 +4,10 @@ using System.Text;
 
 namespace LibraryProject
 {
-	class BorrowingEvent
+    internal class BorrowingEvent : Event
 	{
-        public BorrowingEvent(Reader eReader, State eState, DateTime bDate, DateTime dDate)
-		{
-			Reader = eReader;
-			State = eState;
-			Borrow_date = bDate;
-			Due_date = dDate;
-		}
-
-        public DateTime Borrow_date { get; set; }
-
-        public Reader Reader { get; set; }
-
-        public State State { get; set; }
-
-		public DateTime Due_date { get; set; }
+        public BorrowingEvent(Reader reader, State state, DateTime borrow_date) : base(reader, state, borrow_date)
+        {
+        }
     }
 }

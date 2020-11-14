@@ -23,6 +23,16 @@ namespace LibraryProject
 
 		public int PublishmentYear { get; set; }
 
-		public BookGenre Genre { get; set; } 
+		public BookGenre Genre { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Book book &&
+                   Id == book.Id &&
+                   Title == book.Title &&
+                   Author == book.Author &&
+                   PublishmentYear == book.PublishmentYear &&
+                   Genre == book.Genre;
+        }
     }
 }
