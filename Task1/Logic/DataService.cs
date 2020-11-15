@@ -125,5 +125,21 @@ namespace Logic
         {
             repository.DeleteEvent(id);
         }
+
+        //Handling Events
+
+        public void borrowBook(int readerId, int bookId, DateTime borrowDate)
+        {
+            BorrowingEvent bEvent = new BorrowingEvent(readerId, repository.GetReaderById(readerId), repository.GetState(), borrowDate);
+            repository.AddEvent(bEvent);
+            repository.UpdateBookState(bookId, -1);
+        }
+
+        public void returnBook(int readerId, int bookId, DateTime returnDate)
+        {
+            ReturningEvent rEvent = new ReturningEvent(readerId, repository.GetReaderById(readerId), repository.GetState(), returnDate);
+            repository.AddEvent(rEvent);
+            repository.UpdateBookState(bookId, 1);
+        }
     }
 }

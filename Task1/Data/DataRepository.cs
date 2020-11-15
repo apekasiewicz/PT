@@ -190,6 +190,11 @@ namespace Data
             return context.libraryState.AvailableBooks;
         }
 
+        public State GetState()
+        {
+            return context.libraryState;
+        }
+
         public int GetBookStateById(int id)
         {
             if (context.libraryState.AvailableBooks.ContainsKey(id))
