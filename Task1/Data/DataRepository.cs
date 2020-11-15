@@ -105,6 +105,7 @@ namespace Data
                     context.readers[i].FirstName = reader.FirstName;
                     context.readers[i].LastName = reader.LastName;
                     context.readers[i].Id = reader.Id;
+                    context.readers[i].AmountOfBooksBorrowed = reader.AmountOfBooksBorrowed;
                 }
             }
         }
