@@ -15,11 +15,11 @@ namespace Data
             Book book4 = new Book(4, "The Da Vinci Code", "Dan Brown", 2006, BookGenre.Criminal);
             Book book5 = new Book(5, "The Notebook", "Nicholas Sparks", 1997, BookGenre.Romance);
 
-            data.books.allBooks.Add(1, book1); //the same for the rest
-            /*data.books.Add(2, book2);
-            data.books.Add(3, book3);
-            data.books.Add(4, book4);
-            data.books.Add(5, book5);
+            data.books.allBooks.Add(1, book1); 
+            data.books.allBooks.Add(2, book2);
+            data.books.allBooks.Add(3, book3);
+            data.books.allBooks.Add(4, book4);
+            data.books.allBooks.Add(5, book5);
 
 
             //generate readers
@@ -37,21 +37,29 @@ namespace Data
 
 
             //generate states
-            State state1 = new State(book1, DateTime.Today, DateTime.Today.AddDays(10));
-            State state2 = new State(book2, DateTime.Today, DateTime.Today.AddDays(7));
+            data.libraryState.AllBooks = data.books;
+           
+            for (int i = 0; i < data.books.allBooks.Count; i++)
+            {
+                data.libraryState.AvailableBooks.Add(data.books.allBooks[i].Id, 10);
+            }
 
-            data.states.Add(state1);
-            data.states.Add(state2);
+           //generate events
+            BorrowingEvent bEvent1 = new BorrowingEvent(1, reader1, data.libraryState, DateTime.Today);
+            BorrowingEvent bEvent2 = new BorrowingEvent(2, reader1, data.libraryState, DateTime.Today);
+            BorrowingEvent bEvent3 = new BorrowingEvent(3, reader1, data.libraryState, DateTime.Today);
 
-
-            //generate events
-            BorrowingEvent bEvent1 = new BorrowingEvent(1, reader1, state1, DateTime.Today);
-            BorrowingEvent bEvent2 = new BorrowingEvent(2, reader1, state2, DateTime.Today);
-            BorrowingEvent bEvent3 = new BorrowingEvent(3, reader1, state2, DateTime.Today);
+            ReturningEvent rEvent1 = new ReturningEvent(1, reader1, data.libraryState, DateTime.Today);
+            ReturningEvent rEvent2 = new ReturningEvent(2, reader1, data.libraryState, DateTime.Today);
+            ReturningEvent rEvent3 = new ReturningEvent(3, reader1, data.libraryState, DateTime.Today);
 
             data.events.Add(bEvent1);
             data.events.Add(bEvent2);
-            data.events.Add(bEvent3);*/
+            data.events.Add(bEvent3);
+
+            data.events.Add(rEvent1);
+            data.events.Add(rEvent2);
+            data.events.Add(rEvent3);
         }
     }
 }
