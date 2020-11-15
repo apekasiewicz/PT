@@ -36,30 +36,13 @@ namespace Data
             data.readers.Add(reader5);
 
 
-            //generate states
+            //generate state
             data.libraryState.AllBooks = data.books;
            
             for (int i = 0; i < data.books.allBooks.Count; i++)
             {
                 data.libraryState.AvailableBooks.Add(data.books.allBooks[i].Id, 10);
             }
-
-           //generate events
-            BorrowingEvent bEvent1 = new BorrowingEvent(1, reader1, data.libraryState, DateTime.Today);
-            BorrowingEvent bEvent2 = new BorrowingEvent(2, reader2, data.libraryState, DateTime.Today);
-            BorrowingEvent bEvent3 = new BorrowingEvent(3, reader3, data.libraryState, DateTime.Today);
-
-            ReturningEvent rEvent1 = new ReturningEvent(4, reader2, data.libraryState, DateTime.Today);
-            ReturningEvent rEvent2 = new ReturningEvent(5, reader3, data.libraryState, DateTime.Today);
-            ReturningEvent rEvent3 = new ReturningEvent(6, reader4, data.libraryState, DateTime.Today);
-
-            data.events.Add(bEvent1);
-            data.events.Add(bEvent2);
-            data.events.Add(bEvent3);
-
-            data.events.Add(rEvent1);
-            data.events.Add(rEvent2);
-            data.events.Add(rEvent3);
         }
     }
 }
