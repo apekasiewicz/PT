@@ -25,17 +25,22 @@ namespace Data
             return randomGenre;
         }
 
+        public int randomNumber(int bottomBorder, int upperBorder)
+        {
+            return random.Next(bottomBorder, upperBorder);
+        }
+
         public void GenarateData(DataContext data)
         {
             for(int i = 1; i <= generations_number; i++)
             {
                 //generate readers
-                Reader reader = new Reader(GenerateRandomString(strings_length), GenerateRandomString(strings_length), i);
+                Reader reader = new Reader(GenerateRandomString(strings_length), GenerateRandomString(strings_length), i, randomNumber(0, 20));
                 data.readers.Add(reader);
 
                 //generate books and add them to catalog
                 Book book = new Book(i, GenerateRandomString(strings_length),
-                    GenerateRandomString(strings_length), random.Next(1900, 2020), randomGenre());
+                    GenerateRandomString(strings_length), randomNumber(1900, 2020), randomGenre());
                 data.books.allBooks.Add(i, book);
             }
 

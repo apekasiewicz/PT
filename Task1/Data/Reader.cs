@@ -6,12 +6,12 @@ namespace Data
 {
     public class Reader
     {
-        public Reader(string userFirstName, string userLastName, int userId)
+        public Reader(string userFirstName, string userLastName, int userId, int amountOfBooks)
         {
             FirstName = userFirstName;
             LastName = userLastName;
             Id = userId;
-
+            AmountOfBooksBorrowed = amountOfBooks;
         }
 
         public string FirstName { get; set; }
@@ -19,6 +19,8 @@ namespace Data
         public string LastName { get; set; }
 
         public int Id { get; set; }
+
+        public int AmountOfBooksBorrowed { get; set; } 
 
         public override bool Equals(object obj)
         {

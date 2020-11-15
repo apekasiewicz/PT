@@ -23,11 +23,11 @@ namespace Data
 
 
             //generate readers
-            Reader reader1 = new Reader("Neave", "Oneal", 102030);
-            Reader reader2 = new Reader("Charlize", "Padilla", 102031);
-            Reader reader3 = new Reader("Judith", "Rojas", 102032);
-            Reader reader4 = new Reader("Maliha", "Petty", 102033);
-            Reader reader5 = new Reader("Fionn", "Mcclure", 102034);
+            Reader reader1 = new Reader("Neave", "Oneal", 102030, 4);
+            Reader reader2 = new Reader("Charlize", "Padilla", 102031, 0);
+            Reader reader3 = new Reader("Judith", "Rojas", 102032, 6);
+            Reader reader4 = new Reader("Maliha", "Petty", 102033, 9);
+            Reader reader5 = new Reader("Fionn", "Mcclure", 102034, 2);
 
             data.readers.Add(reader1);
             data.readers.Add(reader2);
