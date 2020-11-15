@@ -30,6 +30,11 @@ namespace Data
         void AddEvent(Event e);
         void DeleteEvent(int id);
 
-        //States?
+        //States
+        Dictionary<int, int> GetAllStates();
+        int GetBookStateById(int id);
+        void UpdateBookState(int id, int newState); //decrement by one if borrowingevent, increment if returning
+        void AddBookState(int id, int state); //new book in catalog, new quantity
+        void DeleteBookstate(int id);   //delete book from catalog, delete its state
     }
 }
