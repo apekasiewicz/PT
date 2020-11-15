@@ -6,6 +6,6 @@ namespace Data
 {
     public class BookCatalog
     {
-        public List<Book> allBooks { get; set; } = new List<Book>();
+        public Dictionary<int, Book> allBooks { get; set; } = new Dictionary<int, Book>();
     }
 }
