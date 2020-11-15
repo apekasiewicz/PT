@@ -49,7 +49,6 @@ namespace Data
                 context.books.allBooks[book.Id].PublishmentYear = book.PublishmentYear;
                 context.books.allBooks[book.Id].Genre = book.Genre;
             }
-            throw new Exception("Such book does not exist in the library");
         }
 
         public void AddBook(Book book)
@@ -67,9 +66,7 @@ namespace Data
             {
                 context.books.allBooks.Remove(id);
             }
-            throw new Exception("Book with such ID does not exist");
         }
-
 
         //Readers
         public List<Reader> GetAllReaders()
@@ -100,7 +97,6 @@ namespace Data
                     context.readers[i].Id = reader.Id;
                 }
             }
-            throw new Exception("Such reader does not exist in the library");
         }
 
         public void AddReader(Reader reader)
@@ -119,12 +115,11 @@ namespace Data
         {
             for (int i = 0; i < context.readers.Count; i++)
             {
-                if (context.readers[i].Id == id)
+                if (context.readers[i].Id == id && context.readers[i].AmountOfBooksBorrowed == 0)
                 {
                     context.readers.Remove(context.readers[i]);
                 }
             }
-            throw new Exception("Reader with such ID does not exist");
         }
 
 
@@ -167,7 +162,6 @@ namespace Data
                     context.events.Remove(context.events[i]);
                 }
             }
-            throw new Exception("Event with such ID does not exist");
         }
 
         public void UpdateEventInfo(Event e)
@@ -181,7 +175,6 @@ namespace Data
                     context.events[i].State = e.State;
                 }
             }
-            throw new Exception("Such event does not exist in the library");
         }
 
         //States
@@ -202,10 +195,12 @@ namespace Data
         public void UpdateBookState(int id, int newState)
         {
             if (context.libraryState.AvailableBooks.ContainsKey(id))
-            {                
-                context.libraryState.AvailableBooks[id] += newState;
+            {
+                if (context.libraryState.AvailableBooks[id] + newState >= 0)
+                {
+                    context.libraryState.AvailableBooks[id] += newState;
+                }
             }
-            throw new Exception("Such book does not exist in the library");
         }
 
         public void AddBookState(int id, int state)
