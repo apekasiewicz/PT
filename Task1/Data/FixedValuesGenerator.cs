@@ -46,12 +46,12 @@ namespace Data
 
            //generate events
             BorrowingEvent bEvent1 = new BorrowingEvent(1, reader1, data.libraryState, DateTime.Today);
-            BorrowingEvent bEvent2 = new BorrowingEvent(2, reader1, data.libraryState, DateTime.Today);
-            BorrowingEvent bEvent3 = new BorrowingEvent(3, reader1, data.libraryState, DateTime.Today);
+            BorrowingEvent bEvent2 = new BorrowingEvent(2, reader2, data.libraryState, DateTime.Today);
+            BorrowingEvent bEvent3 = new BorrowingEvent(3, reader3, data.libraryState, DateTime.Today);
 
-            ReturningEvent rEvent1 = new ReturningEvent(1, reader1, data.libraryState, DateTime.Today);
-            ReturningEvent rEvent2 = new ReturningEvent(2, reader1, data.libraryState, DateTime.Today);
-            ReturningEvent rEvent3 = new ReturningEvent(3, reader1, data.libraryState, DateTime.Today);
+            ReturningEvent rEvent1 = new ReturningEvent(4, reader2, data.libraryState, DateTime.Today);
+            ReturningEvent rEvent2 = new ReturningEvent(5, reader3, data.libraryState, DateTime.Today);
+            ReturningEvent rEvent3 = new ReturningEvent(6, reader4, data.libraryState, DateTime.Today);
 
             data.events.Add(bEvent1);
             data.events.Add(bEvent2);
