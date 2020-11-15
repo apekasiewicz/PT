@@ -9,7 +9,7 @@ namespace Data
     public interface IRepository
     {
         //Products
-        BookCatalog GetAllBooks();
+        Dictionary<int, Book> GetAllBooks();
         Book GetBookById(int id);
         Book GetBookByGenre(BookGenre genre);
         void UpdateBookInfo(Book book);

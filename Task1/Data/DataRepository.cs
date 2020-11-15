@@ -4,40 +4,37 @@ using System.Text;
 
 namespace Data
 {
-    /*public class DataRepository : IRepository
+    public class DataRepository : IRepository
     {
         private DataContext context;
 
         public DataRepository(DataContext context)
         {
             this.context = context;
-            bookKey = 1;
         }
 
-        //Products
-        public int bookKey { get; set; }
-
-        public BookCatalog GetAllBooks()
+        //All Books
+        public Dictionary<int, Book> GetAllBooks()
         {
-            return context.allBooks;
+            return context.books.allBooks;
         }
 
-        public BookCatalog GetBookById(int id)
+        public Book GetBookById(int id)
         {
-            if (context.allBooks.ContainsKey(id))
+            if (context.books.allBooks.ContainsKey(id))
             {
-                return context.books[id];
+                return context.books.allBooks[id];
             }
-            throw new Exception("Book with such id does not exist");
+            throw new Exception("Book with such ID does not exist in the library");
         }
 
         public Book GetBookByGenre(BookGenre genre)
         {
-            for (int i = 0; i < context.books.Count; i++)
+            for (int i = 0; i < context.books.allBooks.Count; i++)
             {
-                if (context.books[i].Genre == genre)
+                if (context.books.allBooks[i].Genre == genre)
                 {
-                    return context.books[i];
+                    return context.books.allBooks[i];
                 }
             }
             throw new Exception("There are no books of this genre in the library.");
@@ -45,29 +42,32 @@ namespace Data
 
         public void UpdateBookInfo(Book book)
         {
-            if (context.books.ContainsKey(book.Id))
+            if (context.books.allBooks.ContainsKey(book.Id))
             {
-                context.books[book.Id].Title = book.Title;
-                context.books[book.Id].Author = book.Author;
-                context.books[book.Id].PublishmentYear = book.PublishmentYear;
-                context.books[book.Id].Genre = book.Genre;
+                context.books.allBooks[book.Id].Title = book.Title;
+                context.books.allBooks[book.Id].Author = book.Author;
+                context.books.allBooks[book.Id].PublishmentYear = book.PublishmentYear;
+                context.books.allBooks[book.Id].Genre = book.Genre;
             }
-            throw new Exception("Such book with does not exist in the library");
+            throw new Exception("Such book does not exist in the library");
         }
 
         public void AddBook(Book book)
         {
-            context.books.Add(bookKey, book);
-            bookKey++;
+            if (context.books.allBooks.ContainsKey(book.Id))
+            {
+                throw new Exception("Book with such ID already exists in the library");
+            }
+            context.books.allBooks.Add(book.Id, book);
         }
 
         public void DeleteBook(int id)
         {
-            if (context.books.ContainsKey(id))
+            if (context.books.allBooks.ContainsKey(id))
             {
-                context.books.Remove(id);
+                context.books.allBooks.Remove(id);
             }
-            throw new Exception("Book with such id does not exist");
+            throw new Exception("Book with such ID does not exist");
         }
 
 
@@ -86,7 +86,7 @@ namespace Data
                     return context.readers[i];
                 }
             }
-            throw new Exception("Reader with such id does not exist");
+            throw new Exception("Reader with such ID does not exist");
         }
 
         public void UpdateReaderInfo(Reader reader)
@@ -105,6 +105,13 @@ namespace Data
 
         public void AddReader(Reader reader)
         {
+            for (int i = 0; i < context.readers.Count; i++)
+            {
+                if (context.readers[i].Id == reader.Id)
+                {
+                    throw new Exception("Reader with such ID already exists in the library");
+                }
+            }
             context.readers.Add(reader);
         }
 
@@ -117,7 +124,7 @@ namespace Data
                     context.readers.Remove(context.readers[i]);
                 }
             }
-            throw new Exception("Reader with such id does not exist");
+            throw new Exception("Reader with such ID does not exist");
         }
 
 
@@ -136,12 +143,18 @@ namespace Data
                     return context.events[i];
                 }
             }
-            throw new Exception("Event with such id does not exist");
+            throw new Exception("Event with such ID does not exist");
         }
-
 
         public void AddEvent(Event e)
         {
+            for (int i = 0; i < context.events.Count; i++)
+            {
+                if (context.events[i].Id == e.Id)
+                {
+                    throw new Exception("Event with such ID already exists");
+                }
+            }
             context.events.Add(e);
         }
 
@@ -154,7 +167,7 @@ namespace Data
                     context.events.Remove(context.events[i]);
                 }
             }
-            throw new Exception("Event with such id does not exist");
+            throw new Exception("Event with such ID does not exist");
         }
 
         public void UpdateEventInfo(Event e)
@@ -167,8 +180,35 @@ namespace Data
                     context.events[i].Reader = e.Reader;
                     context.events[i].State = e.State;
                 }
-
             }
+            throw new Exception("Such event does not exist in the library");
         }
-    }*/
+
+        //States
+
+		public Dictionary<int, int> GetAllStates()
+		{
+			throw new NotImplementedException();
+		}
+
+		public int GetBookStateById(int id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void UpdateBookState(int id, int newState)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void AddBookState(int id, int state)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void DeleteBookstate(int id)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
