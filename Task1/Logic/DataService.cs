@@ -15,10 +15,10 @@ namespace Logic
         }
 
         // GET ALL 
-        public BookCatalog GetAllBooks()
+        public Dictionary<int, Book> GetAllBooks()
         {
-            BookCatalog books = repository.GetAllBooks();
-            if (books.allBooks.Count == 0)
+            Dictionary<int, Book> books = repository.GetAllBooks();
+            if (books.Count == 0)
             {
                 return null;
             }

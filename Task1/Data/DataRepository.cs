@@ -185,30 +185,37 @@ namespace Data
         }
 
         //States
+        public Dictionary<int, int> GetAllStates()
+        {
+            return context.libraryState.AvailableBooks;
+        }
 
-		public Dictionary<int, int> GetAllStates()
-		{
-			throw new NotImplementedException();
-		}
+        public int GetBookStateById(int id)
+        {
+            if (context.libraryState.AvailableBooks.ContainsKey(id))
+            {
+                return context.libraryState.AvailableBooks[id];
+            }
+            throw new Exception("Book with such ID does not exist in the library");
+        }
 
-		public int GetBookStateById(int id)
-		{
-			throw new NotImplementedException();
-		}
+        public void UpdateBookState(int id, int newState)
+        {
+            if (context.libraryState.AvailableBooks.ContainsKey(id))
+            {                
+                context.libraryState.AvailableBooks[id] += newState;
+            }
+            throw new Exception("Such book does not exist in the library");
+        }
 
-		public void UpdateBookState(int id, int newState)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void AddBookState(int id, int state)
-		{
-			throw new NotImplementedException();
-		}
+        public void AddBookState(int id, int state)
+        {
+            context.libraryState.AvailableBooks.Add(id, state);
+        }
 
 		public void DeleteBookstate(int id)
 		{
-			throw new NotImplementedException();
-		}
+            context.libraryState.AvailableBooks.Remove(id);
+        }
 	}
 }

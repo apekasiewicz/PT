@@ -10,7 +10,6 @@ namespace Data
         {
             AllBooks = catalog;
             AvailableBooks = availableBooks;
-            
         }
 
         public BookCatalog AllBooks { get; set; }
