@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data
 {
-    public class DataRepository : IRepository
+    /*public class DataRepository : IRepository
     {
         private DataContext context;
 
@@ -17,14 +17,14 @@ namespace Data
         //Products
         public int bookKey { get; set; }
 
-        public Dictionary<int, Book> GetAllBooks()
+        public BookCatalog GetAllBooks()
         {
-            return context.books;
+            return context.allBooks;
         }
 
-        public Book GetBookById(int id)
+        public BookCatalog GetBookById(int id)
         {
-            if (context.books.ContainsKey(id))
+            if (context.allBooks.ContainsKey(id))
             {
                 return context.books[id];
             }
@@ -170,5 +170,5 @@ namespace Data
 
             }
         }
-    }
+    }*/
 }

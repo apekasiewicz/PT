@@ -6,17 +6,16 @@ namespace Data
 {
     public class State
     {
-        public State(Book sBook, DateTime bDate, DateTime dDate)
+        public State(BookCatalog catalog, Dictionary<int, int> availableBooks)
         {
-            Book = sBook;
-            BorrowDate = bDate;
-            DueDate = dDate;
+            AllBooks = catalog;
+            AvailableBooks = availableBooks;
+            
         }
 
-        public Book Book { get; set; }
-        public DateTime BorrowDate { get; set; }
+        public BookCatalog AllBooks { get; set; }
 
-        public DateTime DueDate { get; set; }
+        public Dictionary<int, int> AvailableBooks { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -26,12 +25,12 @@ namespace Data
             }
 
             State s = (State)obj;
-            return Book == s.Book && BorrowDate == s.BorrowDate && DueDate == s.DueDate;
+            return AllBooks == s.AllBooks && AvailableBooks == s.AvailableBooks;
         }
 
         public override int GetHashCode()
         {
-            return Book.GetHashCode() ^ BorrowDate.GetHashCode() ^ DueDate.GetHashCode();
+            return AllBooks.GetHashCode() ^ AvailableBooks.GetHashCode();
         }
     }
 }

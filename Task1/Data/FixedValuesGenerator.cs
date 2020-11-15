@@ -15,8 +15,8 @@ namespace Data
             Book book4 = new Book(4, "The Da Vinci Code", "Dan Brown", 2006, BookGenre.Criminal);
             Book book5 = new Book(5, "The Notebook", "Nicholas Sparks", 1997, BookGenre.Romance);
 
-            data.books.Add(1, book1);
-            data.books.Add(2, book2);
+            data.books.allBooks.Add(1, book1); //the same for the rest
+            /*data.books.Add(2, book2);
             data.books.Add(3, book3);
             data.books.Add(4, book4);
             data.books.Add(5, book5);
@@ -51,7 +51,7 @@ namespace Data
 
             data.events.Add(bEvent1);
             data.events.Add(bEvent2);
-            data.events.Add(bEvent3);
+            data.events.Add(bEvent3);*/
         }
     }
 }
