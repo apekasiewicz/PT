@@ -47,7 +47,7 @@ namespace Data
             //generate state
             data.libraryState.AllBooks = data.books;
 
-            for (int j = 0; j < data.books.allBooks.Count; j++)
+            for (int j = 1; j <= data.books.allBooks.Count; j++)
             {
                 data.libraryState.AvailableBooks.Add(data.books.allBooks[j].Id, j);
             }
