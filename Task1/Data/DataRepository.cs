@@ -19,6 +19,11 @@ namespace Data
             return context.books.allBooks;
         }
 
+        public int GetAllBooksNumber()
+        {
+            return context.books.allBooks.Count;
+        }
+
         public Book GetBookById(int id)
         {
             if (context.books.allBooks.ContainsKey(id))
@@ -74,6 +79,11 @@ namespace Data
             return context.readers;
         }
 
+        public int GetAllReadersNumber()
+        {
+            return context.readers.Count;
+        }
+
         public Reader GetReaderById(int id)
         {
             for (int i = 0; i < context.readers.Count; i++)
@@ -127,6 +137,11 @@ namespace Data
         public List<Event> GetAllEvents()
         {
             return context.events;
+        }
+
+        public int GetAllEventsNumber()
+        {
+            return context.events.Count;
         }
 
         public Event GetEventById(int id)

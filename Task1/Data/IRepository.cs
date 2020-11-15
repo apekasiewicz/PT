@@ -10,6 +10,7 @@ namespace Data
     {
         //Products
         Dictionary<int, Book> GetAllBooks();
+        int GetAllBooksNumber();
         Book GetBookById(int id);
         Book GetBookByGenre(BookGenre genre);
         void UpdateBookInfo(Book book);
@@ -18,6 +19,7 @@ namespace Data
 
         //Readers
         List<Reader> GetAllReaders();
+        int GetAllReadersNumber();
         Reader GetReaderById(int id);
         void UpdateReaderInfo(Reader reader);
         void AddReader(Reader reader);
@@ -25,6 +27,7 @@ namespace Data
 
         //Events
         List<Event> GetAllEvents();
+        int GetAllEventsNumber();
         Event GetEventById(int id);
         void UpdateEventInfo(Event e);
         void AddEvent(Event e);
