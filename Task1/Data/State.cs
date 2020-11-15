@@ -6,15 +6,9 @@ namespace Data
 {
     public class State
     {
-        public State(BookCatalog catalog, Dictionary<int, int> availableBooks)
-        {
-            AllBooks = catalog;
-            AvailableBooks = availableBooks;
-        }
+        public BookCatalog AllBooks { get; set; } = new BookCatalog();
 
-        public BookCatalog AllBooks { get; set; }
-
-        public Dictionary<int, int> AvailableBooks { get; set; }
+        public Dictionary<int, int> AvailableBooks { get; set; } = new Dictionary<int, int>();
 
         public override bool Equals(object obj)
         {
