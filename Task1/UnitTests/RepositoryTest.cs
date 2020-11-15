@@ -254,6 +254,20 @@ namespace UnitTests
 			Assert.AreEqual(repository.GetBookById(2).PublishmentYear, 1998);
 		}
 
-	
+		[TestMethod]
+		public void GetFirstBookByGenreTest()
+		{
+			repository.AddBook(new Book(5, "The Notebook", "Nicholas Sparks", 1997, BookGenre.Romance));
+			repository.AddBook(new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy));
+			repository.AddBook(new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy));
+
+			Book returnedBook = repository.GetBookByGenre(BookGenre.Fantasy);
+
+			Assert.IsNotNull(returnedBook);
+			Assert.AreEqual(returnedBook.Id, 1);
+			Assert.AreEqual(returnedBook.Title, "A Game of Thrones");
+			Assert.AreEqual(returnedBook.Genre, BookGenre.Fantasy);
+		}
+
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Data
@@ -35,11 +36,11 @@ namespace Data
 
         public Book GetBookByGenre(BookGenre genre)
         {
-            for (int i = 0; i < context.books.allBooks.Count; i++)
+            foreach (var book in context.books.allBooks.ToArray())
             {
-                if (context.books.allBooks[i].Genre == genre)
+                if (context.books.allBooks[book.Key].Genre == genre)
                 {
-                    return context.books.allBooks[i];
+                    return context.books.allBooks[book.Key];
                 }
             }
             throw new Exception("There are no books of this genre in the library.");
