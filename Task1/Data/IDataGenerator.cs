@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data
 {
-    interface IDataGenerator
+    public interface IDataGenerator
     {
         void GenarateData(DataContext data);
     }

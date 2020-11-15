@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data
 {
-    class BookCatalog
+    public class BookCatalog
     {
         public List<Book> allBooks { get; set; } = new List<Book>();
     }

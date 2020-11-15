@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data
 {
-    class DataRepository : IRepository
+    public class DataRepository : IRepository
     {
         private DataContext context;
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data
 {
-    class FixedValuesGenerator : IDataGenerator
+    public class FixedValuesGenerator : IDataGenerator
     {
         public void GenarateData(DataContext data)
         {

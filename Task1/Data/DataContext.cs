@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace Data
 {
-    class DataContext
+    public class DataContext
     {
         public List<Reader> readers = new List<Reader>();
         public Dictionary<int, Book> books = new Dictionary<int, Book>();

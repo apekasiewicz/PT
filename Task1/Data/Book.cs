@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data
 {
-    class Book
+    public class Book
     {
         public Book(int bookId, string bookTitle, string bookAuthor, int bookYear, BookGenre genre)
         {

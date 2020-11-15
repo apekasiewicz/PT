@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data
 {
-    internal enum BookGenre
+    public enum BookGenre
     {
         History,
         Romance,

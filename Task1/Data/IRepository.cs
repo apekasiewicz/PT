@@ -6,7 +6,7 @@ namespace Data
 
 //CRUD definition (create, remove, update, delete)
 {
-    interface IRepository
+    public interface IRepository
     {
         //Products
         Dictionary<int, Book> GetAllBooks();

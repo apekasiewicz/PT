@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data
 {
-    abstract class Event
+    public abstract class Event
     {
         protected Event(int id, Reader reader, State state, DateTime date)
         {

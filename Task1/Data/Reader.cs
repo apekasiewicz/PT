@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Data
 {
-    class Reader
+    public class Reader
     {
         public Reader(string userFirstName, string userLastName, int userId)
         {
