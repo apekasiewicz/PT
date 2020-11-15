@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LibraryProject
+namespace Data
 
-    //CRUD definition (create, remove, update, delete)
+//CRUD definition (create, remove, update, delete)
 {
     interface IRepository
     {

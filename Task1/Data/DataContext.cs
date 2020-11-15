@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
 
-namespace LibraryProject
+namespace Data
 {
     class DataContext
     {

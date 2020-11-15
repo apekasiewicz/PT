@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LibraryProject
+namespace Data
 {
     internal enum BookGenre
     {
         History,
-        Romance, 
+        Romance,
         Drama,
         SciFi,
         Criminal,
-        Kids, 
+        Kids,
         Adventure,
         Fantasy
     }

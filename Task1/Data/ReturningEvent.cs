@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LibraryProject
+namespace Data
 {
     class ReturningEvent : Event
     {

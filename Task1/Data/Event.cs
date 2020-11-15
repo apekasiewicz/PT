@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LibraryProject
+namespace Data
 {
     abstract class Event
     {
@@ -23,13 +23,13 @@ namespace LibraryProject
 
         public override bool Equals(object obj)
         {
-            if ((obj == null) || !(obj is Event))
+            if (obj == null || !(obj is Event))
             {
                 return false;
             }
 
-            Event e = (Event) obj;
-            return Id == e.Id && Date == e.Date && Reader == e.Reader && State == e.State;      
+            Event e = (Event)obj;
+            return Id == e.Id && Date == e.Date && Reader == e.Reader && State == e.State;
         }
 
         public override int GetHashCode()
