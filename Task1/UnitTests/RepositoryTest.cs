@@ -400,7 +400,120 @@ namespace UnitTests
 
 
 		//Test for events
+		[TestMethod]
+		public void AddEventTest()
+		{
+			Reader reader = new Reader("Armaan", "Moran", 12, 0);
 
+			Assert.AreEqual(repository.GetAllEventsNumber(), 0);
+			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+			repository.AddEvent(new ReturningEvent(2, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+			Assert.AreEqual(repository.GetAllEventsNumber(), 2);
+		}
+		
+		[TestMethod]
+		public void DeleteEventTest()
+		{
+			Reader reader = new Reader("Armaan", "Moran", 12, 0);
+
+			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+			repository.AddEvent(new ReturningEvent(2, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+
+			repository.DeleteEvent(1);
+			Assert.AreEqual(repository.GetAllEventsNumber(), 1);
+		}
+		
+		[TestMethod]
+		public void GetAllEventsTest()
+		{
+			Reader reader1 = new Reader("Armaan", "Moran", 12, 0);
+			Reader reader2 = new Reader("Jon", "Snow", 5, 6);
+
+			repository.AddEvent(new BorrowingEvent(1, reader1, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+			repository.AddEvent(new ReturningEvent(2, reader2, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+
+			List<Event> allEvents = repository.GetAllEvents();
+			Assert.AreEqual(allEvents.Count, 2);
+
+			Assert.IsTrue(allEvents.Exists(e => e.Id == 1));
+			Assert.IsTrue(allEvents.Exists(e => e.Id == 2));
+			Assert.IsFalse(allEvents.Exists(e => e.Id == 3));
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(System.Exception))]
+		public void AddEventWithTheSameIdTest()
+		{
+			Reader reader = new Reader("Armaan", "Moran", 12, 0);
+
+			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+			repository.AddEvent(new ReturningEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+			
+			Assert.AreEqual(repository.GetAllEventsNumber(), 1);
+			Assert.AreEqual(repository.GetEventById(1).Date, "2020, 11, 16, 12, 0, 0");
+		}
+		
+		[TestMethod]
+		public void DeleteNonExistingEventTest()
+		{
+			Reader reader = new Reader("Armaan", "Moran", 12, 0);
+			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+
+			repository.DeleteEvent(5);
+			Assert.AreEqual(repository.GetAllEventsNumber(), 1);
+		}
+
+		[TestMethod]
+		public void GetEventByIdTest()
+		{
+			Reader reader = new Reader("Armaan", "Moran", 12, 0);
+			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+
+			Event returnedEvent = repository.GetEventById(1);
+
+			Assert.IsNotNull(returnedEvent);
+			Assert.AreEqual(returnedEvent.Id, 1);
+			Assert.AreEqual(returnedEvent.Date, new DateTime(2020, 11, 16, 12, 0, 0));
+			Assert.AreEqual(returnedEvent.Reader, reader);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(System.Exception))]
+		public void GetNonExistingEventByIdTest()
+		{
+			Reader reader = new Reader("Armaan", "Moran", 12, 0);
+			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+
+			Event returnedEvent = repository.GetEventById(10);
+
+			Assert.IsNull(returnedEvent);
+			Assert.AreNotEqual(returnedEvent.Id, 1);
+			Assert.AreNotEqual(returnedEvent.Date, new DateTime(2020, 11, 16, 12, 0, 0));
+			Assert.AreNotEqual(returnedEvent.Reader, reader);
+		}
+
+		[TestMethod]
+		public void GetNonExistingEventExcpetionTest()
+		{
+			var ex = Assert.ThrowsException<System.Exception>(() => repository.GetEventById(20));
+			Assert.AreSame(ex.Message, "Event with such ID does not exist");
+		}
+
+		[TestMethod]
+		public void UpdateInfoAboutEventTest()
+		{
+			Reader reader1 = new Reader("Armaan", "Moran", 12, 0);
+			Reader reader2 = new Reader("Jon", "Snow", 6, 2);
+
+			repository.AddEvent(new BorrowingEvent(1, reader1, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+			repository.AddEvent(new ReturningEvent(5, reader1, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+
+			BorrowingEvent newBorrowingEvent = new BorrowingEvent(1, reader1, repository.GetState(), new DateTime(2020, 11, 26, 12, 0, 0));
+
+			Assert.AreEqual(repository.GetEventById(1).Date, new DateTime(2020, 11, 16, 12, 0, 0));
+			repository.UpdateEventInfo(newBorrowingEvent);
+			Assert.AreEqual(repository.GetEventById(1).Date, new DateTime(2020, 11, 26, 12, 0, 0));
+		}
 	}
 }
 
