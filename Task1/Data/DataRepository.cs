@@ -214,6 +214,20 @@ namespace Data
             throw new Exception("Book with such ID does not exist in the library");
         }
 
+        public int GetAmountOfAvailableCopies(int id)
+        {
+            var book = GetBookStateById(id);
+
+            if (context.libraryState.AvailableBooks.ContainsKey(id))
+            {
+                var amount = context.libraryState.AvailableBooks[id];
+
+                return amount > 0 ? amount : 0;
+            }
+
+            return 0;
+        }
+
         public void UpdateBookState(int id, int newState)
         {
             if (context.libraryState.AvailableBooks.ContainsKey(id))

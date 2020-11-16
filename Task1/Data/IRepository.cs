@@ -37,6 +37,7 @@ namespace Data
         Dictionary<int, int> GetAllStates();
         State GetState();
         int GetBookStateById(int id);
+        int GetAmountOfAvailableCopies(int id);
         void UpdateBookState(int id, int newState); //decrement by one if borrowingevent, increment if returning
         void AddBookState(int id, int state); //new book in catalog, new quantity
         void DeleteBookstate(int id);   //delete book from catalog, delete its state
