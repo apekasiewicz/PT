@@ -205,28 +205,15 @@ namespace Data
             return context.libraryState;
         }
 
-        public int GetBookStateById(int id)
+        public int GetAmountOfAvailableCopiesById(int id)
         {
             if (context.libraryState.AvailableBooks.ContainsKey(id))
             {
                 return context.libraryState.AvailableBooks[id];
             }
-            throw new Exception("Book with such ID does not exist in the library");
-        }
-
-        public int GetAmountOfAvailableCopies(int id)
-        {
-            var book = GetBookStateById(id);
-
-            if (context.libraryState.AvailableBooks.ContainsKey(id))
-            {
-                var amount = context.libraryState.AvailableBooks[id];
-
-                return amount > 0 ? amount : 0;
-            }
-
             return 0;
         }
+
 
         public void UpdateBookState(int id, int newState)
         {
@@ -236,11 +223,19 @@ namespace Data
                 {
                     context.libraryState.AvailableBooks[id] += newState;
                 }
+                else
+                {
+                    throw new Exception("There is no such amount of these books in the library");
+                }
             }
         }
 
         public void AddBookState(int id, int state)
         {
+            if (context.libraryState.AvailableBooks.ContainsKey(id))
+            {
+                throw new Exception("Book with such ID already exists in the library");
+            }
             context.libraryState.AvailableBooks.Add(id, state);
         }
 
