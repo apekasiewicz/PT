@@ -219,14 +219,19 @@ namespace Data
         {
             if (context.libraryState.AvailableBooks.ContainsKey(id))
             {
-                if (context.libraryState.AvailableBooks[id] + newState >= 0)
+                if(newState >= 0)
                 {
-                    context.libraryState.AvailableBooks[id] += newState;
+                    context.libraryState.AvailableBooks[id] = newState;
                 }
                 else
                 {
-                    throw new Exception("There is no such amount of these books in the library");
+                    throw new InvalidOperationException("You can not set the stock amount to negative number!");
                 }
+                
+            }
+            else
+            {
+                throw new Exception("There is no such amount of these books in the library");
             }
         }
 

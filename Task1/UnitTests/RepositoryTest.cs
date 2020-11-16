@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,6 +10,7 @@ namespace UnitTests
 	{
 		private IRepository repository;
 		private DataContext context;
+		private IDataGenerator generator;
 
 		[TestInitialize]
 		public void Initialize()
@@ -354,28 +356,27 @@ namespace UnitTests
 			repository.AddBookState(1, 5);
 			repository.AddBookState(2, 4);
 
-			repository.UpdateBookState(1, 5);
-			repository.UpdateBookState(2, -2);
+			repository.UpdateBookState(1, 10);
+			repository.UpdateBookState(2, 2);
 
 			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(1), 10);
 			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(2), 2);
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(System.Exception))]
-		public void UpdateBookStateBorrowedTooManyBooksTest()
+		[ExpectedException(typeof(InvalidOperationException))]
+		public void UpdateBookStateNegativeTest()
 		{
 			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
 			Book book2 = new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy);
 			repository.AddBookState(1, 5);
 			repository.AddBookState(2, 4);
 
-			repository.UpdateBookState(2, -5);
-
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(2), 4);
+			repository.UpdateBookState(2, -2);
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(Exception))]
 		public void UpdateBookStateNonExistingTest()
 		{
 			repository.UpdateBookState(5, 5);
