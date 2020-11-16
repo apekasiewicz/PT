@@ -232,272 +232,159 @@ namespace UnitTests
 			Assert.AreEqual(returnedBook.Genre, BookGenre.Fantasy);
 		}
 
-		/*
+
 		//Test for states
 		[TestMethod]
-		public void AddNewBookToInventoryTest()
+		public void AddNewBooktateToInventoryTest()
 		{
-			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
-			Book book2 = new Book(2, "The Notebook", "Nicholas Sparks", 1997, BookGenre.Romance);
+			Book book1 = new Book(6, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
+			Book book2 = new Book(7, "The Notebook", "Nicholas Sparks", 1997, BookGenre.Romance);
 
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(1), 0);
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(2), 0);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(6), 0);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(7), 0);
 
-			repository.AddBookState(1, 6);
-			repository.AddBookState(2, 10);
+			service.AddNewBookState(6, 5);
+			service.AddNewBookState(7, 8);
 
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(1), 6);
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(2), 10);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(6), 5);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(7), 8);
 		}
 
+		
 		[TestMethod]
-		public void DeleteBookFromInventoryTest()
+		public void DeleteBookStateFromInventoryTest()
 		{
-			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
-			Book book2 = new Book(2, "The Notebook", "Nicholas Sparks", 1997, BookGenre.Romance);
-
-			repository.AddBookState(1, 6);
-			repository.AddBookState(2, 10);
-			repository.DeleteBookstate(2);
-
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(1), 6);
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(2), 0);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(2), 10);
+			service.DeleteBookstate(2);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(2), 0);
 		}
-
+		
 		[TestMethod]
-		[ExpectedException(typeof(System.Exception))]
-		public void AddExistingBookToInventoryTest()
+		public void AddExistingStateBookToInventoryTest()
 		{
 			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
 
-			repository.AddBookState(1, 6);
-			repository.AddBookState(1, 10);
-
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(1), 6);
+			Assert.ThrowsException<Exception>(() => service.AddNewBookState(1, 6));
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(1), 10);
+			Assert.AreEqual(service.GetBookById(1).Title, "Lord of the Rings");
 		}
 
 		[TestMethod]
 		public void DeleteNonExistingBookFromInventoryTest()
 		{
-			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
-
-			repository.AddBookState(1, 6);
-			Assert.ThrowsException<InvalidOperationException>(
-				() => repository.DeleteBookstate(5));
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(5), 0);
+			Assert.ThrowsException<InvalidOperationException>(() => service.DeleteBookstate(70));
 		}
 
 		[TestMethod]
 		public void GetAllStatesTest()
 		{
-			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
-			Book book2 = new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy);
-			Book book3 = new Book(3, "A Storm of Swords", "George R.R.Martin", 2000, BookGenre.Fantasy);
-
-			repository.AddBookState(1, 5);
-			repository.AddBookState(2, 4);
-			repository.AddBookState(3, 3);
-
-			Dictionary<int, int> allAvailableBooks = repository.GetAllStates();
-			Assert.AreEqual(allAvailableBooks.Count, 3);
+			Dictionary<int, int> allAvailableBooks = service.GetAllAvailableBooks();
+			Assert.AreEqual(allAvailableBooks.Count, 5);
 
 			Assert.IsTrue(allAvailableBooks.ContainsKey(1));
 			Assert.IsTrue(allAvailableBooks.ContainsKey(2));
 			Assert.IsTrue(allAvailableBooks.ContainsKey(3));
+			Assert.IsTrue(allAvailableBooks.ContainsKey(4));
+			Assert.IsTrue(allAvailableBooks.ContainsKey(5));
 
-			Assert.IsTrue(allAvailableBooks.ContainsValue(5));
-			Assert.IsTrue(allAvailableBooks.ContainsValue(4));
-			Assert.IsTrue(allAvailableBooks.ContainsValue(3));
+			Assert.IsTrue(allAvailableBooks.ContainsValue(10));
 		}
 
 		[TestMethod]
 		public void UpdateBookStateTest()
 		{
-			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
-			Book book2 = new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy);
-			repository.AddBookState(1, 5);
-			repository.AddBookState(2, 4);
+			service.UpdateStock(1, 6);
+			service.UpdateStock(5, 20);
 
-			repository.UpdateBookState(1, 10);
-			repository.UpdateBookState(2, 2);
-
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(1), 10);
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(2), 2);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(1), 6);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(5), 20);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(2), 10);
 		}
-
+		
 		[TestMethod]
-		[ExpectedException(typeof(InvalidOperationException))]
 		public void UpdateBookStateNegativeTest()
 		{
-			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
-			Book book2 = new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy);
-			repository.AddBookState(1, 5);
-			repository.AddBookState(2, 4);
-
-			repository.UpdateBookState(2, -2);
+			Assert.ThrowsException<InvalidOperationException>(() => service.UpdateStock(2, -2));
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(2), 10);
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(Exception))]
 		public void UpdateBookStateNonExistingTest()
 		{
-			repository.UpdateBookState(5, 5);
-			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(5), 0);
+			Assert.ThrowsException<Exception>(() => service.UpdateStock(10, 10));
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(10), 0);
 		}
 
 		[TestMethod]
 		public void GetStateTest()
 		{
-			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
-			Book book2 = new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy);
-			Book book3 = new Book(3, "A Storm of Swords", "George R.R.Martin", 2000, BookGenre.Fantasy);
-
-			repository.AddBookState(1, 5);
-			repository.AddBookState(2, 4);
-			repository.AddBookState(3, 3);
-
-			Dictionary<int, int> allAvailableBooks = repository.GetAllStates();
-			Assert.AreEqual(repository.GetState().AvailableBooks, allAvailableBooks);
+			Dictionary<int, int> allAvailableBooks = service.GetAllAvailableBooks();
+			Assert.AreEqual(service.GetAllAvailableBooks(), allAvailableBooks);
 		}
 
-
-		//Test for events
-		[TestMethod]
-		public void AddEventTest()
-		{
-			Reader reader = new Reader("Armaan", "Moran", 12, 0);
-
-			Assert.AreEqual(repository.GetAllEventsNumber(), 0);
-			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-			repository.AddEvent(new ReturningEvent(2, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-			Assert.AreEqual(repository.GetAllEventsNumber(), 2);
-		}
 		
-		[TestMethod]
-		public void DeleteEventTest()
-		{
-			Reader reader = new Reader("Armaan", "Moran", 12, 0);
-
-			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-			repository.AddEvent(new ReturningEvent(2, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-
-			repository.DeleteEvent(1);
-			Assert.AreEqual(repository.GetAllEventsNumber(), 1);
-		}
-		
+		//Test for events		
 		[TestMethod]
 		public void GetAllEventsTest()
 		{
-			Reader reader1 = new Reader("Armaan", "Moran", 12, 0);
-			Reader reader2 = new Reader("Jon", "Snow", 5, 6);
-
-			repository.AddEvent(new BorrowingEvent(1, reader1, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-			repository.AddEvent(new ReturningEvent(2, reader2, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-
-			List<Event> allEvents = repository.GetAllEvents();
-			Assert.AreEqual(allEvents.Count, 2);
+			List<Event> allEvents = service.GetAllEvents();
+			Assert.AreEqual(allEvents.Count, 5);
 
 			Assert.IsTrue(allEvents.Exists(e => e.Id == 1));
 			Assert.IsTrue(allEvents.Exists(e => e.Id == 2));
-			Assert.IsFalse(allEvents.Exists(e => e.Id == 3));
-		}
-
-		[TestMethod]
-		[ExpectedException(typeof(System.Exception))]
-		public void AddEventWithTheSameIdTest()
-		{
-			Reader reader = new Reader("Armaan", "Moran", 12, 0);
-
-			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-			repository.AddEvent(new ReturningEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-			
-			Assert.AreEqual(repository.GetAllEventsNumber(), 1);
-			Assert.AreEqual(repository.GetEventById(1).Date, "2020, 11, 16, 12, 0, 0");
-		}
-		
-		[TestMethod]
-		public void DeleteNonExistingEventTest()
-		{
-			Reader reader = new Reader("Armaan", "Moran", 12, 0);
-			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-
-			Assert.ThrowsException<InvalidOperationException>(
-				() => repository.DeleteEvent(5));
-		
-			Assert.AreEqual(repository.GetAllEventsNumber(), 1);
+			Assert.IsTrue(allEvents.Exists(e => e.Id == 3));
+			Assert.IsTrue(allEvents.Exists(e => e.Id == 4));
+			Assert.IsTrue(allEvents.Exists(e => e.Id == 5));
 		}
 
 		[TestMethod]
 		public void GetEventByIdTest()
 		{
-			Reader reader = new Reader("Armaan", "Moran", 12, 0);
-			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-
-			Event returnedEvent = repository.GetEventById(1);
+			Event returnedEvent = service.GetEventById(1);
 
 			Assert.IsNotNull(returnedEvent);
 			Assert.AreEqual(returnedEvent.Id, 1);
 			Assert.AreEqual(returnedEvent.Date, new DateTime(2020, 11, 16, 12, 0, 0));
-			Assert.AreEqual(returnedEvent.Reader, reader);
+			Assert.AreEqual(returnedEvent.Reader, service.GetReaderById(102030));
+			Assert.AreEqual(returnedEvent.State, service.GetStateLibrary());
 		}
-
+		
+		
 		[TestMethod]
-		[ExpectedException(typeof(System.Exception))]
 		public void GetNonExistingEventByIdTest()
 		{
-			Reader reader = new Reader("Armaan", "Moran", 12, 0);
-			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+			Assert.ThrowsException<Exception>(() => service.GetEventById(10));
 
-			Event returnedEvent = repository.GetEventById(10);
-
-			Assert.IsNull(returnedEvent);
-			Assert.AreNotEqual(returnedEvent.Id, 1);
-			Assert.AreNotEqual(returnedEvent.Date, new DateTime(2020, 11, 16, 12, 0, 0));
-			Assert.AreNotEqual(returnedEvent.Reader, reader);
 		}
 
 		[TestMethod]
 		public void GetNonExistingEventExcpetionTest()
 		{
-			var ex = Assert.ThrowsException<System.Exception>(() => repository.GetEventById(20));
+			var ex = Assert.ThrowsException<System.Exception>(() => service.GetEventById(20));
 			Assert.AreSame(ex.Message, "Event with such ID does not exist");
 		}
-
+		
 		[TestMethod]
 		public void UpdateInfoAboutEventTest()
 		{
-			Reader reader1 = new Reader("Armaan", "Moran", 12, 0);
-			Reader reader2 = new Reader("Jon", "Snow", 6, 2);
+			BorrowingEvent newBorrowingEvent = new BorrowingEvent(1, service.GetReaderById(102031), service.GetStateLibrary(), new DateTime(2020, 11, 26, 15, 0, 0));
 
-			repository.AddEvent(new BorrowingEvent(1, reader1, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-			repository.AddEvent(new ReturningEvent(5, reader1, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-
-			BorrowingEvent newBorrowingEvent = new BorrowingEvent(1, reader1, repository.GetState(), new DateTime(2020, 11, 26, 12, 0, 0));
-
-			Assert.AreEqual(repository.GetEventById(1).Date, new DateTime(2020, 11, 16, 12, 0, 0));
-			repository.UpdateEventInfo(newBorrowingEvent);
-			Assert.AreEqual(repository.GetEventById(1).Date, new DateTime(2020, 11, 26, 12, 0, 0));
+			Assert.AreEqual(service.GetEventById(1).Date, new DateTime(2020, 11, 16, 12, 0, 0));
+			Assert.AreEqual(service.GetEventById(1).Reader, service.GetReaderById(102030));
+			service.EditEvent(newBorrowingEvent);
+			Assert.AreEqual(service.GetEventById(1).Date, new DateTime(2020, 11, 26, 15, 0, 0));
+			Assert.AreEqual(service.GetEventById(1).Reader, service.GetReaderById(102031));
 		}
 
 		[TestMethod]
 		public void UpdateInfoAboutNonExistingEventTest()
 		{
-			Reader reader1 = new Reader("Armaan", "Moran", 12, 0);
-			Reader reader2 = new Reader("Jon", "Snow", 6, 2);
-
-			repository.AddEvent(new BorrowingEvent(1, reader1, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-			repository.AddEvent(new ReturningEvent(5, reader1, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
-
-			BorrowingEvent newBorrowingEvent = new BorrowingEvent(6, reader1, repository.GetState(), new DateTime(2020, 11, 26, 12, 0, 0));
-
-			Assert.AreEqual(repository.GetEventById(1).Date, new DateTime(2020, 11, 16, 12, 0, 0));
-			Assert.ThrowsException<InvalidOperationException>(
-				() => repository.UpdateEventInfo(newBorrowingEvent));
-			Assert.AreEqual(repository.GetEventById(1).Date, new DateTime(2020, 11, 16, 12, 0, 0));
+			BorrowingEvent newBorrowingEvent = new BorrowingEvent(6, service.GetReaderById(102032), service.GetStateLibrary(), new DateTime(2020, 11, 26, 12, 0, 0));
+			Assert.ThrowsException<InvalidOperationException>(() => service.EditEvent(newBorrowingEvent));
 		}
-	}*/
-
 	}
+
+	
 }
 
 

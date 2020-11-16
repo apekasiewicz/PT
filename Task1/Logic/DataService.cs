@@ -102,10 +102,6 @@ namespace Logic
             repository.AddReader(reader);
         }
 
-        public void AddEvent(Event e)
-        {
-            repository.AddEvent(e);
-        }
 
         //EDIT
         public void EditBook(Book book)
@@ -135,10 +131,6 @@ namespace Logic
             repository.DeleteReader(id);
         }
 
-        public void DeleteEvent(int id)
-        {
-            repository.DeleteEvent(id);
-        }
 
         //STATE
         public void UpdateStock(int bookId, int newAmount)
@@ -149,6 +141,11 @@ namespace Logic
         public Dictionary<int, int> GetAllAvailableBooks()
         {
             return repository.GetAllStates();
+        }
+
+        public State GetStateLibrary()
+        {
+            return repository.GetState();
         }
 
         public int GetAmountOfAvailableCopiesById(int bookId)

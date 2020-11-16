@@ -33,7 +33,7 @@ namespace UnitTests
 		{
 			Assert.AreEqual(repository.GetAllBooksNumber(), 5);
 			Assert.AreEqual(repository.GetAllReadersNumber(), 5);
-			Assert.AreEqual(repository.GetAllEventsNumber(), 0);
+			Assert.AreEqual(repository.GetAllEventsNumber(), 5);
 		}
 
 		[TestMethod]
