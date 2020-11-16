@@ -358,13 +358,6 @@ namespace UnitTests
 		}
 
 		[TestMethod]
-		public void GetNonExistingEventExcpetionTest()
-		{
-			var ex = Assert.ThrowsException<System.Exception>(() => service.GetEventById(20));
-			Assert.AreSame(ex.Message, "Event with such ID does not exist");
-		}
-
-		[TestMethod]
 		public void UpdateInfoAboutEventTest()
 		{
 			BorrowingEvent newBorrowingEvent = new BorrowingEvent(1, service.GetReaderById(102031), service.GetStateLibrary(), new DateTime(2020, 11, 26, 15, 0, 0));
@@ -420,20 +413,6 @@ namespace UnitTests
 		}
 
 		[TestMethod]
-		public void BorrowBookWrongReaderIdTest()
-		{
-			var ex = Assert.ThrowsException<System.Exception>(() => service.borrowBook(102035, 6, 1, DateTime.Now));
-			Assert.AreSame(ex.Message, "Reader with such ID does not exist");
-		}
-
-		[TestMethod]
-		public void BorrowBookWrongEventIdTest()
-		{
-			var ex = Assert.ThrowsException<System.Exception>(() => service.borrowBook(102031, 2, 1, DateTime.Now));
-			Assert.AreSame(ex.Message, "Event with such ID already exists");
-		}
-
-		[TestMethod]
 		public void ReturnBookTest()
 		{
 			service.borrowBook(102031, 6, 1, DateTime.Now);
@@ -443,27 +422,6 @@ namespace UnitTests
 			service.returnBook(102031, 7, 1, DateTime.Now);
 			Assert.AreEqual(service.GetReaderById(102031).AmountOfBooksBorrowed, 0);
 			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(1), 10);
-		}
-		
-		[TestMethod]
-		public void ReturnBookNoCopiesTest()
-		{
-			var ex = Assert.ThrowsException<InvalidOperationException>(() => service.returnBook(102031, 6, 1, DateTime.Now));
-			Assert.AreSame(ex.Message, "You can not return books when you did not borrow.");
-		}
-		
-		[TestMethod]
-		public void ReturnBookWrongReaderIdTest()
-		{
-			var ex = Assert.ThrowsException<Exception>(() => service.returnBook(102035, 6, 1, DateTime.Now));
-			Assert.AreSame(ex.Message, "Reader with such ID does not exist");
-		}
-
-		[TestMethod]
-		public void ReturnBookWrongEventIdTest()
-		{
-			var ex = Assert.ThrowsException<Exception>(() => service.returnBook(102030, 2, 1, DateTime.Now));
-			Assert.AreSame(ex.Message, "Event with such ID already exists");
 		}
 
 		[TestMethod]
