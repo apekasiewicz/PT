@@ -55,6 +55,10 @@ namespace Data
                 context.books.allBooks[book.Id].PublishmentYear = book.PublishmentYear;
                 context.books.allBooks[book.Id].Genre = book.Genre;
             }
+            else
+            {
+                throw new InvalidOperationException("Such book does not exist in the library!");
+            }
         }
 
         public void AddBook(Book book)
@@ -72,7 +76,12 @@ namespace Data
             {
                 context.books.allBooks.Remove(id);
             }
+            else
+            {
+                throw new InvalidOperationException("Such book does not exist in the library!");
+            }
         }
+
 
         //Readers
         public List<Reader> GetAllReaders()
@@ -107,8 +116,10 @@ namespace Data
                     context.readers[i].LastName = reader.LastName;
                     context.readers[i].Id = reader.Id;
                     context.readers[i].AmountOfBooksBorrowed = reader.AmountOfBooksBorrowed;
+                    return;
                 }
             }
+            throw new InvalidOperationException("Such reader ID does not exist in the library!");
         }
 
         public void AddReader(Reader reader)
@@ -127,11 +138,21 @@ namespace Data
         {
             for (int i = 0; i < context.readers.Count; i++)
             {
-                if (context.readers[i].Id == id && context.readers[i].AmountOfBooksBorrowed == 0)
+                if (context.readers[i].Id == id)
                 {
-                    context.readers.Remove(context.readers[i]);
+                    if (context.readers[i].AmountOfBooksBorrowed == 0)
+                    {
+                        context.readers.Remove(context.readers[i]);
+                        return;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("This reader has books borrowed!");
+                    }
+
                 }
             }
+            throw new InvalidOperationException("No such reader in the library");
         }
 
 
@@ -177,8 +198,10 @@ namespace Data
                 if (context.events[i].Id == id)
                 {
                     context.events.Remove(context.events[i]);
+                    return;
                 }
             }
+            throw new InvalidOperationException("Event with such ID does not exist!");
         }
 
         public void UpdateEventInfo(Event e)
@@ -190,8 +213,10 @@ namespace Data
                     context.events[i].Date = e.Date;
                     context.events[i].Reader = e.Reader;
                     context.events[i].State = e.State;
+                    return;
                 }
             }
+            throw new InvalidOperationException("Cannot update - event with such ID does not exist!");
         }
 
         //States
@@ -231,7 +256,7 @@ namespace Data
             }
             else
             {
-                throw new Exception("There is no such amount of these books in the library");
+                throw new Exception("There is no such book in the library stock");
             }
         }
 
@@ -246,7 +271,15 @@ namespace Data
 
 		public void DeleteBookstate(int id)
 		{
-            context.libraryState.AvailableBooks.Remove(id);
+            if (context.libraryState.AvailableBooks.ContainsKey(id))
+            {
+                context.libraryState.AvailableBooks.Remove(id);
+            }
+            else
+            {
+                throw new InvalidOperationException("Book with such ID does not exist in the stock!");
+            }
+                
         }
 	}
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Logic
 {
-    class DataService
+    public class DataService
     {
         private IRepository repository;
 
@@ -28,6 +28,11 @@ namespace Logic
             }
         }
 
+        public int GetAllBooksNumber()
+        {
+            return repository.GetAllBooksNumber();
+        }
+
         public List<Reader> GetAllReaders()
         {
             List<Reader> readers = repository.GetAllReaders();
@@ -39,6 +44,11 @@ namespace Logic
             {
                 return readers;
             }
+        }
+
+        public int GetAllReadersNumber()
+        {
+            return repository.GetAllReadersNumber();
         }
 
         public List<Event> GetAllEvents()
@@ -54,6 +64,10 @@ namespace Logic
             }
         }
 
+        public int GetAllEventsNumber()
+        {
+            return repository.GetAllEventsNumber();
+        }
 
         // SEARCH FOR ONE
         public Book GetBookById(int id)
@@ -160,7 +174,7 @@ namespace Logic
             var currentBookState = repository.GetAmountOfAvailableCopiesById(bookId);
             var reader = repository.GetReaderById(readerId);
 
-            if(currentBookState == 0)
+            if (currentBookState == 0)
             {
                 throw new InvalidOperationException("The book is unavailable for borrowing.");
             }
@@ -186,9 +200,9 @@ namespace Logic
             OnEventUpdateState(bookId, currentBookState, reader, false);
         }
 
-        private void OnEventUpdateState(int bookId, int currentBookState, Reader reader, bool  isBorrowing)
+        private void OnEventUpdateState(int bookId, int currentBookState, Reader reader, bool isBorrowing)
         {
-            if(isBorrowing)
+            if (isBorrowing)
             {
                 currentBookState -= 1;
                 reader.AmountOfBooksBorrowed += 1;
@@ -202,7 +216,7 @@ namespace Logic
             }
         }
 
-        public IEnumerable<Event> GetEventsForReader(int readerId) 
+        public IEnumerable<Event> GetEventsForReader(int readerId)
         {
             var reader = repository.GetReaderById(readerId);
             List<Event> events = new List<Event>();

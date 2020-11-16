@@ -78,7 +78,9 @@ namespace UnitTests
 			repository.AddReader(new Reader("Armaan", "Moran", 12, 0));
 			repository.AddReader(new Reader("Brandon", "Cobb", 15, 1));
 
-			repository.DeleteReader(18);
+			Assert.ThrowsException<InvalidOperationException>(
+				() => repository.DeleteReader(18));
+
 			Assert.AreEqual(repository.GetAllReadersNumber(), 2);
 		}
 
@@ -87,7 +89,8 @@ namespace UnitTests
 		{
 			repository.AddReader(new Reader("Brandon", "Cobb", 15, 1));
 
-			repository.DeleteReader(15);
+			Assert.ThrowsException<InvalidOperationException>(
+				() => repository.DeleteReader(15));
 			Assert.AreEqual(repository.GetAllReadersNumber(), 1);
 		}
 
@@ -137,6 +140,14 @@ namespace UnitTests
 			repository.UpdateReaderInfo(newReaderData);
 			Assert.AreEqual(repository.GetReaderById(12).AmountOfBooksBorrowed, 5);
 			Assert.AreEqual(repository.GetReaderById(15).AmountOfBooksBorrowed, 1);
+		}
+
+		[TestMethod]
+		public void UpdateInfoAboutNonExistingReaderTest()
+		{
+			Reader newReaderData = new Reader("Armaan", "Moran", 12, 5);
+			Assert.ThrowsException<InvalidOperationException>(
+				() => repository.UpdateReaderInfo(newReaderData));
 		}
 
 
@@ -203,8 +214,9 @@ namespace UnitTests
 		{
 			repository.AddBook(new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy));
 			repository.AddBook(new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy));
+			Assert.ThrowsException<InvalidOperationException>(
+				() => repository.DeleteBook(3));
 
-			repository.DeleteBook(3);
 			Assert.AreEqual(repository.GetAllBooksNumber(), 2);
 		}
 
@@ -254,6 +266,15 @@ namespace UnitTests
 			repository.UpdateBookInfo(newBookData);
 			Assert.AreEqual(repository.GetBookById(1).PublishmentYear, 1996);
 			Assert.AreEqual(repository.GetBookById(2).PublishmentYear, 1998);
+		}
+
+		[TestMethod]
+		public void UpdateInfoAboutNonExistingBookTest()
+		{
+			Book newBookData = new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy);
+			Assert.ThrowsException<InvalidOperationException>(
+				() => repository.UpdateBookInfo(newBookData));
+
 		}
 
 		[TestMethod]
@@ -321,7 +342,8 @@ namespace UnitTests
 			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
 
 			repository.AddBookState(1, 6);
-			repository.DeleteBookstate(5);
+			Assert.ThrowsException<InvalidOperationException>(
+				() => repository.DeleteBookstate(5));
 			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(5), 0);
 		}
 
@@ -459,7 +481,9 @@ namespace UnitTests
 			Reader reader = new Reader("Armaan", "Moran", 12, 0);
 			repository.AddEvent(new BorrowingEvent(1, reader, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
 
-			repository.DeleteEvent(5);
+			Assert.ThrowsException<InvalidOperationException>(
+				() => repository.DeleteEvent(5));
+		
 			Assert.AreEqual(repository.GetAllEventsNumber(), 1);
 		}
 
@@ -513,6 +537,23 @@ namespace UnitTests
 			Assert.AreEqual(repository.GetEventById(1).Date, new DateTime(2020, 11, 16, 12, 0, 0));
 			repository.UpdateEventInfo(newBorrowingEvent);
 			Assert.AreEqual(repository.GetEventById(1).Date, new DateTime(2020, 11, 26, 12, 0, 0));
+		}
+
+		[TestMethod]
+		public void UpdateInfoAboutNonExistingEventTest()
+		{
+			Reader reader1 = new Reader("Armaan", "Moran", 12, 0);
+			Reader reader2 = new Reader("Jon", "Snow", 6, 2);
+
+			repository.AddEvent(new BorrowingEvent(1, reader1, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+			repository.AddEvent(new ReturningEvent(5, reader1, repository.GetState(), new DateTime(2020, 11, 16, 12, 0, 0)));
+
+			BorrowingEvent newBorrowingEvent = new BorrowingEvent(6, reader1, repository.GetState(), new DateTime(2020, 11, 26, 12, 0, 0));
+
+			Assert.AreEqual(repository.GetEventById(1).Date, new DateTime(2020, 11, 16, 12, 0, 0));
+			Assert.ThrowsException<InvalidOperationException>(
+				() => repository.UpdateEventInfo(newBorrowingEvent));
+			Assert.AreEqual(repository.GetEventById(1).Date, new DateTime(2020, 11, 16, 12, 0, 0));
 		}
 	}
 }
