@@ -166,7 +166,7 @@ namespace Logic
 
         //Handling Actions
 
-        public void borrowBook(int readerId, int bookId, DateTime borrowDate)
+        public void borrowBook(int readerId, int eventId, int bookId, DateTime borrowDate)
         {
             var currentBookState = repository.GetAmountOfAvailableCopiesById(bookId);
             var reader = repository.GetReaderById(readerId);
@@ -176,12 +176,12 @@ namespace Logic
                 throw new InvalidOperationException("The book is unavailable for borrowing.");
             }
 
-            BorrowingEvent bEvent = new BorrowingEvent(readerId, reader, repository.GetState(), borrowDate);
+            BorrowingEvent bEvent = new BorrowingEvent(eventId, reader, repository.GetState(), borrowDate);
             repository.AddEvent(bEvent);
             OnEventUpdateState(bookId, currentBookState, reader, true);
         }
 
-        public void returnBook(int readerId, int bookId, DateTime returnDate)
+        public void returnBook(int readerId, int eventId, int bookId, DateTime returnDate)
         {
             var currentBookState = repository.GetAmountOfAvailableCopiesById(bookId);
             var reader = repository.GetReaderById(readerId);
@@ -192,7 +192,7 @@ namespace Logic
                 throw new InvalidOperationException("You can not return books when you did not borrow.");
             }
 
-            ReturningEvent rEvent = new ReturningEvent(readerId, reader, repository.GetState(), returnDate);
+            ReturningEvent rEvent = new ReturningEvent(eventId, reader, repository.GetState(), returnDate);
             repository.AddEvent(rEvent);
             OnEventUpdateState(bookId, currentBookState, reader, false);
         }
