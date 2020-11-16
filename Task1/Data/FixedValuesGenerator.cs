@@ -43,6 +43,21 @@ namespace Data
             {
                 data.libraryState.AvailableBooks.Add(data.books.allBooks[i].Id, 10);
             }
+
+            //generate events
+
+            BorrowingEvent bEvent1 = new BorrowingEvent(1, reader1, data.libraryState, new DateTime(2020, 11, 16, 12, 0, 0));
+            BorrowingEvent bEvent2 = new BorrowingEvent(2, reader1, data.libraryState, new DateTime(2020, 11, 16, 12, 15, 0));
+            BorrowingEvent bEvent3 = new BorrowingEvent(3, reader2, data.libraryState, new DateTime(2020, 11, 16, 15, 30, 0));
+
+            ReturningEvent rEvent1 = new ReturningEvent(4, reader1, data.libraryState, new DateTime(2020, 11, 16, 12, 10, 0));
+            ReturningEvent rEvent2 = new ReturningEvent(5, reader1, data.libraryState, new DateTime(2020, 11, 16, 12, 08, 0));
+
+            data.events.Add(bEvent1);
+            data.events.Add(bEvent2);
+            data.events.Add(bEvent3);
+            data.events.Add(rEvent1);
+            data.events.Add(rEvent2);
         }
     }
 }
