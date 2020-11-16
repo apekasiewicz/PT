@@ -465,6 +465,38 @@ namespace UnitTests
 			var ex = Assert.ThrowsException<System.Exception>(() => service.returnBook(102030, 2, 1, DateTime.Now));
 			Assert.AreSame(ex.Message, "Event with such ID already exists");
 		}
+
+		[TestMethod]
+		public void GetEventsForReaderTest()
+		{
+			List<Event> events = (List<Event>)service.GetEventsForReader(102030);
+			Assert.IsNotNull(events);
+			Assert.AreEqual(events.Count, 4);
+			Assert.IsTrue(events.Exists(e => e.Id == 1));
+			Assert.IsTrue(events.Exists(e => e.Id == 2));
+			Assert.IsFalse(events.Exists(e => e.Id == 3));
+			Assert.IsTrue(events.Exists(e => e.Id == 4));
+			Assert.IsTrue(events.Exists(e => e.Id == 5));
+		}
+
+		[TestMethod]
+		public void GetEventsForReaderNullTest()
+		{
+			List<Event> events = (List<Event>)service.GetEventsForReader(102034);
+			Assert.AreEqual(events.Count, 0);
+		}
+
+		[TestMethod]
+		public void GetEventsBetweenDatesTest()
+		{
+			List<Event> events = (List<Event>)service.GetEventsBetweenDates(new DateTime(2020, 11, 16, 12, 0, 0), new DateTime(2020, 11, 16, 13, 0, 0));
+			Assert.IsNotNull(events);
+			Assert.IsTrue(events.Exists(e => e.Id == 1));
+			Assert.IsTrue(events.Exists(e => e.Id == 2));
+			Assert.IsFalse(events.Exists(e => e.Id == 3));
+			Assert.IsTrue(events.Exists(e => e.Id == 4));
+			Assert.IsTrue(events.Exists(e => e.Id == 5));
+		}
 	}
 }
 
