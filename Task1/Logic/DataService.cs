@@ -28,7 +28,7 @@ namespace Logic
             }
         }
 
-        public List<Reader> getAllReaders()
+        public List<Reader> GetAllReaders()
         {
             List<Reader> readers = repository.GetAllReaders();
             if (readers.Count == 0)
@@ -41,7 +41,7 @@ namespace Logic
             }
         }
 
-        public List<Event> getAllEvents()
+        public List<Event> GetAllEvents()
         {
             List<Event> events = repository.GetAllEvents();
             if (events.Count == 0)
@@ -126,20 +126,109 @@ namespace Logic
             repository.DeleteEvent(id);
         }
 
-        //Handling Events
+        //STATE
+        public void UpdateStock(int bookId, int newAmount)
+        {
+            repository.UpdateBookState(bookId, newAmount);
+        }
+
+        public Dictionary<int, int> GetAllAvailableBooks()
+        {
+            return repository.GetAllStates();
+        }
+
+        public int GetAmountOfAvailableCopiesById(int bookId)
+        {
+            return repository.GetAmountOfAvailableCopiesById(bookId);
+        }
+
+        public void AddNewBookState(int bookId, int state)
+        {
+            repository.AddBookState(bookId, state);
+        }
+
+        public void DeleteBookstate(int bookId)
+        {
+            repository.DeleteBookstate(bookId);
+        }
+
+
+        //Handling Actions
 
         public void borrowBook(int readerId, int bookId, DateTime borrowDate)
         {
-            BorrowingEvent bEvent = new BorrowingEvent(readerId, repository.GetReaderById(readerId), repository.GetState(), borrowDate);
+            var currentBookState = repository.GetAmountOfAvailableCopiesById(bookId);
+            var reader = repository.GetReaderById(readerId);
+
+            if(currentBookState == 0)
+            {
+                throw new InvalidOperationException("The book is unavailable for borrowing.");
+            }
+
+            BorrowingEvent bEvent = new BorrowingEvent(readerId, reader, repository.GetState(), borrowDate);
             repository.AddEvent(bEvent);
-            repository.UpdateBookState(bookId, -1);
+            OnEventUpdateState(bookId, currentBookState, reader, true);
         }
 
         public void returnBook(int readerId, int bookId, DateTime returnDate)
         {
-            ReturningEvent rEvent = new ReturningEvent(readerId, repository.GetReaderById(readerId), repository.GetState(), returnDate);
+            var currentBookState = repository.GetAmountOfAvailableCopiesById(bookId);
+            var reader = repository.GetReaderById(readerId);
+            var readerBooks = reader.AmountOfBooksBorrowed;
+
+            if (readerBooks == 0)
+            {
+                throw new InvalidOperationException("You can not return books when you did not borrow.");
+            }
+
+            ReturningEvent rEvent = new ReturningEvent(readerId, reader, repository.GetState(), returnDate);
             repository.AddEvent(rEvent);
-            repository.UpdateBookState(bookId, 1);
+            OnEventUpdateState(bookId, currentBookState, reader, false);
+        }
+
+        private void OnEventUpdateState(int bookId, int currentBookState, Reader reader, bool  isBorrowing)
+        {
+            if(isBorrowing)
+            {
+                currentBookState -= 1;
+                reader.AmountOfBooksBorrowed += 1;
+                repository.UpdateBookState(bookId, currentBookState);
+            }
+            else
+            {
+                currentBookState += 1;
+                reader.AmountOfBooksBorrowed -= 1;
+                repository.UpdateBookState(bookId, currentBookState);
+            }
+        }
+
+        public IEnumerable<Event> GetEventsForReader(int readerId) 
+        {
+            var reader = repository.GetReaderById(readerId);
+            List<Event> events = new List<Event>();
+
+            foreach (Event ev in repository.GetAllEvents())
+            {
+                if (ev.Reader.Equals(reader))
+                {
+                    events.Add(ev);
+                }
+            }
+            return events;
+        }
+
+        public IEnumerable<Event> GetEventsBetweenDates(DateTime start, DateTime end)
+        {
+            List<Event> events = new List<Event>();
+
+            foreach (Event ev in repository.GetAllEvents())
+            {
+                if (ev.Date >= start && ev.Date <= end)
+                {
+                    events.Add(ev);
+                }
+            }
+            return events;
         }
     }
 }
