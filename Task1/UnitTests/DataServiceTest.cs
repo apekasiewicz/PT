@@ -250,7 +250,7 @@ namespace UnitTests
 			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(7), 8);
 		}
 
-		
+
 		[TestMethod]
 		public void DeleteBookStateFromInventoryTest()
 		{
@@ -258,7 +258,7 @@ namespace UnitTests
 			service.DeleteBookstate(2);
 			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(2), 0);
 		}
-		
+
 		[TestMethod]
 		public void AddExistingStateBookToInventoryTest()
 		{
@@ -300,7 +300,7 @@ namespace UnitTests
 			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(5), 20);
 			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(2), 10);
 		}
-		
+
 		[TestMethod]
 		public void UpdateBookStateNegativeTest()
 		{
@@ -322,7 +322,7 @@ namespace UnitTests
 			Assert.AreEqual(service.GetAllAvailableBooks(), allAvailableBooks);
 		}
 
-		
+
 		//Test for events		
 		[TestMethod]
 		public void GetAllEventsTest()
@@ -348,8 +348,8 @@ namespace UnitTests
 			Assert.AreEqual(returnedEvent.Reader, service.GetReaderById(102030));
 			Assert.AreEqual(returnedEvent.State, service.GetStateLibrary());
 		}
-		
-		
+
+
 		[TestMethod]
 		public void GetNonExistingEventByIdTest()
 		{
@@ -363,7 +363,7 @@ namespace UnitTests
 			var ex = Assert.ThrowsException<System.Exception>(() => service.GetEventById(20));
 			Assert.AreSame(ex.Message, "Event with such ID does not exist");
 		}
-		
+
 		[TestMethod]
 		public void UpdateInfoAboutEventTest()
 		{
@@ -382,9 +382,90 @@ namespace UnitTests
 			BorrowingEvent newBorrowingEvent = new BorrowingEvent(6, service.GetReaderById(102032), service.GetStateLibrary(), new DateTime(2020, 11, 26, 12, 0, 0));
 			Assert.ThrowsException<InvalidOperationException>(() => service.EditEvent(newBorrowingEvent));
 		}
-	}
 
-	
+
+		//Tests for borrowing and returning events
+		[TestMethod]
+		public void BorrowBookTest()
+		{
+			Assert.AreEqual(service.GetReaderById(102030).AmountOfBooksBorrowed, 4);
+			Assert.AreEqual(service.GetAllEventsNumber(), 5);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(1), 10);
+
+			service.borrowBook(102030, 6, 1, DateTime.Now);
+
+			Assert.AreEqual(service.GetReaderById(102030).AmountOfBooksBorrowed, 5);
+			Assert.AreEqual(service.GetAllEventsNumber(), 6);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(1), 9);
+		}
+
+		[TestMethod]
+		public void BorrowBookNoCopiesInInventoryTest()
+		{
+			service.borrowBook(102030, 6, 1, DateTime.Now);
+			service.borrowBook(102031, 7, 1, DateTime.Now);
+			service.borrowBook(102032, 8, 1, DateTime.Now);
+			service.borrowBook(102033, 9, 1, DateTime.Now);
+			service.borrowBook(102034, 10, 1, DateTime.Now);
+			service.borrowBook(102030, 11, 1, DateTime.Now);
+			service.borrowBook(102031, 12, 1, DateTime.Now);
+			service.borrowBook(102032, 13, 1, DateTime.Now);
+			service.borrowBook(102033, 14, 1, DateTime.Now);
+			service.borrowBook(102034, 15, 1, DateTime.Now);
+			Assert.AreEqual(service.GetAllEventsNumber(), 15);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(1), 0);
+
+			var ex = Assert.ThrowsException<InvalidOperationException>(() => service.borrowBook(102030, 11, 1, DateTime.Now));
+			Assert.AreSame(ex.Message, "The book is unavailable for borrowing.");
+		}
+
+		[TestMethod]
+		public void BorrowBookWrongReaderIdTest()
+		{
+			var ex = Assert.ThrowsException<System.Exception>(() => service.borrowBook(102035, 6, 1, DateTime.Now));
+			Assert.AreSame(ex.Message, "Reader with such ID does not exist");
+		}
+
+		[TestMethod]
+		public void BorrowBookWrongEventIdTest()
+		{
+			var ex = Assert.ThrowsException<System.Exception>(() => service.borrowBook(102031, 2, 1, DateTime.Now));
+			Assert.AreSame(ex.Message, "Event with such ID already exists");
+		}
+
+		[TestMethod]
+		public void ReturnBookTest()
+		{
+			service.borrowBook(102031, 6, 1, DateTime.Now);
+			Assert.AreEqual(service.GetReaderById(102031).AmountOfBooksBorrowed, 1);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(1), 9);
+
+			service.returnBook(102031, 7, 1, DateTime.Now);
+			Assert.AreEqual(service.GetReaderById(102031).AmountOfBooksBorrowed, 0);
+			Assert.AreEqual(service.GetAmountOfAvailableCopiesById(1), 10);
+		}
+		
+		[TestMethod]
+		public void ReturnBookNoCopiesTest()
+		{
+			var ex = Assert.ThrowsException<InvalidOperationException>(() => service.returnBook(102031, 6, 1, DateTime.Now));
+			Assert.AreSame(ex.Message, "You can not return books when you did not borrow.");
+		}
+		
+		[TestMethod]
+		public void ReturnBookWrongReaderIdTest()
+		{
+			var ex = Assert.ThrowsException<System.Exception>(() => service.returnBook(102035, 6, 1, DateTime.Now));
+			Assert.AreSame(ex.Message, "Reader with such ID does not exist");
+		}
+
+		[TestMethod]
+		public void ReturnBookWrongEventIdTest()
+		{
+			var ex = Assert.ThrowsException<System.Exception>(() => service.returnBook(102030, 2, 1, DateTime.Now));
+			Assert.AreSame(ex.Message, "Event with such ID already exists");
+		}
+	}
 }
 
 
