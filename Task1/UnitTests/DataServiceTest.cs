@@ -455,14 +455,14 @@ namespace UnitTests
 		[TestMethod]
 		public void ReturnBookWrongReaderIdTest()
 		{
-			var ex = Assert.ThrowsException<System.Exception>(() => service.returnBook(102035, 6, 1, DateTime.Now));
+			var ex = Assert.ThrowsException<Exception>(() => service.returnBook(102035, 6, 1, DateTime.Now));
 			Assert.AreSame(ex.Message, "Reader with such ID does not exist");
 		}
 
 		[TestMethod]
 		public void ReturnBookWrongEventIdTest()
 		{
-			var ex = Assert.ThrowsException<System.Exception>(() => service.returnBook(102030, 2, 1, DateTime.Now));
+			var ex = Assert.ThrowsException<Exception>(() => service.returnBook(102030, 2, 1, DateTime.Now));
 			Assert.AreSame(ex.Message, "Event with such ID already exists");
 		}
 
