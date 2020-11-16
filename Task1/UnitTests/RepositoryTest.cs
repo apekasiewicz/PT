@@ -57,7 +57,7 @@ namespace UnitTests
 			Assert.IsFalse(allReaders.Exists(r => r.Id == 5));
 		}
 
-		
+
 		[TestMethod]
 		[ExpectedException(typeof(System.Exception))]
 		public void AddReaderWithTheSameIdTest()
@@ -120,7 +120,7 @@ namespace UnitTests
 			var ex = Assert.ThrowsException<System.Exception>(() => repository.GetReaderById(20));
 			Assert.AreSame(ex.Message, "Reader with such ID does not exist");
 		}
-		
+
 
 		[TestMethod]
 		public void UpdateInfoAboutReaderTest()
@@ -160,7 +160,7 @@ namespace UnitTests
 			repository.DeleteBook(2);
 			Assert.AreEqual(repository.GetAllBooksNumber(), 1);
 		}
-		
+
 		[TestMethod]
 		public void GetAllBooksTest()
 		{
@@ -184,7 +184,7 @@ namespace UnitTests
 			Assert.IsTrue(allBooks.ContainsValue(book3));
 		}
 
-		
+
 		[TestMethod]
 		[ExpectedException(typeof(System.Exception))]
 		public void AddBookWithTheSameIdTest()
@@ -206,7 +206,7 @@ namespace UnitTests
 			Assert.AreEqual(repository.GetAllBooksNumber(), 2);
 		}
 
-		
+
 		[TestMethod]
 		public void GetBookByIdTest()
 		{
@@ -231,7 +231,7 @@ namespace UnitTests
 			Assert.AreNotEqual(returnedBook.Title, "A Game of Thrones");
 			Assert.AreNotEqual(returnedBook.Genre, BookGenre.Fantasy);
 		}
-		
+
 		[TestMethod]
 		public void GetNonExistingBookExcpetionTest()
 		{
@@ -249,7 +249,7 @@ namespace UnitTests
 
 			Assert.AreEqual(repository.GetBookById(1).PublishmentYear, 1996);
 			Assert.AreEqual(repository.GetBookById(2).PublishmentYear, 1298);
-			repository.UpdateBookInfo(newBookData); 
+			repository.UpdateBookInfo(newBookData);
 			Assert.AreEqual(repository.GetBookById(1).PublishmentYear, 1996);
 			Assert.AreEqual(repository.GetBookById(2).PublishmentYear, 1998);
 		}
@@ -257,17 +257,150 @@ namespace UnitTests
 		[TestMethod]
 		public void GetFirstBookByGenreTest()
 		{
-			repository.AddBook(new Book(5, "The Notebook", "Nicholas Sparks", 1997, BookGenre.Romance));
-			repository.AddBook(new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy));
+			repository.AddBook(new Book(1, "The Notebook", "Nicholas Sparks", 1997, BookGenre.Romance));
+			repository.AddBook(new Book(5, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy));
 			repository.AddBook(new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy));
 
 			Book returnedBook = repository.GetBookByGenre(BookGenre.Fantasy);
 
 			Assert.IsNotNull(returnedBook);
-			Assert.AreEqual(returnedBook.Id, 1);
+			Assert.AreEqual(returnedBook.Id, 5);
 			Assert.AreEqual(returnedBook.Title, "A Game of Thrones");
 			Assert.AreEqual(returnedBook.Genre, BookGenre.Fantasy);
 		}
 
+
+		//Test for states
+		[TestMethod]
+		public void AddNewBookToInventoryTest()
+		{
+			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
+			Book book2 = new Book(2, "The Notebook", "Nicholas Sparks", 1997, BookGenre.Romance);
+
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(1), 0);
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(2), 0);
+
+			repository.AddBookState(1, 6);
+			repository.AddBookState(2, 10);
+
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(1), 6);
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(2), 10);
+		}
+
+		[TestMethod]
+		public void DeleteBookFromInventoryTest()
+		{
+			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
+			Book book2 = new Book(2, "The Notebook", "Nicholas Sparks", 1997, BookGenre.Romance);
+
+			repository.AddBookState(1, 6);
+			repository.AddBookState(2, 10);
+			repository.DeleteBookstate(2);
+
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(1), 6);
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(2), 0);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(System.Exception))]
+		public void AddExistingBookToInventoryTest()
+		{
+			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
+
+			repository.AddBookState(1, 6);
+			repository.AddBookState(1, 10);
+
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(1), 6);
+		}
+
+		[TestMethod]
+		public void DeleteNonExistingBookFromInventoryTest()
+		{
+			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
+
+			repository.AddBookState(1, 6);
+			repository.DeleteBookstate(5);
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(5), 0);
+		}
+
+		[TestMethod]
+		public void GetAllStatesTest()
+		{
+			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
+			Book book2 = new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy);
+			Book book3 = new Book(3, "A Storm of Swords", "George R.R.Martin", 2000, BookGenre.Fantasy);
+
+			repository.AddBookState(1, 5);
+			repository.AddBookState(2, 4);
+			repository.AddBookState(3, 3);
+
+			Dictionary<int, int> allAvailableBooks = repository.GetAllStates();
+			Assert.AreEqual(allAvailableBooks.Count, 3);
+
+			Assert.IsTrue(allAvailableBooks.ContainsKey(1));
+			Assert.IsTrue(allAvailableBooks.ContainsKey(2));
+			Assert.IsTrue(allAvailableBooks.ContainsKey(3));
+
+			Assert.IsTrue(allAvailableBooks.ContainsValue(5));
+			Assert.IsTrue(allAvailableBooks.ContainsValue(4));
+			Assert.IsTrue(allAvailableBooks.ContainsValue(3));
+		}
+
+		[TestMethod]
+		public void UpdateBookStateTest()
+		{
+			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
+			Book book2 = new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy);
+			repository.AddBookState(1, 5);
+			repository.AddBookState(2, 4);
+
+			repository.UpdateBookState(1, 5);
+			repository.UpdateBookState(2, -2);
+
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(1), 10);
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(2), 2);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(System.Exception))]
+		public void UpdateBookStateBorrowedTooManyBooksTest()
+		{
+			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
+			Book book2 = new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy);
+			repository.AddBookState(1, 5);
+			repository.AddBookState(2, 4);
+
+			repository.UpdateBookState(2, -5);
+
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(2), 4);
+		}
+
+		[TestMethod]
+		public void UpdateBookStateNonExistingTest()
+		{
+			repository.UpdateBookState(5, 5);
+			Assert.AreEqual(repository.GetAmountOfAvailableCopiesById(5), 0);
+		}
+
+		[TestMethod]
+		public void GetStateTest()
+		{
+			Book book1 = new Book(1, "A Game of Thrones", "George R.R.Martin", 1996, BookGenre.Fantasy);
+			Book book2 = new Book(2, "A Clash of Kings", "George R.R.Martin", 1998, BookGenre.Fantasy);
+			Book book3 = new Book(3, "A Storm of Swords", "George R.R.Martin", 2000, BookGenre.Fantasy);
+
+			repository.AddBookState(1, 5);
+			repository.AddBookState(2, 4);
+			repository.AddBookState(3, 3);
+
+			Dictionary<int, int> allAvailableBooks = repository.GetAllStates();
+			Assert.AreEqual(repository.GetState().AvailableBooks, allAvailableBooks);
+		}
+
+
+		//Test for events
+
 	}
 }
+
+
