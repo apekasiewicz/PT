@@ -30,18 +30,18 @@ namespace Library.Data
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void Insertbook(book instance);
-    partial void Updatebook(book instance);
-    partial void Deletebook(book instance);
-    partial void Insertevent(@event instance);
-    partial void Updateevent(@event instance);
-    partial void Deleteevent(@event instance);
-    partial void Insertreader(reader instance);
-    partial void Updatereader(reader instance);
-    partial void Deletereader(reader instance);
-    partial void Insertstate(state instance);
-    partial void Updatestate(state instance);
-    partial void Deletestate(state instance);
+    partial void InsertBook(Book instance);
+    partial void UpdateBook(Book instance);
+    partial void DeleteBook(Book instance);
+    partial void InsertEvent(Event instance);
+    partial void UpdateEvent(Event instance);
+    partial void DeleteEvent(Event instance);
+    partial void InsertReader(Reader instance);
+    partial void UpdateReader(Reader instance);
+    partial void DeleteReader(Reader instance);
+    partial void InsertState(State instance);
+    partial void UpdateState(State instance);
+    partial void DeleteState(State instance);
     #endregion
 		
 		public LibraryDataContext() : 
@@ -74,41 +74,41 @@ namespace Library.Data
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<book> books
+		public System.Data.Linq.Table<Book> Books
 		{
 			get
 			{
-				return this.GetTable<book>();
+				return this.GetTable<Book>();
 			}
 		}
 		
-		public System.Data.Linq.Table<@event> events
+		public System.Data.Linq.Table<Event> Events
 		{
 			get
 			{
-				return this.GetTable<@event>();
+				return this.GetTable<Event>();
 			}
 		}
 		
-		public System.Data.Linq.Table<reader> readers
+		public System.Data.Linq.Table<Reader> Readers
 		{
 			get
 			{
-				return this.GetTable<reader>();
+				return this.GetTable<Reader>();
 			}
 		}
 		
-		public System.Data.Linq.Table<state> states
+		public System.Data.Linq.Table<State> States
 		{
 			get
 			{
-				return this.GetTable<state>();
+				return this.GetTable<State>();
 			}
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.book")]
-	public partial class book : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Book")]
+	public partial class Book : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -123,7 +123,7 @@ namespace Library.Data
 		
 		private string _genre;
 		
-		private EntitySet<state> _states;
+		private EntitySet<State> _States;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -141,13 +141,13 @@ namespace Library.Data
     partial void OngenreChanged();
     #endregion
 		
-		public book()
+		public Book()
 		{
-			this._states = new EntitySet<state>(new Action<state>(this.attach_states), new Action<state>(this.detach_states));
+			this._States = new EntitySet<State>(new Action<State>(this.attach_States), new Action<State>(this.detach_States));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_book_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_book_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int book_id
 		{
 			get
@@ -247,16 +247,16 @@ namespace Library.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="book_state", Storage="_states", ThisKey="book_id", OtherKey="book")]
-		public EntitySet<state> states
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Book_State", Storage="_States", ThisKey="book_id", OtherKey="book")]
+		public EntitySet<State> States
 		{
 			get
 			{
-				return this._states;
+				return this._States;
 			}
 			set
 			{
-				this._states.Assign(value);
+				this._States.Assign(value);
 			}
 		}
 		
@@ -280,21 +280,21 @@ namespace Library.Data
 			}
 		}
 		
-		private void attach_states(state entity)
+		private void attach_States(State entity)
 		{
 			this.SendPropertyChanging();
-			entity.book1 = this;
+			entity.Book1 = this;
 		}
 		
-		private void detach_states(state entity)
+		private void detach_States(State entity)
 		{
 			this.SendPropertyChanging();
-			entity.book1 = null;
+			entity.Book1 = null;
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.event")]
-	public partial class @event : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Event")]
+	public partial class Event : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -309,9 +309,9 @@ namespace Library.Data
 		
 		private int _reader;
 		
-		private EntityRef<reader> _reader1;
+		private EntityRef<Reader> _Reader1;
 		
-		private EntityRef<state> _state1;
+		private EntityRef<State> _State1;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -329,14 +329,14 @@ namespace Library.Data
     partial void OnreaderChanged();
     #endregion
 		
-		public @event()
+		public Event()
 		{
-			this._reader1 = default(EntityRef<reader>);
-			this._state1 = default(EntityRef<state>);
+			this._Reader1 = default(EntityRef<Reader>);
+			this._State1 = default(EntityRef<State>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_event_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_event_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int event_id
 		{
 			get
@@ -407,7 +407,7 @@ namespace Library.Data
 			{
 				if ((this._state != value))
 				{
-					if (this._state1.HasLoadedOrAssignedValue)
+					if (this._State1.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -431,7 +431,7 @@ namespace Library.Data
 			{
 				if ((this._reader != value))
 				{
-					if (this._reader1.HasLoadedOrAssignedValue)
+					if (this._Reader1.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -444,70 +444,70 @@ namespace Library.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="reader_event", Storage="_reader1", ThisKey="reader", OtherKey="reader_id", IsForeignKey=true)]
-		public reader reader1
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Reader_Event", Storage="_Reader1", ThisKey="reader", OtherKey="reader_id", IsForeignKey=true)]
+		public Reader Reader1
 		{
 			get
 			{
-				return this._reader1.Entity;
+				return this._Reader1.Entity;
 			}
 			set
 			{
-				reader previousValue = this._reader1.Entity;
+				Reader previousValue = this._Reader1.Entity;
 				if (((previousValue != value) 
-							|| (this._reader1.HasLoadedOrAssignedValue == false)))
+							|| (this._Reader1.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._reader1.Entity = null;
-						previousValue.events.Remove(this);
+						this._Reader1.Entity = null;
+						previousValue.Events.Remove(this);
 					}
-					this._reader1.Entity = value;
+					this._Reader1.Entity = value;
 					if ((value != null))
 					{
-						value.events.Add(this);
+						value.Events.Add(this);
 						this._reader = value.reader_id;
 					}
 					else
 					{
 						this._reader = default(int);
 					}
-					this.SendPropertyChanged("reader1");
+					this.SendPropertyChanged("Reader1");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="state_event", Storage="_state1", ThisKey="state", OtherKey="state_id", IsForeignKey=true)]
-		public state state1
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="State_Event", Storage="_State1", ThisKey="state", OtherKey="state_id", IsForeignKey=true)]
+		public State State1
 		{
 			get
 			{
-				return this._state1.Entity;
+				return this._State1.Entity;
 			}
 			set
 			{
-				state previousValue = this._state1.Entity;
+				State previousValue = this._State1.Entity;
 				if (((previousValue != value) 
-							|| (this._state1.HasLoadedOrAssignedValue == false)))
+							|| (this._State1.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._state1.Entity = null;
-						previousValue.events.Remove(this);
+						this._State1.Entity = null;
+						previousValue.Events.Remove(this);
 					}
-					this._state1.Entity = value;
+					this._State1.Entity = value;
 					if ((value != null))
 					{
-						value.events.Add(this);
+						value.Events.Add(this);
 						this._state = value.state_id;
 					}
 					else
 					{
 						this._state = default(int);
 					}
-					this.SendPropertyChanged("state1");
+					this.SendPropertyChanged("State1");
 				}
 			}
 		}
@@ -533,8 +533,8 @@ namespace Library.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.reader")]
-	public partial class reader : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Reader")]
+	public partial class Reader : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -545,7 +545,7 @@ namespace Library.Data
 		
 		private string _reader_l_name;
 		
-		private EntitySet<@event> _events;
+		private EntitySet<Event> _Events;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -559,13 +559,13 @@ namespace Library.Data
     partial void Onreader_l_nameChanged();
     #endregion
 		
-		public reader()
+		public Reader()
 		{
-			this._events = new EntitySet<@event>(new Action<@event>(this.attach_events), new Action<@event>(this.detach_events));
+			this._Events = new EntitySet<Event>(new Action<Event>(this.attach_Events), new Action<Event>(this.detach_Events));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_reader_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_reader_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int reader_id
 		{
 			get
@@ -625,16 +625,16 @@ namespace Library.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="reader_event", Storage="_events", ThisKey="reader_id", OtherKey="reader")]
-		public EntitySet<@event> events
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Reader_Event", Storage="_Events", ThisKey="reader_id", OtherKey="reader")]
+		public EntitySet<Event> Events
 		{
 			get
 			{
-				return this._events;
+				return this._Events;
 			}
 			set
 			{
-				this._events.Assign(value);
+				this._Events.Assign(value);
 			}
 		}
 		
@@ -658,21 +658,21 @@ namespace Library.Data
 			}
 		}
 		
-		private void attach_events(@event entity)
+		private void attach_Events(Event entity)
 		{
 			this.SendPropertyChanging();
-			entity.reader1 = this;
+			entity.Reader1 = this;
 		}
 		
-		private void detach_events(@event entity)
+		private void detach_Events(Event entity)
 		{
 			this.SendPropertyChanging();
-			entity.reader1 = null;
+			entity.Reader1 = null;
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.state")]
-	public partial class state : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.State")]
+	public partial class State : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -683,9 +683,9 @@ namespace Library.Data
 		
 		private int _book;
 		
-		private EntitySet<@event> _events;
+		private EntitySet<Event> _Events;
 		
-		private EntityRef<book> _book1;
+		private EntityRef<Book> _Book1;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -699,14 +699,14 @@ namespace Library.Data
     partial void OnbookChanged();
     #endregion
 		
-		public state()
+		public State()
 		{
-			this._events = new EntitySet<@event>(new Action<@event>(this.attach_events), new Action<@event>(this.detach_events));
-			this._book1 = default(EntityRef<book>);
+			this._Events = new EntitySet<Event>(new Action<Event>(this.attach_Events), new Action<Event>(this.detach_Events));
+			this._Book1 = default(EntityRef<Book>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_state_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_state_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int state_id
 		{
 			get
@@ -757,7 +757,7 @@ namespace Library.Data
 			{
 				if ((this._book != value))
 				{
-					if (this._book1.HasLoadedOrAssignedValue)
+					if (this._Book1.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -770,49 +770,49 @@ namespace Library.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="state_event", Storage="_events", ThisKey="state_id", OtherKey="state")]
-		public EntitySet<@event> events
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="State_Event", Storage="_Events", ThisKey="state_id", OtherKey="state")]
+		public EntitySet<Event> Events
 		{
 			get
 			{
-				return this._events;
+				return this._Events;
 			}
 			set
 			{
-				this._events.Assign(value);
+				this._Events.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="book_state", Storage="_book1", ThisKey="book", OtherKey="book_id", IsForeignKey=true)]
-		public book book1
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Book_State", Storage="_Book1", ThisKey="book", OtherKey="book_id", IsForeignKey=true)]
+		public Book Book1
 		{
 			get
 			{
-				return this._book1.Entity;
+				return this._Book1.Entity;
 			}
 			set
 			{
-				book previousValue = this._book1.Entity;
+				Book previousValue = this._Book1.Entity;
 				if (((previousValue != value) 
-							|| (this._book1.HasLoadedOrAssignedValue == false)))
+							|| (this._Book1.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._book1.Entity = null;
-						previousValue.states.Remove(this);
+						this._Book1.Entity = null;
+						previousValue.States.Remove(this);
 					}
-					this._book1.Entity = value;
+					this._Book1.Entity = value;
 					if ((value != null))
 					{
-						value.states.Add(this);
+						value.States.Add(this);
 						this._book = value.book_id;
 					}
 					else
 					{
 						this._book = default(int);
 					}
-					this.SendPropertyChanged("book1");
+					this.SendPropertyChanged("Book1");
 				}
 			}
 		}
@@ -837,16 +837,16 @@ namespace Library.Data
 			}
 		}
 		
-		private void attach_events(@event entity)
+		private void attach_Events(Event entity)
 		{
 			this.SendPropertyChanging();
-			entity.state1 = this;
+			entity.State1 = this;
 		}
 		
-		private void detach_events(@event entity)
+		private void detach_Events(Event entity)
 		{
 			this.SendPropertyChanging();
-			entity.state1 = null;
+			entity.State1 = null;
 		}
 	}
 }
