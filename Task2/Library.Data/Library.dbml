@@ -1,1 +1,41 @@
-﻿
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="library" Class="LibraryDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-ID9HRR5;Initial Catalog=library;Integrated Security=True" SettingsObjectName="Library.Data.Properties.Settings" SettingsPropertyName="libraryConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.book" Member="books">
+    <Type Name="book">
+      <Column Name="book_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="author" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="publishment_year" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="genre" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Association Name="book_state" Member="states" ThisKey="book_id" OtherKey="book" Type="state" />
+    </Type>
+  </Table>
+  <Table Name="dbo.event" Member="events">
+    <Type Name="event">
+      <Column Name="event_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="event_time" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="is_borrowing_event" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="state" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="reader" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="reader_event" Member="reader1" ThisKey="reader" OtherKey="reader_id" Type="reader" IsForeignKey="true" />
+      <Association Name="state_event" Member="state1" ThisKey="state" OtherKey="state_id" Type="state" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.reader" Member="readers">
+    <Type Name="reader">
+      <Column Name="reader_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="reader_f_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="reader_l_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="reader_event" Member="events" ThisKey="reader_id" OtherKey="reader" Type="event" />
+    </Type>
+  </Table>
+  <Table Name="dbo.state" Member="states">
+    <Type Name="state">
+      <Column Name="state_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="is_borrowed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="book" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="state_event" Member="events" ThisKey="state_id" OtherKey="state" Type="event" />
+      <Association Name="book_state" Member="book1" ThisKey="book" OtherKey="book_id" Type="book" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
