@@ -6,17 +6,12 @@ namespace Library.Services
 {
     public class BookService
     {
-        /*private LibraryDataContext context = new LibraryDataContext();
+        private LibraryDataContext context = new LibraryDataContext();
 
         public List<Book> GetAllBooks()
         {
-           
+            return new List<Book>(context.Books);
         }
-
-        public int GetAllBooksNumber()
-        {
-            Book book = context.Books.Where(p => p.id == _id).First();
-        }*/
 
         /*Dictionary<int, Book> GetAllBooks();
         int GetAllBooksNumber();
