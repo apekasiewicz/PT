@@ -40,19 +40,12 @@ namespace Library.Services
             }
         }
 
-        // ReaderService can be maybe used? - code repetition
+        // ReaderService can be maybe used? 
         public IEnumerable<Event> GetEventsForReaderByName(string fName, string lName)
         {
             using (var context = new LibraryDataContext())
             {
-                Reader reader = new Reader();
-                foreach (Reader r in context.Readers.ToList())
-                {
-                    if (r.reader_f_name.Equals(fName) && r.reader_l_name.Equals(lName))
-                    {
-                        reader = r;
-                    }
-                }
+                Reader reader = context.Readers.SingleOrDefault(r => r.reader_f_name.Equals(fName) && r.reader_l_name.Equals(lName));
 
                 List<Event> result = new List<Event>();
                 foreach (Event e in context.Events.ToList())
@@ -82,19 +75,12 @@ namespace Library.Services
             }
         }
 
-        // BookService can be maybe used? - code repetition
+        // BookService can be maybe used? 
         public IEnumerable<Event> GetEventsForBookByTitle(string title)
         {
             using (var context = new LibraryDataContext())
             {
-                Book book = new Book();
-                foreach (Book b in context.Books.ToList())
-                {
-                    if (b.title.Equals(title))
-                    {
-                        book = b;
-                    }
-                }
+                Book book = context.Books.SingleOrDefault(b => b.title.Equals(title));
 
                 List<Event> result = new List<Event>();
                 foreach (Event e in context.Events.ToList())
@@ -162,8 +148,8 @@ namespace Library.Services
         {
             using (var context = new LibraryDataContext())
             {
-                if (context.Readers.FirstOrDefault(r => r.reader_id.Equals(readerId)) != null &&
-                        context.Books.FirstOrDefault(b => b.book_id.Equals(bookId)) != null )
+                if (context.Readers.SingleOrDefault(r => r.reader_id.Equals(readerId)) != null &&
+                        context.Books.SingleOrDefault(b => b.book_id.Equals(bookId)) != null )
                 {
                     Event newEvent = new Event
                     {

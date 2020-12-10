@@ -58,7 +58,7 @@ namespace Library.Services
         {
             using (var context = new LibraryDataContext())
             {
-                if (GetBook(t, a) == null && q >= 0) //if the book doesn't already exist in the db or quantity is not negative
+                if (GetBook(t, a) == null && q >= 0) //if the book doesn't already exist in the db and quantity is not negative
                 {
                     Book newBook = new Book
                     {
