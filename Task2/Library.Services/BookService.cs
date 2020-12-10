@@ -54,18 +54,19 @@ namespace Library.Services
             }
         } 
 
-        public bool AddBook(string a, string t, int year, string g)
+        public bool AddBook(string a, string t, int year, string g, int q)
         {
             using (var context = new LibraryDataContext())
             {
-                if (GetBook(t, a) == null) //if the book doesn't already exist in the db
+                if (GetBook(t, a) == null || q >= 0) //if the book doesn't already exist in the db or quantity is not negative
                 {
                     Book newBook = new Book
                     {
                         author = a,
                         title = t,
                         publishment_year = year,
-                        genre = g
+                        genre = g,
+                        quantity = q
                     };
                     context.Books.InsertOnSubmit(newBook);  //add to collection
                     context.SubmitChanges();    //add to db
@@ -123,22 +124,29 @@ namespace Library.Services
             }
         }
 
+        public bool UpdateBookQuantity(int _id, int q)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                if (q >= 0)
+                {
+                    Book book = context.Books.SingleOrDefault(i => i.book_id == _id);
+                    book.quantity = q;
+                    context.SubmitChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
         public bool DeleteBook(int _id)
         {
             using (var context = new LibraryDataContext())
             {
                 Book book = context.Books.SingleOrDefault(i => i.book_id == _id);
-                //State bookState = context.States.SingleOrDefault(i => i.book == _id);
-                //if (!bookState.is_borrowed) //the book is not borrowed 
-                //{
-                    context.Books.DeleteOnSubmit(book);
-                    context.SubmitChanges();
-                    return true;
-                //}
-                /*else
-                {
-                    throw new System.Exception("A borrowed book cannot be deleted!");
-                }*/
+                context.Books.DeleteOnSubmit(book);
+                context.SubmitChanges();
+                return true;
             }
         }
     }

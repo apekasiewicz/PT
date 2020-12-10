@@ -44,7 +44,7 @@ namespace DataTest
         }
 
 
-        [TestMethod]
+        /*[TestMethod]
         public void SelectBookFromDatabase()
         {
             LibraryDataContext db = new LibraryDataContext();
@@ -54,7 +54,7 @@ namespace DataTest
             Assert.AreEqual(book.author, "J.K. Rowling");
             Assert.AreEqual(book.publishment_year, 1997);
             Assert.AreEqual(book.genre, "Fantasy");
-        }
+        }*/
 
         [TestMethod]
         public void SelectBookWhichNotExistsFromDatabase()

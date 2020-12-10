@@ -30,18 +30,15 @@ namespace Library.Data
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertReader(Reader instance);
+    partial void UpdateReader(Reader instance);
+    partial void DeleteReader(Reader instance);
     partial void InsertBook(Book instance);
     partial void UpdateBook(Book instance);
     partial void DeleteBook(Book instance);
     partial void InsertEvent(Event instance);
     partial void UpdateEvent(Event instance);
     partial void DeleteEvent(Event instance);
-    partial void InsertReader(Reader instance);
-    partial void UpdateReader(Reader instance);
-    partial void DeleteReader(Reader instance);
-    partial void InsertState(State instance);
-    partial void UpdateState(State instance);
-    partial void DeleteState(State instance);
     #endregion
 		
 		public LibraryDataContext() : 
@@ -74,6 +71,14 @@ namespace Library.Data
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<Reader> Readers
+		{
+			get
+			{
+				return this.GetTable<Reader>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Book> Books
 		{
 			get
@@ -87,448 +92,6 @@ namespace Library.Data
 			get
 			{
 				return this.GetTable<Event>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Reader> Readers
-		{
-			get
-			{
-				return this.GetTable<Reader>();
-			}
-		}
-		
-		public System.Data.Linq.Table<State> States
-		{
-			get
-			{
-				return this.GetTable<State>();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Book")]
-	public partial class Book : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _book_id;
-		
-		private string _author;
-		
-		private string _title;
-		
-		private System.Nullable<int> _publishment_year;
-		
-		private string _genre;
-		
-		private EntitySet<State> _States;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onbook_idChanging(int value);
-    partial void Onbook_idChanged();
-    partial void OnauthorChanging(string value);
-    partial void OnauthorChanged();
-    partial void OntitleChanging(string value);
-    partial void OntitleChanged();
-    partial void Onpublishment_yearChanging(System.Nullable<int> value);
-    partial void Onpublishment_yearChanged();
-    partial void OngenreChanging(string value);
-    partial void OngenreChanged();
-    #endregion
-		
-		public Book()
-		{
-			this._States = new EntitySet<State>(new Action<State>(this.attach_States), new Action<State>(this.detach_States));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_book_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int book_id
-		{
-			get
-			{
-				return this._book_id;
-			}
-			set
-			{
-				if ((this._book_id != value))
-				{
-					this.Onbook_idChanging(value);
-					this.SendPropertyChanging();
-					this._book_id = value;
-					this.SendPropertyChanged("book_id");
-					this.Onbook_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_author", DbType="VarChar(50)")]
-		public string author
-		{
-			get
-			{
-				return this._author;
-			}
-			set
-			{
-				if ((this._author != value))
-				{
-					this.OnauthorChanging(value);
-					this.SendPropertyChanging();
-					this._author = value;
-					this.SendPropertyChanged("author");
-					this.OnauthorChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_title", DbType="VarChar(50)")]
-		public string title
-		{
-			get
-			{
-				return this._title;
-			}
-			set
-			{
-				if ((this._title != value))
-				{
-					this.OntitleChanging(value);
-					this.SendPropertyChanging();
-					this._title = value;
-					this.SendPropertyChanged("title");
-					this.OntitleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_publishment_year", DbType="Int")]
-		public System.Nullable<int> publishment_year
-		{
-			get
-			{
-				return this._publishment_year;
-			}
-			set
-			{
-				if ((this._publishment_year != value))
-				{
-					this.Onpublishment_yearChanging(value);
-					this.SendPropertyChanging();
-					this._publishment_year = value;
-					this.SendPropertyChanged("publishment_year");
-					this.Onpublishment_yearChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_genre", DbType="VarChar(30)")]
-		public string genre
-		{
-			get
-			{
-				return this._genre;
-			}
-			set
-			{
-				if ((this._genre != value))
-				{
-					this.OngenreChanging(value);
-					this.SendPropertyChanging();
-					this._genre = value;
-					this.SendPropertyChanged("genre");
-					this.OngenreChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Book_State", Storage="_States", ThisKey="book_id", OtherKey="book")]
-		public EntitySet<State> States
-		{
-			get
-			{
-				return this._States;
-			}
-			set
-			{
-				this._States.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_States(State entity)
-		{
-			this.SendPropertyChanging();
-			entity.Book1 = this;
-		}
-		
-		private void detach_States(State entity)
-		{
-			this.SendPropertyChanging();
-			entity.Book1 = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Event")]
-	public partial class Event : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _event_id;
-		
-		private System.DateTime _event_time;
-		
-		private bool _is_borrowing_event;
-		
-		private int _state;
-		
-		private int _reader;
-		
-		private EntityRef<Reader> _Reader1;
-		
-		private EntityRef<State> _State1;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onevent_idChanging(int value);
-    partial void Onevent_idChanged();
-    partial void Onevent_timeChanging(System.DateTime value);
-    partial void Onevent_timeChanged();
-    partial void Onis_borrowing_eventChanging(bool value);
-    partial void Onis_borrowing_eventChanged();
-    partial void OnstateChanging(int value);
-    partial void OnstateChanged();
-    partial void OnreaderChanging(int value);
-    partial void OnreaderChanged();
-    #endregion
-		
-		public Event()
-		{
-			this._Reader1 = default(EntityRef<Reader>);
-			this._State1 = default(EntityRef<State>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_event_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int event_id
-		{
-			get
-			{
-				return this._event_id;
-			}
-			set
-			{
-				if ((this._event_id != value))
-				{
-					this.Onevent_idChanging(value);
-					this.SendPropertyChanging();
-					this._event_id = value;
-					this.SendPropertyChanged("event_id");
-					this.Onevent_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_event_time", DbType="Date NOT NULL")]
-		public System.DateTime event_time
-		{
-			get
-			{
-				return this._event_time;
-			}
-			set
-			{
-				if ((this._event_time != value))
-				{
-					this.Onevent_timeChanging(value);
-					this.SendPropertyChanging();
-					this._event_time = value;
-					this.SendPropertyChanged("event_time");
-					this.Onevent_timeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_borrowing_event", DbType="Bit NOT NULL")]
-		public bool is_borrowing_event
-		{
-			get
-			{
-				return this._is_borrowing_event;
-			}
-			set
-			{
-				if ((this._is_borrowing_event != value))
-				{
-					this.Onis_borrowing_eventChanging(value);
-					this.SendPropertyChanging();
-					this._is_borrowing_event = value;
-					this.SendPropertyChanged("is_borrowing_event");
-					this.Onis_borrowing_eventChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_state", DbType="Int NOT NULL")]
-		public int state
-		{
-			get
-			{
-				return this._state;
-			}
-			set
-			{
-				if ((this._state != value))
-				{
-					if (this._State1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnstateChanging(value);
-					this.SendPropertyChanging();
-					this._state = value;
-					this.SendPropertyChanged("state");
-					this.OnstateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_reader", DbType="Int NOT NULL")]
-		public int reader
-		{
-			get
-			{
-				return this._reader;
-			}
-			set
-			{
-				if ((this._reader != value))
-				{
-					if (this._Reader1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnreaderChanging(value);
-					this.SendPropertyChanging();
-					this._reader = value;
-					this.SendPropertyChanged("reader");
-					this.OnreaderChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Reader_Event", Storage="_Reader1", ThisKey="reader", OtherKey="reader_id", IsForeignKey=true)]
-		public Reader Reader1
-		{
-			get
-			{
-				return this._Reader1.Entity;
-			}
-			set
-			{
-				Reader previousValue = this._Reader1.Entity;
-				if (((previousValue != value) 
-							|| (this._Reader1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Reader1.Entity = null;
-						previousValue.Events.Remove(this);
-					}
-					this._Reader1.Entity = value;
-					if ((value != null))
-					{
-						value.Events.Add(this);
-						this._reader = value.reader_id;
-					}
-					else
-					{
-						this._reader = default(int);
-					}
-					this.SendPropertyChanged("Reader1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="State_Event", Storage="_State1", ThisKey="state", OtherKey="state_id", IsForeignKey=true)]
-		public State State1
-		{
-			get
-			{
-				return this._State1.Entity;
-			}
-			set
-			{
-				State previousValue = this._State1.Entity;
-				if (((previousValue != value) 
-							|| (this._State1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._State1.Entity = null;
-						previousValue.Events.Remove(this);
-					}
-					this._State1.Entity = value;
-					if ((value != null))
-					{
-						value.Events.Add(this);
-						this._state = value.state_id;
-					}
-					else
-					{
-						this._state = default(int);
-					}
-					this.SendPropertyChanged("State1");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -671,77 +234,315 @@ namespace Library.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.State")]
-	public partial class State : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Book")]
+	public partial class Book : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _state_id;
+		private int _book_id;
 		
-		private bool _is_borrowed;
+		private string _author;
 		
-		private int _book;
+		private string _title;
+		
+		private System.Nullable<int> _publishment_year;
+		
+		private string _genre;
+		
+		private System.Nullable<int> _quantity;
 		
 		private EntitySet<Event> _Events;
-		
-		private EntityRef<Book> _Book1;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void Onstate_idChanging(int value);
-    partial void Onstate_idChanged();
-    partial void Onis_borrowedChanging(bool value);
-    partial void Onis_borrowedChanged();
-    partial void OnbookChanging(int value);
-    partial void OnbookChanged();
+    partial void Onbook_idChanging(int value);
+    partial void Onbook_idChanged();
+    partial void OnauthorChanging(string value);
+    partial void OnauthorChanged();
+    partial void OntitleChanging(string value);
+    partial void OntitleChanged();
+    partial void Onpublishment_yearChanging(System.Nullable<int> value);
+    partial void Onpublishment_yearChanged();
+    partial void OngenreChanging(string value);
+    partial void OngenreChanged();
+    partial void OnquantityChanging(System.Nullable<int> value);
+    partial void OnquantityChanged();
     #endregion
 		
-		public State()
+		public Book()
 		{
 			this._Events = new EntitySet<Event>(new Action<Event>(this.attach_Events), new Action<Event>(this.detach_Events));
-			this._Book1 = default(EntityRef<Book>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_state_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int state_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_book_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int book_id
 		{
 			get
 			{
-				return this._state_id;
+				return this._book_id;
 			}
 			set
 			{
-				if ((this._state_id != value))
+				if ((this._book_id != value))
 				{
-					this.Onstate_idChanging(value);
+					this.Onbook_idChanging(value);
 					this.SendPropertyChanging();
-					this._state_id = value;
-					this.SendPropertyChanged("state_id");
-					this.Onstate_idChanged();
+					this._book_id = value;
+					this.SendPropertyChanged("book_id");
+					this.Onbook_idChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_borrowed", DbType="Bit NOT NULL")]
-		public bool is_borrowed
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_author", DbType="VarChar(50)")]
+		public string author
 		{
 			get
 			{
-				return this._is_borrowed;
+				return this._author;
 			}
 			set
 			{
-				if ((this._is_borrowed != value))
+				if ((this._author != value))
 				{
-					this.Onis_borrowedChanging(value);
+					this.OnauthorChanging(value);
 					this.SendPropertyChanging();
-					this._is_borrowed = value;
-					this.SendPropertyChanged("is_borrowed");
-					this.Onis_borrowedChanged();
+					this._author = value;
+					this.SendPropertyChanged("author");
+					this.OnauthorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_title", DbType="VarChar(50)")]
+		public string title
+		{
+			get
+			{
+				return this._title;
+			}
+			set
+			{
+				if ((this._title != value))
+				{
+					this.OntitleChanging(value);
+					this.SendPropertyChanging();
+					this._title = value;
+					this.SendPropertyChanged("title");
+					this.OntitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_publishment_year", DbType="Int")]
+		public System.Nullable<int> publishment_year
+		{
+			get
+			{
+				return this._publishment_year;
+			}
+			set
+			{
+				if ((this._publishment_year != value))
+				{
+					this.Onpublishment_yearChanging(value);
+					this.SendPropertyChanging();
+					this._publishment_year = value;
+					this.SendPropertyChanged("publishment_year");
+					this.Onpublishment_yearChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_genre", DbType="VarChar(30)")]
+		public string genre
+		{
+			get
+			{
+				return this._genre;
+			}
+			set
+			{
+				if ((this._genre != value))
+				{
+					this.OngenreChanging(value);
+					this.SendPropertyChanging();
+					this._genre = value;
+					this.SendPropertyChanged("genre");
+					this.OngenreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantity", DbType="Int")]
+		public System.Nullable<int> quantity
+		{
+			get
+			{
+				return this._quantity;
+			}
+			set
+			{
+				if ((this._quantity != value))
+				{
+					this.OnquantityChanging(value);
+					this.SendPropertyChanging();
+					this._quantity = value;
+					this.SendPropertyChanged("quantity");
+					this.OnquantityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Book_Event", Storage="_Events", ThisKey="book_id", OtherKey="book")]
+		public EntitySet<Event> Events
+		{
+			get
+			{
+				return this._Events;
+			}
+			set
+			{
+				this._Events.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Events(Event entity)
+		{
+			this.SendPropertyChanging();
+			entity.Book1 = this;
+		}
+		
+		private void detach_Events(Event entity)
+		{
+			this.SendPropertyChanging();
+			entity.Book1 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Event")]
+	public partial class Event : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _event_id;
+		
+		private System.DateTime _event_time;
+		
+		private bool _is_borrowing_event;
+		
+		private int _book;
+		
+		private int _reader;
+		
+		private EntityRef<Book> _Book1;
+		
+		private EntityRef<Reader> _Reader1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onevent_idChanging(int value);
+    partial void Onevent_idChanged();
+    partial void Onevent_timeChanging(System.DateTime value);
+    partial void Onevent_timeChanged();
+    partial void Onis_borrowing_eventChanging(bool value);
+    partial void Onis_borrowing_eventChanged();
+    partial void OnbookChanging(int value);
+    partial void OnbookChanged();
+    partial void OnreaderChanging(int value);
+    partial void OnreaderChanged();
+    #endregion
+		
+		public Event()
+		{
+			this._Book1 = default(EntityRef<Book>);
+			this._Reader1 = default(EntityRef<Reader>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_event_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int event_id
+		{
+			get
+			{
+				return this._event_id;
+			}
+			set
+			{
+				if ((this._event_id != value))
+				{
+					this.Onevent_idChanging(value);
+					this.SendPropertyChanging();
+					this._event_id = value;
+					this.SendPropertyChanged("event_id");
+					this.Onevent_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_event_time", DbType="Date NOT NULL")]
+		public System.DateTime event_time
+		{
+			get
+			{
+				return this._event_time;
+			}
+			set
+			{
+				if ((this._event_time != value))
+				{
+					this.Onevent_timeChanging(value);
+					this.SendPropertyChanging();
+					this._event_time = value;
+					this.SendPropertyChanged("event_time");
+					this.Onevent_timeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_borrowing_event", DbType="Bit NOT NULL")]
+		public bool is_borrowing_event
+		{
+			get
+			{
+				return this._is_borrowing_event;
+			}
+			set
+			{
+				if ((this._is_borrowing_event != value))
+				{
+					this.Onis_borrowing_eventChanging(value);
+					this.SendPropertyChanging();
+					this._is_borrowing_event = value;
+					this.SendPropertyChanged("is_borrowing_event");
+					this.Onis_borrowing_eventChanged();
 				}
 			}
 		}
@@ -770,20 +571,31 @@ namespace Library.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="State_Event", Storage="_Events", ThisKey="state_id", OtherKey="state")]
-		public EntitySet<Event> Events
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_reader", DbType="Int NOT NULL")]
+		public int reader
 		{
 			get
 			{
-				return this._Events;
+				return this._reader;
 			}
 			set
 			{
-				this._Events.Assign(value);
+				if ((this._reader != value))
+				{
+					if (this._Reader1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnreaderChanging(value);
+					this.SendPropertyChanging();
+					this._reader = value;
+					this.SendPropertyChanged("reader");
+					this.OnreaderChanged();
+				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Book_State", Storage="_Book1", ThisKey="book", OtherKey="book_id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Book_Event", Storage="_Book1", ThisKey="book", OtherKey="book_id", IsForeignKey=true)]
 		public Book Book1
 		{
 			get
@@ -800,12 +612,12 @@ namespace Library.Data
 					if ((previousValue != null))
 					{
 						this._Book1.Entity = null;
-						previousValue.States.Remove(this);
+						previousValue.Events.Remove(this);
 					}
 					this._Book1.Entity = value;
 					if ((value != null))
 					{
-						value.States.Add(this);
+						value.Events.Add(this);
 						this._book = value.book_id;
 					}
 					else
@@ -813,6 +625,40 @@ namespace Library.Data
 						this._book = default(int);
 					}
 					this.SendPropertyChanged("Book1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Reader_Event", Storage="_Reader1", ThisKey="reader", OtherKey="reader_id", IsForeignKey=true)]
+		public Reader Reader1
+		{
+			get
+			{
+				return this._Reader1.Entity;
+			}
+			set
+			{
+				Reader previousValue = this._Reader1.Entity;
+				if (((previousValue != value) 
+							|| (this._Reader1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Reader1.Entity = null;
+						previousValue.Events.Remove(this);
+					}
+					this._Reader1.Entity = value;
+					if ((value != null))
+					{
+						value.Events.Add(this);
+						this._reader = value.reader_id;
+					}
+					else
+					{
+						this._reader = default(int);
+					}
+					this.SendPropertyChanged("Reader1");
 				}
 			}
 		}
@@ -835,18 +681,6 @@ namespace Library.Data
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Events(Event entity)
-		{
-			this.SendPropertyChanging();
-			entity.State1 = this;
-		}
-		
-		private void detach_Events(Event entity)
-		{
-			this.SendPropertyChanging();
-			entity.State1 = null;
 		}
 	}
 }
