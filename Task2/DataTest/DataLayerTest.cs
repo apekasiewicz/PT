@@ -32,11 +32,9 @@ namespace DataTest
         }
 
 
-
         [TestMethod]
         public void AddBookToDatabase()
         {
-
             LibraryDataContext db = new LibraryDataContext();
 
             Book book1 = new Book();
