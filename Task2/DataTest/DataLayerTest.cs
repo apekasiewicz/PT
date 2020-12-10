@@ -65,7 +65,7 @@ namespace DataTest
             Assert.IsNull(book);
         }
 
-/*
+
         [TestMethod]
         [ExpectedException(typeof(System.Data.SqlClient.SqlException))]
         public void ConnectingToNonExsistingDB()
@@ -83,7 +83,5 @@ namespace DataTest
                 fakeDB.SubmitChanges();
             }
         }
-
-       */
     }
 }
