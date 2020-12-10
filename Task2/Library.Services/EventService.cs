@@ -157,8 +157,61 @@ namespace Library.Services
             }
         }
 
+        
+        public bool AddEvent(DateTime time, bool isBorrowingEvent, int bookId, int readerId)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                if (context.Readers.FirstOrDefault(r => r.reader_id.Equals(readerId)) != null &&
+                        context.Books.FirstOrDefault(b => b.book_id.Equals(bookId)) != null )
+                {
+                    Event newEvent = new Event
+                    {
+                        event_time = time,
+                        is_borrowing_event = isBorrowingEvent,
+                        book = bookId,
+                        reader = readerId
+                    };
+                    context.Events.InsertOnSubmit(newEvent);
+                    context.SubmitChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
 
-    
+        public bool DeleteEvent(int id)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                Event ev = context.Events.SingleOrDefault(e => e.event_id == id);
+                context.Events.DeleteOnSubmit(ev);
+                context.SubmitChanges();
+                return true;
+            }
+        }
 
+        
+        public bool UpdateEventTime(int id, DateTime time)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                Event ev = context.Events.SingleOrDefault(e => e.event_id == id);
+                ev.event_time = time;
+                context.SubmitChanges();
+                return true;
+            }
+        }
+
+        public bool UpdateEventType(int id)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                Event ev = context.Events.SingleOrDefault(e => e.event_id == id);
+                ev.is_borrowing_event = !ev.is_borrowing_event;
+                context.SubmitChanges();
+                return true;
+            }
+        }
     }
 }
