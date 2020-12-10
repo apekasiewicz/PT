@@ -1,14 +1,15 @@
-﻿using Library.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Library.Data;
 using System.Linq;
+//using System.Data.SqlClient;
 
 namespace DataTest
 {
     [TestClass]
     public class DataLayerTest
     {
-        
+
         [TestMethod]
         public void AddBookToDatabase()
         {
@@ -31,7 +32,6 @@ namespace DataTest
             Assert.AreEqual(book2.genre, "Adventure");
         }
         
-
         [TestMethod]
         public void DeleteBookFromDatabase()
         {
@@ -42,7 +42,7 @@ namespace DataTest
             db.Books.DeleteOnSubmit(book);
             db.SubmitChanges();
         }
-        
+
 
         [TestMethod]
         public void SelectBookFromDatabase()
@@ -64,5 +64,26 @@ namespace DataTest
             Book book = db.Books.FirstOrDefault(b => b.title.Equals("Harry -------- Potter"));
             Assert.IsNull(book);
         }
+
+/*
+        [TestMethod]
+        [ExpectedException(typeof(System.Data.SqlClient.SqlException))]
+        public void ConnectingToNonExsistingDB()
+        {
+            string connectionString = "Data Source=DELL-LAT5490-2;Initial Catalog=WrongCatalog;Integrated Security=True";
+            using (LibraryDataContext fakeDB = new LibraryDataContext(connectionString))
+            {
+                Book book1 = new Book();
+                book1.title = "Game of Thrones";
+                book1.author = "George R. R. Martin";
+                book1.publishment_year = 2011;
+                book1.genre = "Adventure";
+
+                fakeDB.Books.InsertOnSubmit(book1);
+                fakeDB.SubmitChanges();
+            }
+        }
+
+       */
     }
 }
