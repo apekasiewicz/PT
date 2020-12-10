@@ -39,19 +39,56 @@ namespace Library.Services
             }
         }
 
-        /*public bool AddReader(string fName, string lName)
+        public bool AddReader(string fName, string lName)
         {
             using (var context = new LibraryDataContext())
             {
-                if (GetReader())
+                if (GetReader(fName, lName) == null)
+                {
+                    Reader newReader = new Reader
+                    {
+                        reader_f_name = fName,
+                        reader_l_name = lName
+                    };
+                    context.Readers.InsertOnSubmit(newReader);
+                    context.SubmitChanges();
+                    return true;
+                }
+                return false;
             }
-        }*/
-    }
+        }
 
-    /*
-        int GetAllReadersNumber();
-        Reader GetReaderById(int id);
-        void UpdateReaderInfo(Reader reader);
-        void AddReader(Reader reader);
-        void DeleteReader(int id);*/
+        public bool UpdateReaderFName(int id, string fName)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                Reader reader = context.Readers.SingleOrDefault(i => i.reader_id == id);
+                reader.reader_f_name = fName;
+                context.SubmitChanges();
+                return true;
+            }
+        }
+
+        public bool UpdateReaderLName(int id, string lName)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                Reader reader = context.Readers.SingleOrDefault(i => i.reader_id == id);
+                reader.reader_l_name = lName;
+                context.SubmitChanges();
+                return true;
+            }
+        }
+
+        public bool DeleteReader(int id)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                Reader reader = context.Readers.SingleOrDefault(i => i.reader_id == id);
+                context.Readers.DeleteOnSubmit(reader);
+                context.SubmitChanges();
+                return true;
+            }
+        }
+    }
 }
