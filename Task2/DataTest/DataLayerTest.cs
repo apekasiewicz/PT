@@ -20,6 +20,7 @@ namespace DataTest
                 book1.author = "George R. R. Martin";
                 book1.publishment_year = 2011;
                 book1.genre = "Adventure";
+                book1.quantity = 10;
 
                 db.Books.InsertOnSubmit(book1);
                 db.SubmitChanges();
@@ -30,6 +31,7 @@ namespace DataTest
                 Assert.AreEqual(book2.author, "George R. R. Martin");
                 Assert.AreEqual(book2.publishment_year, 2011);
                 Assert.AreEqual(book2.genre, "Adventure");
+                Assert.AreEqual(book2.quantity, 10);
             }
         }
 
@@ -46,20 +48,19 @@ namespace DataTest
         }
 
 
-        /*[TestMethod]
+        [TestMethod]
         public void SelectBookFromDatabase()
         {
             using (var db = new LibraryDataContext())
-        {
-                    Book book = db.Books.FirstOrDefault(b => b.title.Equals("Harry Potter"));
-            Assert.AreEqual(book.title, "Harry Potter");
-            Assert.AreEqual(book.author, "J.K. Rowling");
-            Assert.AreEqual(book.publishment_year, 1997);
-            Assert.AreEqual(book.genre, "Fantasy");
+            {
+                Book book = db.Books.FirstOrDefault(b => b.title.Equals("Harry Potter"));
+                Assert.AreEqual(book.title, "Harry Potter");
+                Assert.AreEqual(book.author, "J.K. Rowling");
+                Assert.AreEqual(book.publishment_year, 1997);
+                Assert.AreEqual(book.genre, "Fantasy");
+                Assert.AreEqual(book.quantity, 3);
+            }
         }
-
-
-        }*/
 
         [TestMethod]
         public void SelectBookWhichNotExistsFromDatabase()
