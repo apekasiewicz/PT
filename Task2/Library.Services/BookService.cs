@@ -128,9 +128,17 @@ namespace Library.Services
             using (var context = new LibraryDataContext())
             {
                 Book book = context.Books.SingleOrDefault(i => i.book_id == _id);
-                context.Books.DeleteOnSubmit(book);
-                context.SubmitChanges();
-                return true;
+                //State bookState = context.States.SingleOrDefault(i => i.book == _id);
+                //if (!bookState.is_borrowed) //the book is not borrowed 
+                //{
+                    context.Books.DeleteOnSubmit(book);
+                    context.SubmitChanges();
+                    return true;
+                //}
+                /*else
+                {
+                    throw new System.Exception("A borrowed book cannot be deleted!");
+                }*/
             }
         }
     }
