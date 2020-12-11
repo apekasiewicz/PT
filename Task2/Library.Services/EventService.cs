@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Library.Services
 {
-	class EventService
+	public class EventService
 	{
         public IEnumerable<Event> GetEvents()
         {

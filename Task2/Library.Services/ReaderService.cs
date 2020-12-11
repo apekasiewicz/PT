@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Library.Services
 {
-    class ReaderService
+    public class ReaderService
     {
         public IEnumerable<Reader> GetReaders()
         {
