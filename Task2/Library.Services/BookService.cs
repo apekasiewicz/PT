@@ -6,7 +6,7 @@ namespace Library.Services
 {
     public class BookService
     {
-        public IEnumerable<Book> GetAllBooks()
+        static public IEnumerable<Book> GetAllBooks()
         {
             using (var context = new LibraryDataContext())  //inside using it gets closed automatically
             {
@@ -15,7 +15,7 @@ namespace Library.Services
             }
         }
 
-        public int GetAllBooksNumber()
+        static public int GetAllBooksNumber()
         {
             using (var context = new LibraryDataContext())
             {
@@ -23,7 +23,7 @@ namespace Library.Services
             }
         }
 
-        public Book GetBook(string title, string author)
+        static public Book GetBook(string title, string author)
         {
             using (var context = new LibraryDataContext())
             {
@@ -38,7 +38,7 @@ namespace Library.Services
             }
         }
 
-        public IEnumerable<Book> GetBooksByGenre(string g)
+        static public IEnumerable<Book> GetBooksByGenre(string g)
         {
             using (var context = new LibraryDataContext())
             {
@@ -52,9 +52,9 @@ namespace Library.Services
                 }
                 return result;
             }
-        } 
+        }
 
-        public bool AddBook(string a, string t, int year, string g, int q)
+        static public bool AddBook(string a, string t, int year, string g, int q)
         {
             using (var context = new LibraryDataContext())
             {
@@ -76,7 +76,7 @@ namespace Library.Services
             }
         }
 
-        public bool UpdateBookAuthor(int _id, string author) //not sure if id will work with the view
+        static public bool UpdateBookAuthor(int _id, string author) //not sure if id will work with the view
         {
             using (var context = new LibraryDataContext())
             {
@@ -91,7 +91,7 @@ namespace Library.Services
             }
         }
 
-        public bool UpdateBookTitle(int _id, string title)
+        static public bool UpdateBookTitle(int _id, string title)
         {
             using (var context = new LibraryDataContext())
             {
@@ -102,7 +102,7 @@ namespace Library.Services
             }
         }
 
-        public bool UpdateBookYear(int _id, int year)
+        static public bool UpdateBookYear(int _id, int year)
         {
             using (var context = new LibraryDataContext())
             {
@@ -113,7 +113,7 @@ namespace Library.Services
             }
         }
 
-        public bool UpdateBookGenre(int _id, string genre)
+        static public bool UpdateBookGenre(int _id, string genre)
         {
             using (var context = new LibraryDataContext())
             {
@@ -124,7 +124,7 @@ namespace Library.Services
             }
         }
 
-        public bool UpdateBookQuantity(int _id, int q)
+        static public bool UpdateBookQuantity(int _id, int q)
         {
             using (var context = new LibraryDataContext())
             {
@@ -139,11 +139,11 @@ namespace Library.Services
             }
         }
 
-        public bool DeleteBook(int _id)
+        static public bool DeleteBook(string title)
         {
             using (var context = new LibraryDataContext())
             {
-                Book book = context.Books.SingleOrDefault(i => i.book_id == _id);
+                Book book = context.Books.FirstOrDefault(i => i.title == title);
                 context.Books.DeleteOnSubmit(book);
                 context.SubmitChanges();
                 return true;
