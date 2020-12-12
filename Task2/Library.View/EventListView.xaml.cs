@@ -17,15 +17,15 @@ using System.Windows.Shapes;
 namespace Library.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for EventListView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EventListView : UserControl
     {
-       // ReaderListViewModel readerListViewModel = new ReaderListViewModel();
-        public MainWindow()
+        ReaderListViewModel readerListViewModel = new ReaderListViewModel();
+        public EventListView()
         {
             InitializeComponent();
-            //this.DataContext = this.readerListViewModel;
+            this.DataContext = this.readerListViewModel;
         }
     }
 }

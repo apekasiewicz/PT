@@ -25,7 +25,7 @@ namespace Library.View
         public ReaderListView()
         {
             InitializeComponent();
-            this.DataContext = readerListViewModel;
+            this.DataContext = this.readerListViewModel;
         }
     }
 }

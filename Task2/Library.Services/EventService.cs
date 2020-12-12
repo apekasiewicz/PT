@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Library.Data;
 using System.Linq;
 
 namespace Library.Services
 {
-	public class EventService
+    public class EventService
 	{
         public IEnumerable<Event> GetEvents()
         {
@@ -45,7 +44,7 @@ namespace Library.Services
         {
             using (var context = new LibraryDataContext())
             {
-                Reader reader = context.Readers.SingleOrDefault(r => r.reader_f_name.Equals(fName) && r.reader_l_name.Equals(lName));
+                Reader reader = ReaderService.GetReader(fName, lName);
 
                 List<Event> result = new List<Event>();
                 foreach (Event e in context.Events.ToList())

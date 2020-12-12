@@ -74,7 +74,7 @@ namespace ServicesTest
             Assert.AreEqual(BookService.GetAllBooksNumber(), 5);
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public void UpdateBookTitleTest()
         {
             Assert.IsTrue(BookService.UpdateBookTitle(44, "The Notebook part 2"));
@@ -133,6 +133,6 @@ namespace ServicesTest
 
             //update to restore original db
             Assert.IsTrue(BookService.UpdateBookYear(44, 1997));
-        }
+        }*/
     }
 }

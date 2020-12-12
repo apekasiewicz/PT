@@ -13,6 +13,7 @@ namespace Library.UI
     public class ReaderListViewModel : ModelViewBase
     {
         private ReaderService readerService = new ReaderService();
+        private EventService eventService = new EventService();
 
         public ReaderListViewModel()
         {
@@ -34,6 +35,42 @@ namespace Library.UI
                 readers = value;
                 OnPropertyChanged("Readers");
             }
+        }
+
+        private Reader currentReader;
+        public Reader CurrentReader 
+        { 
+            get
+            {
+                return this.currentReader;
+            }
+
+            set
+            {
+                this.currentReader = value;
+                OnPropertyChanged("CurrentReader");
+                this.RefreshEvents();
+            }
+        }
+
+        private IEnumerable<Event> events;
+        public IEnumerable<Event> Events
+        {
+            get
+            {
+                return this.events;
+            } 
+            set
+            {
+                this.events = value;
+                OnPropertyChanged("Events");
+            }
+        }
+        private void RefreshEvents()
+        {
+            
+            Task.Run(() => this.Events = eventService.GetEventsForReaderByName(CurrentReader.reader_f_name, CurrentReader.reader_l_name));
+         
         }
     }
 }

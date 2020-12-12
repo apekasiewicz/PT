@@ -24,7 +24,7 @@ namespace Library.Services
             }
         }
 
-        public Reader GetReader(string fName, string lName)
+        public static Reader GetReader(string fName, string lName)
         {
             using (var context = new LibraryDataContext())
             {

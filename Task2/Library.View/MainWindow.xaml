@@ -10,6 +10,9 @@
         <DataTemplate x:Key="ReadersList">
             <local:ReaderListView/>
         </DataTemplate>
+        <DataTemplate x:Key="EventsList">
+            <local:EventListView/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -18,5 +21,6 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions/>
         <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ReadersList}" Grid.Row="0"/>
+        <!--" ContentControl Content="{Binding}" ContentTemplate="{StaticResource EventsList}" Grid.Row="1"/-->
     </Grid>
 </Window>
