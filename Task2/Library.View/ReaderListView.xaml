@@ -16,9 +16,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
-        
-        <ListView ItemsSource="{Binding Events}" Margin="0, 30, 0, 0">
+
+
+        <ListView ItemsSource="{Binding Events}" SelectedItem="{Binding CurrentEvent, Mode=TwoWay}" Margin="0, 30, 0, 0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding event_id}" Width="30"/>
@@ -28,5 +28,20 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <ListView ItemsSource="{Binding Book}" Margin="0, 30, 0, 0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding book_id}" Width="30"/>
+                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding author}" Width="160"/>
+                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding title}" Width="130"/>
+                    <GridViewColumn Header="Year Published" DisplayMemberBinding="{Binding publishment_year}" Width="50"/>
+                    <GridViewColumn Header="Genre" DisplayMemberBinding="{Binding genre}" Width="50"/>
+                    <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding quantity}" Width="50"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <TextBox Text="{Binding Book.title}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
     </StackPanel>
 </UserControl>

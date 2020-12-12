@@ -38,6 +38,21 @@ namespace Library.Services
             }
         }
 
+        public Book GetBookById(int id)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                foreach (Book b in context.Books.ToList())
+                {
+                    if(b.book_id.Equals(id))
+                    {
+                        return b;
+                    }
+                }
+                return null;
+            }
+        }
+
         static public IEnumerable<Book> GetBooksByGenre(string g)
         {
             using (var context = new LibraryDataContext())

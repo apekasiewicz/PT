@@ -14,11 +14,13 @@ namespace Library.UI
     {
         private ReaderService readerService;
         private EventService eventService;
+        private BookService bookService;
 
         public ReaderListViewModel()
         {
             readerService = new ReaderService();
             eventService = new EventService();
+            bookService = new BookService();
             AddReader = new CommandBase(o => { ShowAddReaderView(); }, o => true);
             RefreshReaders();
         }
@@ -76,14 +78,40 @@ namespace Library.UI
         }
 
         /*Display book for selected event */
-        /*private Event currentEvent;
+        private Event currentEvent;
         public Event CurrentEvent
         {
             get
             {
-
+                return this.currentEvent;
             }
-        }*/
+            set
+            {
+                this.currentEvent = value;
+                OnPropertyChanged("CurrentEvent");
+                this.RefreshBook();
+            }
+        }
+
+        private Book book;
+        public Book Book
+        {
+            get
+            {
+                return this.book;
+            }
+            set
+            {
+                this.book = value;
+                OnPropertyChanged("Book");
+            }
+        }
+
+        private void RefreshBook()
+        {
+           // System.Diagnostics.Debug.WriteLine(CurrentEvent.book);
+            Task.Run(() => this.Book = bookService.GetBookById(CurrentEvent.book));
+        }
 
         /*ICommand */
         public CommandBase AddReader { get; private set; }
