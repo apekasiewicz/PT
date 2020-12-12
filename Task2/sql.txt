@@ -4,3 +4,11 @@ INSERT INTO Reader VALUES
 	('Judith', 'Rojas'),
 	('Maliha', 'Petty'),
 	('Fionn', 'Mcclure');
+
+
+INSERT INTO Book VALUES
+	('J.R.R.Tolkien', 'Lord of the Rings', 1954, 'Adventure', 5),
+	('J.K. Rowling', 'Harry Potter', 1997, 'Fantasy', 3),
+	('Paulo Coelho', 'The Alchemist', 1988, 'Drama', 8),
+	('Dan Brown', 'The Da Vinci Code', 2006, 'Criminal', 1),
+	('Nicholas Sparks', 'The Notebook', 1997, 'Romance', 6);
