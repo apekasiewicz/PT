@@ -16,7 +16,7 @@ namespace Library.Services
             }
         }
 
-        public int GetAllReadersNumber()
+        static public int GetAllReadersNumber()
         {
             using (var context = new LibraryDataContext())
             {
@@ -39,7 +39,7 @@ namespace Library.Services
             }
         }
 
-        public bool AddReader(string fName, string lName)
+        static public bool AddReader(string fName, string lName)
         {
             using (var context = new LibraryDataContext())
             {
@@ -58,7 +58,7 @@ namespace Library.Services
             }
         }
 
-        public bool UpdateReaderFName(int id, string fName)
+        static public bool UpdateReaderFName(int id, string fName)
         {
             using (var context = new LibraryDataContext())
             {
@@ -69,7 +69,7 @@ namespace Library.Services
             }
         }
 
-        public bool UpdateReaderLName(int id, string lName)
+        static public bool UpdateReaderLName(int id, string lName)
         {
             using (var context = new LibraryDataContext())
             {
@@ -80,11 +80,12 @@ namespace Library.Services
             }
         }
 
-        public bool DeleteReader(int id)
+        static public bool DeleteReader(string fName, string lName)
         {
             using (var context = new LibraryDataContext())
             {
-                Reader reader = context.Readers.SingleOrDefault(i => i.reader_id == id);
+                Reader reader = context.Readers.SingleOrDefault(i => i.reader_f_name.Equals(fName) 
+                        && i.reader_l_name.Equals(lName));
                 context.Readers.DeleteOnSubmit(reader);
                 context.SubmitChanges();
                 return true;
