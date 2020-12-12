@@ -6,17 +6,33 @@
         xmlns:local="clr-namespace:Library.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
-        <DataTemplate x:Key="ReadersList">
-            <local:ReaderListView/>
-        </DataTemplate>
-    </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions/>
-        <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ReadersList}" Grid.Row="0"/>
-    </Grid>
+	<Window.Resources>
+		<DataTemplate x:Key="ReadersList">
+			<local:ReaderListView/>
+		</DataTemplate>
+		<DataTemplate x:Key="BorrowBooksList">
+			<local:BorrowBookListView/>
+		</DataTemplate>
+	</Window.Resources>
+	<StackPanel>
+		<TabControl>
+			<TabItem Header="Readers and books">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions/>
+					<ContentControl Content="{Binding}" ContentTemplate="{StaticResource ReadersList}" Grid.Row="0"/>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Borrow Book">
+				<ContentControl Content="{Binding}" ContentTemplate="{StaticResource BorrowBooksList}" />
+			</TabItem>
+		</TabControl>
+	</StackPanel>
+
 </Window>
+
+
+
