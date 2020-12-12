@@ -12,11 +12,14 @@ namespace Library.UI
 {
     public class ReaderListViewModel : ModelViewBase
     {
-        private ReaderService readerService = new ReaderService();
-        private EventService eventService = new EventService();
+        private ReaderService readerService;
+        private EventService eventService;
 
         public ReaderListViewModel()
         {
+            readerService = new ReaderService();
+            eventService = new EventService();
+            AddReader = new CommandBase(o => { ShowAddReaderView(); }, o => true);
             RefreshReaders();
         }
 
@@ -37,6 +40,7 @@ namespace Library.UI
             }
         }
 
+        /*Master detail - displays events for selected customer*/
         private Reader currentReader;
         public Reader CurrentReader 
         { 
@@ -68,9 +72,28 @@ namespace Library.UI
         }
         private void RefreshEvents()
         {
-            
             Task.Run(() => this.Events = eventService.GetEventsForReaderByName(CurrentReader.reader_f_name, CurrentReader.reader_l_name));
-         
+        }
+
+        /*Display book for selected event */
+        /*private Event currentEvent;
+        public Event CurrentEvent
+        {
+            get
+            {
+
+            }
+        }*/
+
+        /*ICommand */
+        public CommandBase AddReader { get; private set; }
+
+        public Lazy<IWindow> NewWindow { get; set; }
+
+        private void ShowAddReaderView()
+        {
+            IWindow newWindow = NewWindow.Value;
+            newWindow.Show();
         }
     }
 }

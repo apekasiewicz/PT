@@ -11,22 +11,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Library.View
 {
     /// <summary>
-    /// Interaction logic for ReaderListView.xaml
+    /// Interaction logic for AddReaderView.xaml
     /// </summary>
-    public partial class ReaderListView : UserControl
+    public partial class AddReaderView : Window, IWindow
     {
-        ReaderListViewModel readerListViewModel = new ReaderListViewModel();
-        public ReaderListView()
+        public AddReaderView()
         {
             InitializeComponent();
-            this.DataContext = this.readerListViewModel;
-            readerListViewModel.NewWindow = new Lazy<IWindow>(() => new AddReaderView());
         }
     }
 }

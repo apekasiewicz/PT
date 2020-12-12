@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Library.UI.Common
 {
-    class CommandBase : ICommand
+    public class CommandBase : ICommand
     {
         private readonly Action<object> execute = null;
         private readonly Predicate<object> canExecute = null;
