@@ -61,7 +61,7 @@ namespace ServicesTest
         }
 
         
-        [TestMethod]
+        /*[TestMethod]
         public void UpdateReaderNameTest()
         {
             Assert.IsTrue(ReaderService.UpdateReaderFName(55, "Ann"));
@@ -85,6 +85,6 @@ namespace ServicesTest
 
             //update to restore original db
             Assert.IsTrue(ReaderService.UpdateReaderLName(55, "Rojas"));
-        }
+        }*/
     }
 }

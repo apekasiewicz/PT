@@ -9,19 +9,34 @@ namespace Library.UI.Common
 {
     class CommandBase : ICommand
     {
-        private readonly Action<object> execute;
-        private readonly Predicate<object> canExecute;
+        private readonly Action<object> execute = null;
+        private readonly Predicate<object> canExecute = null;
+
+        public CommandBase(Action<object> execute)
+            : this(execute, null) { }
+
+        public CommandBase(Action<object> execute, Predicate<object> canExecute)
+        {
+            this.execute = execute;
+            this.canExecute = canExecute;
+        }
 
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
-            throw new NotImplementedException();
+            return canExecute != null ? canExecute(parameter) : true;
         }
 
         public void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            if (execute != null)
+                execute(parameter);
+        }
+
+        public void OnCanExecuteChanged()
+        {
+            CanExecuteChanged(this, EventArgs.Empty);
         }
     }
 }
