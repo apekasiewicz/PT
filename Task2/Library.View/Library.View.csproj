@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3023F7E7-49D2-403C-B5C1-DEE4246D07C8}</ProjectGuid>
+    <ProjectGuid>{28515D26-3744-4792-BACF-E1185952FC5A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Library.Presentation</RootNamespace>
-    <AssemblyName>Library.Presentation</AssemblyName>
+    <RootNamespace>Library.View</RootNamespace>
+    <AssemblyName>Library.View</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -55,9 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MVVM\CommandBase.cs" />
-    <Compile Include="ViewModel\MVVM\ModelViewBase.cs" />
+    <Compile Include="ReaderListView.xaml.cs">
+      <DependentUpon>ReaderListView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -70,9 +70,12 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ReaderListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Reader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -99,9 +102,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library.Services\Library.Services.csproj">
-      <Project>{220db478-91d5-43b4-80a1-e653d099accd}</Project>
-      <Name>Library.Services</Name>
+    <ProjectReference Include="..\Library.UI\Library.UI.csproj">
+      <Project>{8276ccf7-4d99-4d5a-ba36-f49160aa08c4}</Project>
+      <Name>Library.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,6 @@
+INSERT INTO Reader VALUES
+	('Neave', 'Oneal'),
+	('Charilize', 'Padilla'), 
+	('Judith', 'Rojas'),
+	('Maliha', 'Petty'),
+	('Fionn', 'Mcclure');

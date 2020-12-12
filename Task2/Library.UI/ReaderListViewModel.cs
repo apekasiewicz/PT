@@ -1,40 +1,39 @@
-﻿using System;
+﻿using Library.Data;
+using Library.Services;
+using Library.UI.Common;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Library.Presentation.Model;
-using Library.Presentation.ViewModel.MVVM;
-using Library.Services;
 
-namespace Library.Presentation.ViewModel
+namespace Library.UI
 {
-    public class MainViewModel : ModelViewBase
+    public class ReaderListViewModel : ModelViewBase
     {
         private ReaderService readerService = new ReaderService();
 
-        public MainViewModel()
+        public ReaderListViewModel()
         {
-            this.RefreshReaders();
+            RefreshReaders();
         }
 
         private void RefreshReaders()
         {
-            //Task.Run(() => readerService.GetReaders());
+            Task.Run(() => this.Readers = readerService.GetReaders());
         }
 
         private IEnumerable<Reader> readers;
         public IEnumerable<Reader> Readers
         {
-            get => this.readers;
+            get => readers;
 
             set
             {
-                this.readers = value;
+                readers = value;
                 OnPropertyChanged("Readers");
             }
-            
         }
     }
 }
