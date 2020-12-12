@@ -6,7 +6,7 @@ namespace Library.Services
 {
     public class BookService
     {
-        static public IEnumerable<Book> GetAllBooks()
+        public IEnumerable<Book> GetAllBooks()
         {
             using (var context = new LibraryDataContext())  //inside using it gets closed automatically
             {
