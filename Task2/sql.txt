@@ -13,5 +13,14 @@ INSERT INTO Book VALUES
 	('Dan Brown', 'The Da Vinci Code', 2006, 'Criminal', 1),
 	('Nicholas Sparks', 'The Notebook', 1997, 'Romance', 6);
 
+
+INSERT INTO Event VALUES
+	('2020-11-16', 1, 42, 55),
+	('2020-12-10', 1, 44, 56),
+	('2020-12-05', 0, 40, 56),
+	('2020-12-01', 0, 42, 53),
+	('2020-11-20', 1, 41, 53);
+
+
 INSERT INTO Event VALUES
 	('2020-11-16', 1, 25, 7);
