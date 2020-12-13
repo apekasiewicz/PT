@@ -6,30 +6,33 @@
              xmlns:local="clr-namespace:Library.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-	<StackPanel Orientation="Horizontal">
-		<StackPanel Width="400" >
-			<TextBlock FontSize="20"  TextAlignment="Center">Choose a reader</TextBlock>
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Width="400" >
+            <TextBlock FontSize="20"  TextAlignment="Center">Choose a reader</TextBlock>
 			<ComboBox
                 x:Name="readers"
                 Width="300"
                 Margin="50,50,50,50"
                 HorizontalAlignment="Center"
                 ItemsSource="{Binding Path=Readers}"
-				DisplayMemberPath="reader_l_name"/>
+				DisplayMemberPath="reader_l_name"
+				SelectedItem="{Binding CurrentReader}"/>
 		</StackPanel>
+		
+        <Button x:Name="borrowBook" Content="Borrow this book" Command="{Binding BorrowBook}" HorizontalAlignment="Center" Height="30" Width="105" Margin="0,210"/>
 
-		<StackPanel Width="400">
-			<TextBlock FontSize="20"  TextAlignment="Center">Choose a book</TextBlock>
-			<ComboBox
+        <StackPanel Width="400">
+            <TextBlock FontSize="20"  TextAlignment="Center">Choose a book</TextBlock>
+            <ComboBox
                 x:Name="books"
                 Width="300"
                 Margin="50,50,50,50"
                 HorizontalAlignment="Center"
                 ItemsSource="{Binding Path=Books}"
 				DisplayMemberPath="title"
-             />
-		</StackPanel>
-
-	</StackPanel>
+				SelectedItem="{Binding CurrentBook}"/>
+        </StackPanel>
+		
+    </StackPanel>
 </UserControl>
 

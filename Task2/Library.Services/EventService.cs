@@ -7,7 +7,7 @@ namespace Library.Services
 {
     public class EventService
 	{
-        public IEnumerable<Event> GetEvents()
+        static public IEnumerable<Event> GetEvents()
         {
             using (var context = new LibraryDataContext())
             {
@@ -15,7 +15,7 @@ namespace Library.Services
             }
         }
 
-        public int GetAllEventsNumber()
+        static public int GetAllEventsNumber()
         {
             using (var context = new LibraryDataContext())
             {
@@ -23,7 +23,7 @@ namespace Library.Services
             }
         }
 
-        public IEnumerable<Event> GetEventsForReaderById(int readerId)
+        static public IEnumerable<Event> GetEventsForReaderById(int readerId)
         {
             using (var context = new LibraryDataContext())
             {
@@ -93,7 +93,7 @@ namespace Library.Services
             }
         }
 
-        public IEnumerable<Event> GetBorrowingEvents()
+        static public IEnumerable<Event> GetBorrowingEvents()
         {
             using (var context = new LibraryDataContext())
             {
@@ -109,7 +109,7 @@ namespace Library.Services
             }
         }
 
-        public IEnumerable<Event> GetReturningEvents()
+        static public IEnumerable<Event> GetReturningEvents()
         {
             using (var context = new LibraryDataContext())
             {
@@ -126,7 +126,7 @@ namespace Library.Services
         }
 
       
-        public IEnumerable<Event> GetEventsByDate(DateTime date)
+        static public IEnumerable<Event> GetEventsByDate(DateTime date)
         {
             using (var context = new LibraryDataContext())
             {
@@ -143,7 +143,7 @@ namespace Library.Services
         }
 
         
-        public bool AddEvent(DateTime time, bool isBorrowingEvent, int bookId, int readerId)
+        static public bool AddEvent(DateTime time, bool isBorrowingEvent, int bookId, int readerId)
         {
             using (var context = new LibraryDataContext())
             {
@@ -165,7 +165,7 @@ namespace Library.Services
             }
         }
 
-        public bool DeleteEvent(int id)
+        static public bool DeleteEvent(int id)
         {
             using (var context = new LibraryDataContext())
             {

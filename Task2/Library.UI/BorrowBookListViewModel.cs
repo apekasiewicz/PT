@@ -11,14 +11,19 @@ namespace Library.UI
     public class BorrowBookListViewModel : ModelViewBase
     {
 
-        private ReaderService readerService = new ReaderService();
-        private BookService bookService = new BookService();
+        private ReaderService readerService;
+        private BookService bookService;
 
        public BorrowBookListViewModel()
        {
+            readerService = new ReaderService();
+            bookService = new BookService();
+
+            BorrowBook = new CommandBase(o => { BorrowBookForReader(); }, o => true);
+
             RefreshReaders();
             RefreshBooks();
-    }
+        }
 
         private void RefreshReaders()
         {
@@ -32,16 +37,16 @@ namespace Library.UI
 
 
         private IEnumerable<Reader> readers;
-    public IEnumerable<Reader> Readers
-    {
-        get => readers;
-
-        set
+        public IEnumerable<Reader> Readers
         {
-            readers = value;
-            OnPropertyChanged("Readers");
+            get => readers;
+
+            set
+            {
+                readers = value;
+                OnPropertyChanged("Readers");
+            }
         }
-    }
 
         private IEnumerable<Book> books;
         public IEnumerable<Book> Books
@@ -55,17 +60,43 @@ namespace Library.UI
             }
         }
 
-
-        public System.Windows.Input.ICommand BorrowBookCommand
+        //selected book
+        private Book currentBook;
+        public Book CurrentBook
         {
-            get;
-            private set;
+            get
+            {
+                return this.currentBook;
+            }
+            set
+            {
+                this.currentBook = value;
+                OnPropertyChanged("Book");
+            }
         }
 
-
-        public void BorrowBook(int readerId, int bookId)
+        private Reader currentReader;
+        public Reader CurrentReader
         {
-            
+            get
+            {
+                return this.currentReader;
+            }
+
+            set
+            {
+                this.currentReader = value;
+                OnPropertyChanged("CurrentReader");
+            }
+        }
+
+        /*ICommand*/
+        public CommandBase BorrowBook { get; private set; }
+
+
+        private void BorrowBookForReader()
+        {
+            EventService.AddEvent(DateTime.Today, true, CurrentBook.book_id, CurrentReader.reader_id);
         }
     }
 
