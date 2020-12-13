@@ -1,3 +1,39 @@
+/*Create Statements*/
+
+CREATE TABLE Reader(
+	reader_id INT IDENTITY(1, 1) NOT NULL,
+	reader_f_name VARCHAR(50),
+	reader_l_name VARCHAR(50),
+
+CONSTRAINT reader_PK PRIMARY KEY(reader_id)
+);
+
+CREATE TABLE Book(
+	book_id INT IDENTITY(1, 1) NOT NULL,
+	author VARCHAR(50),
+	title VARCHAR(50), 
+	publishment_year INT,
+	genre VARCHAR(30),
+	quantity INT
+
+CONSTRAINT book_PK PRIMARY KEY(book_id)
+);
+
+CREATE TABLE Event(
+	event_id INT IDENTITY(1, 1) NOT NULL,
+	event_time DATE NOT NULL, 
+	is_borrowing_event BIT NOT NULL,
+	book INT NOT NULL,
+	reader INT NOT NULL,
+
+CONSTRAINT event_PK PRIMARY KEY(event_id),
+CONSTRAINT event_FK1 FOREIGN KEY(book) REFERENCES book(book_id),
+CONSTRAINT event_FK2 FOREIGN KEY(reader) REFERENCES reader(reader_id)
+);
+
+
+/*Inserts*/
+
 INSERT INTO Reader VALUES
 	('Neave', 'Oneal'),
 	('Charilize', 'Padilla'), 
