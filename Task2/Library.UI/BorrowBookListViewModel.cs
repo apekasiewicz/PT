@@ -20,6 +20,7 @@ namespace Library.UI
             bookService = new BookService();
 
             BorrowBook = new CommandBase(o => { BorrowBookForReader(); }, o => true);
+            ReturnBook = new CommandBase(o => { ReturnBookByReader(); }, o => true);
 
             RefreshReaders();
             RefreshBooks();
@@ -93,10 +94,16 @@ namespace Library.UI
         /*ICommand*/
         public CommandBase BorrowBook { get; private set; }
 
-
         private void BorrowBookForReader()
         {
             EventService.AddEvent(DateTime.Today, true, CurrentBook.book_id, CurrentReader.reader_id);
+        }
+
+        public CommandBase ReturnBook { get; private set; }
+
+        private void ReturnBookByReader()
+        {
+            EventService.DeleteEvent(CurrentReader.reader_id, CurrentBook.book_id);
         }
     }
 

@@ -165,14 +165,18 @@ namespace Library.Services
             }
         }
 
-        static public bool DeleteEvent(int id)
+        static public bool DeleteEvent(int readerId, int bookId)
         {
             using (var context = new LibraryDataContext())
             {
-                Event ev = context.Events.SingleOrDefault(e => e.event_id == id);
-                context.Events.DeleteOnSubmit(ev);
-                context.SubmitChanges();
-                return true;
+                Event ev = context.Events.FirstOrDefault(e => e.reader == readerId && e.book == bookId);
+                if (ev != null)
+                {
+                    context.Events.DeleteOnSubmit(ev);
+                    context.SubmitChanges();
+                    return true;
+                }
+                return false;
             }
         }
 

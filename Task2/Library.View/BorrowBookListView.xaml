@@ -7,32 +7,50 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Orientation="Horizontal">
-        <StackPanel Width="400" >
-            <TextBlock FontSize="20"  TextAlignment="Center">Choose a reader</TextBlock>
-			<ComboBox
+
+        <StackPanel Width="409" Margin="0,5,0,86" RenderTransformOrigin="0.5,0.5" >
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-0.527"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-1.324"/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
+            <TextBlock FontSize="20"  TextAlignment="Center"><Run Text="Choose a reader"/></TextBlock>
+            <ComboBox
                 x:Name="readers"
                 Width="300"
                 Margin="50,50,50,50"
                 HorizontalAlignment="Center"
-                ItemsSource="{Binding Path=Readers}"
+                ItemsSource="{Binding Readers}"
 				DisplayMemberPath="reader_l_name"
 				SelectedItem="{Binding CurrentReader}"/>
-		</StackPanel>
-		
-        <Button x:Name="borrowBook" Content="Borrow this book" Command="{Binding BorrowBook}" HorizontalAlignment="Center" Height="30" Width="105" Margin="0,210"/>
+            <Button x:Name="borrowBook" Content="Borrow this book" Command="{Binding BorrowBook}"  Height="30" Margin="152,150,115.333,150" />
+        </StackPanel>
 
-        <StackPanel Width="400">
-            <TextBlock FontSize="20"  TextAlignment="Center">Choose a book</TextBlock>
+        <StackPanel Width="394" RenderTransformOrigin="0.5,0.5" Margin="0,-3,0,-1">
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.559"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="1.99"/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
+            <TextBlock FontSize="20"  TextAlignment="Center"><Run Text="Choose a book"/></TextBlock>
             <ComboBox
                 x:Name="books"
                 Width="300"
                 Margin="50,50,50,50"
                 HorizontalAlignment="Center"
-                ItemsSource="{Binding Path=Books}"
+                ItemsSource="{Binding Books}"
 				DisplayMemberPath="title"
 				SelectedItem="{Binding CurrentBook}"/>
+            <Button x:Name="returnBook" Content="Return this book" Command="{Binding ReturnBook}"  Height="30" Margin="150,150,111,150" />
         </StackPanel>
-		
+
     </StackPanel>
+
 </UserControl>
 
