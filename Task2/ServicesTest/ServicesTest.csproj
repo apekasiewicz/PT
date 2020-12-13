@@ -52,6 +52,7 @@
     <Compile Include="BookServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReaderServiceTest.cs" />
+    <Compile Include="EventServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
