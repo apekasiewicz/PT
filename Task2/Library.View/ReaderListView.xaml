@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Library.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="400" d:DesignWidth="800">
     <StackPanel>
-        <Button x:Name="addReaderBtn" Content="Add Reader" Command="{Binding AddReader}" Margin="0,10,20,10" HorizontalAlignment="Right" Height="29" Width="85"/>
+        <Button x:Name="addReaderBtn" Content="Add Reader" Command="{Binding AddReader}" Margin="0,10,20,10" HorizontalAlignment="Right" Height="30" Width="90"/>
+        <TextBlock FontSize="16" Margin="28, 10, 0, 10"><Run Text="Click on user to display their events:"/></TextBlock>
         <ListView ItemsSource="{Binding Readers}"  SelectedItem="{Binding CurrentReader, Mode=TwoWay}">
             <ListView.View>
                 <GridView>
@@ -17,31 +18,25 @@
             </ListView.View>
         </ListView>
 
-
         <ListView ItemsSource="{Binding Events}" SelectedItem="{Binding CurrentEvent, Mode=TwoWay}" Margin="0, 30, 0, 0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding event_id}" Width="30"/>
                     <GridViewColumn Header="Date" DisplayMemberBinding="{Binding event_time}" Width="160"/>
                     <GridViewColumn Header="Is it Borrowing Event?" DisplayMemberBinding="{Binding is_borrowing_event}" Width="130"/>
-                    <GridViewColumn Header="Book" DisplayMemberBinding="{Binding book}" Width="50"/>
+                    <GridViewColumn Header="Book ID" DisplayMemberBinding="{Binding book}" Width="50"/>
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <ListView ItemsSource="{Binding Book}" Margin="0, 30, 0, 0">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding book_id}" Width="30"/>
-                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding author}" Width="160"/>
-                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding title}" Width="130"/>
-                    <GridViewColumn Header="Year Published" DisplayMemberBinding="{Binding publishment_year}" Width="50"/>
-                    <GridViewColumn Header="Genre" DisplayMemberBinding="{Binding genre}" Width="50"/>
-                    <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding quantity}" Width="50"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <TextBlock FontSize="16"  Margin="28,40,44,0"><Run Text="Click on event to display book details:"/></TextBlock>
+        <StackPanel Orientation="Vertical" Margin="426,-20,44,10">
+            <TextBox Text="{Binding Book.author}"/>
+            <TextBox Text="{Binding Book.title}"/>
+            <TextBox Text="{Binding Book.publishment_year}"/>
+            <TextBox Text="{Binding Book.genre}"/>
+        </StackPanel>
 
-        <TextBox Text="{Binding Book.title}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
     </StackPanel>
+
 </UserControl>
