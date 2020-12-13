@@ -103,7 +103,7 @@ namespace Library.UI
 
         private void ReturnBookByReader()
         {
-            EventService.DeleteEvent(CurrentReader.reader_id, CurrentBook.book_id);
+            EventService.AddEvent(DateTime.Today, false, CurrentBook.book_id, CurrentReader.reader_id);
         }
     }
 

@@ -6,7 +6,17 @@
         xmlns:local="clr-namespace:Library.View"
         mc:Ignorable="d"
         Title="AddReaderView" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+	<Grid>
+		<StackPanel>
+			<TextBlock Margin="100, 50, 100, 10" Text="Add reader" FontWeight="Bold" FontSize="20"/>
+			<TextBlock Margin="100, 50, 100, 10" Text="First name" FontSize="16"/>
+			<TextBox Margin="100, 0, 190, 10" Text="{Binding FName}" />
+
+
+			<TextBlock Margin="100, 20, 100, 10 " Text="Last name" FontSize="16"/>
+			<TextBox Margin="100, 0, 190, 10" Text="{Binding LName}" />
+			<Button Width="120" Height="50" Margin="10, 50, 10, 10 " Command="{Binding AddReaderCommand}" Content="ADD READER" />
+		</StackPanel>
+
+	</Grid>
 </Window>
