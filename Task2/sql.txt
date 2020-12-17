@@ -1,3 +1,9 @@
+/*Drops*/
+
+DROP TABLE	Event;
+DROP TABLE Book;
+DROP TABLE Reader;
+
 /*Create Statements*/
 
 CREATE TABLE Reader(
@@ -41,7 +47,6 @@ INSERT INTO Reader VALUES
 	('Maliha', 'Petty'),
 	('Fionn', 'Mcclure');
 
-
 INSERT INTO Book VALUES
 	('J.R.R.Tolkien', 'Lord of the Rings', 1954, 'Adventure', 5),
 	('J.K. Rowling', 'Harry Potter', 1997, 'Fantasy', 3),
@@ -49,14 +54,17 @@ INSERT INTO Book VALUES
 	('Dan Brown', 'The Da Vinci Code', 2006, 'Criminal', 1),
 	('Nicholas Sparks', 'The Notebook', 1997, 'Romance', 6);
 
-
 INSERT INTO Event VALUES
-	('2020-11-16', 1, 42, 55),
-	('2020-12-10', 1, 44, 56),
-	('2020-12-05', 0, 40, 56),
-	('2020-12-01', 0, 42, 53),
-	('2020-11-20', 1, 41, 53);
+	('2020-11-16', 1, 3, 4),
+	('2020-12-10', 1, 4, 5),
+	('2020-12-05', 0, 1, 5),
+	('2020-12-01', 0, 3, 1),
+	('2020-11-20', 1, 2, 1);
 
 
-INSERT INTO Event VALUES
-	('2020-11-16', 1, 25, 7);
+/*Selects */
+
+SELECT * FROM Reader;
+SELECT * FROM Book;
+SELECT * FROM Event;
+
