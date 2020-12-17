@@ -1,6 +1,7 @@
 ﻿using Library.UI;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,12 @@ namespace Library.View
         public AddReaderView()
         {
             InitializeComponent();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)    //makes window be reusable
+        {
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }
