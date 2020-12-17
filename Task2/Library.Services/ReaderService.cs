@@ -39,6 +39,21 @@ namespace Library.Services
             }
         }
 
+        public Reader GetReaderById(int id)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                foreach (Reader r in context.Readers.ToList())
+                {
+                    if (r.reader_id.Equals(id))
+                    {
+                        return r;
+                    }
+                }
+                return null;
+            }
+        }
+
         static public bool AddReader(string fName, string lName)
         {
             using (var context = new LibraryDataContext())

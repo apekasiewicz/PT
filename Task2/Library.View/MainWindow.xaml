@@ -20,15 +20,8 @@
 	<StackPanel>
 		<TabControl>
 			<TabItem Header="Readers and Events">
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="*"/>
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions/>
-					<ContentControl Content="{Binding}" ContentTemplate="{StaticResource ReadersList}" Grid.Row="0"/>
-				</Grid>
-			</TabItem>
+                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ReadersList}"/>
+            </TabItem>
             <TabItem Header="Books And Events">
                 <ContentControl Content="{Binding}" ContentTemplate="{StaticResource BooksList}"/>
             </TabItem>
