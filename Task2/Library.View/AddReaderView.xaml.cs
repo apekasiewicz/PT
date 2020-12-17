@@ -31,5 +31,10 @@ namespace Library.View
             e.Cancel = true;
             this.Hide();
         }
+
+        private void AddReader()
+        {
+            this.Hide();
+        }
     }
 }

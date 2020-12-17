@@ -12,27 +12,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Library.View
 {
     /// <summary>
-    /// Interaction logic for ReaderListView.xaml
+    /// Interaction logic for EditReaderView.xaml
     /// </summary>
-    public partial class ReaderListView : UserControl
+    public partial class EditReaderView : Window, IWindow
     {
-        public ReaderListView()
+        public EditReaderView()
         {
             InitializeComponent();
         }
 
-        protected override void OnInitialized(EventArgs e)
+        protected override void OnClosing(CancelEventArgs e)    //makes window be reusable
         {
-            base.OnInitialized(e);
-            ReaderListViewModel readerListViewModel = (ReaderListViewModel)DataContext;
-            readerListViewModel.AddWindow = new Lazy<IWindow>(() => new AddReaderView());
-            readerListViewModel.EditWindow = new Lazy<IWindow>(() => new EditReaderView());
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }

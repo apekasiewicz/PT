@@ -22,8 +22,8 @@ namespace Library.UI
             readerService = new ReaderService();
             eventService = new EventService();
             bookService = new BookService();
-            AddReaderCommand = new CommandBase(ShowAddReaderView);
-            //EditReaderCommand 
+            AddReaderCommand = new CommandBase(ShowAddNewReader);
+            EditReaderCommand = new CommandBase(ShowEditReader);
             RefreshReaders();
         }
 
@@ -120,15 +120,23 @@ namespace Library.UI
         /*ICommand */
         public ICommand AddReaderCommand { get; private set; }
 
-        public CommandBase EditReaderCommand { get; private set; }
+        public ICommand EditReaderCommand { get; private set; }
 
         public CommandBase DeleteReaderCommand { get; private set; }
 
-        public Lazy<IWindow> NewWindow { get; set; }
+        public Lazy<IWindow> AddWindow { get; set; }
 
-        private void ShowAddReaderView()
+        public Lazy<IWindow> EditWindow { get; set; }
+
+        private void ShowAddNewReader()
         {
-            IWindow newWindow = NewWindow.Value;
+            IWindow newWindow = AddWindow.Value;
+            newWindow.Show();
+        }
+
+        private void ShowEditReader()
+        {
+            IWindow newWindow = EditWindow.Value;
             newWindow.Show();
         }
     }
