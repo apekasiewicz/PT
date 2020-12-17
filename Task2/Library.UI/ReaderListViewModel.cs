@@ -109,8 +109,10 @@ namespace Library.UI
 
         private void RefreshBook()
         {
-           // System.Diagnostics.Debug.WriteLine(CurrentEvent.book);
-            Task.Run(() => this.Book = bookService.GetBookById(CurrentEvent.book));
+            if (this.currentEvent != null)  //prevents the program crash when reader is changed having selected a book
+                Task.Run(() => this.Book = bookService.GetBookById(CurrentEvent.book));
+            else
+                this.Book = null;
         }
 
         /*ICommand */

@@ -5,20 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Library.View"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="800">
+             d:DesignHeight="560" d:DesignWidth="600">
+    <UserControl.Resources>
+        <DataTemplate x:Key="RowButtons">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnEditReader" Content="Edit" Margin="10, 0, 10, 0" Width="30"/>
+                <Button x:Name="btnDeleteReader" Content="Delete"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <StackPanel>
         <Button x:Name="addReaderBtn" Content="Add Reader" Command="{Binding AddReader}" Margin="0,10,20,10" HorizontalAlignment="Right" Height="30" Width="90"/>
-        <TextBlock FontSize="16" Margin="28, 10, 0, 10"><Run Text="Click on user to display their events:"/></TextBlock>
-        <ListView ItemsSource="{Binding Readers}"  SelectedItem="{Binding CurrentReader, Mode=TwoWay}">
+        <TextBlock FontSize="16" Margin="18, 10, 10, 10"><Run Text="Click on user to display their events:"/></TextBlock>
+        <ListView ItemsSource="{Binding Readers}"  SelectedItem="{Binding CurrentReader, Mode=TwoWay}" Margin="10, 10, 10, 10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding reader_f_name}" Width="300"/>
-                    <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding reader_l_name}" Width="300"/>
+                    <GridView.Columns>
+                        <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding reader_f_name}" Width="200"/>
+                        <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding reader_l_name}" Width="200"/>
+                        <GridViewColumn CellTemplate="{StaticResource RowButtons}" Width="100"/>
+                    </GridView.Columns>
+                    
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <ListView ItemsSource="{Binding Events}" SelectedItem="{Binding CurrentEvent, Mode=TwoWay}" Margin="0, 30, 0, 0">
+        <ListView ItemsSource="{Binding Events}" SelectedItem="{Binding CurrentEvent, Mode=TwoWay}" Margin="10, 30, 10, 0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding event_id}" Width="30"/>
@@ -29,8 +42,8 @@
             </ListView.View>
         </ListView>
 
-        <TextBlock FontSize="16"  Margin="28,40,44,0"><Run Text="Click on event to display book details:"/></TextBlock>
-        <StackPanel Orientation="Vertical" Margin="426,-20,44,10">
+        <TextBlock FontSize="16"  Margin="18,40,44,0"><Run Text="Click on event to display book details:"/></TextBlock>
+        <StackPanel Orientation="Vertical" Margin="300,-20,10,10" >
             <TextBox Text="{Binding Book.author}"/>
             <TextBox Text="{Binding Book.title}"/>
             <TextBox Text="{Binding Book.publishment_year}"/>

@@ -21,11 +21,9 @@ namespace Library.View
     /// </summary>
     public partial class MainWindow : Window
     {
-       // ReaderListViewModel readerListViewModel = new ReaderListViewModel();
         public MainWindow()
         {
             InitializeComponent();
-            //this.DataContext = this.readerListViewModel;
         }
     }
 }
