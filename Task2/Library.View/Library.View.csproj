@@ -58,6 +58,9 @@
     <Compile Include="AddReaderView.xaml.cs">
       <DependentUpon>AddReaderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BookListView.xaml.cs">
+      <DependentUpon>BookListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BorrowBookListView.xaml.cs">
       <DependentUpon>BorrowBookListView.xaml</DependentUpon>
     </Compile>
@@ -68,6 +71,10 @@
       <DependentUpon>ReaderListView.xaml</DependentUpon>
     </Compile>
     <Page Include="AddReaderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BookListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

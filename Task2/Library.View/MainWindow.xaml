@@ -13,6 +13,9 @@
 		<DataTemplate x:Key="BorrowBooksList">
 			<local:BorrowBookListView/>
 		</DataTemplate>
+        <DataTemplate x:Key="BooksList">
+            <local:BookListView/>
+        </DataTemplate>
 	</Window.Resources>
 	<StackPanel>
 		<TabControl>
@@ -26,6 +29,9 @@
 					<ContentControl Content="{Binding}" ContentTemplate="{StaticResource ReadersList}" Grid.Row="0"/>
 				</Grid>
 			</TabItem>
+            <TabItem Header="Books And Events">
+                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource BooksList}"/>
+            </TabItem>
 			<TabItem Header="Borrow Book">
 				<ContentControl Content="{Binding}" ContentTemplate="{StaticResource BorrowBooksList}" />
 			</TabItem>
