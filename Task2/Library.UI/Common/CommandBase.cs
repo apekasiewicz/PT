@@ -9,13 +9,13 @@ namespace Library.UI.Common
 {
     public class CommandBase : ICommand
     {
-        private readonly Action<object> execute = null;
+        private readonly Action execute = null;
         private readonly Predicate<object> canExecute = null;
 
-        public CommandBase(Action<object> execute)
+        public CommandBase(Action execute)
             : this(execute, null) { }
 
-        public CommandBase(Action<object> execute, Predicate<object> canExecute)
+        public CommandBase(Action execute, Predicate<object> canExecute)
         {
             this.execute = execute;
             this.canExecute = canExecute;
@@ -30,8 +30,7 @@ namespace Library.UI.Common
 
         public void Execute(object parameter)
         {
-            if (execute != null)
-                execute(parameter);
+            this.execute();
         }
 
         public void OnCanExecuteChanged()

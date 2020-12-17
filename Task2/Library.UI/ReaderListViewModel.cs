@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Library.UI
 {
@@ -21,7 +22,8 @@ namespace Library.UI
             readerService = new ReaderService();
             eventService = new EventService();
             bookService = new BookService();
-            AddReader = new CommandBase(o => { ShowAddReaderView(); }, o => true);
+            AddReaderCommand = new CommandBase(ShowAddReaderView);
+            //EditReaderCommand 
             RefreshReaders();
         }
 
@@ -116,7 +118,11 @@ namespace Library.UI
         }
 
         /*ICommand */
-        public CommandBase AddReader { get; private set; }
+        public ICommand AddReaderCommand { get; private set; }
+
+        public CommandBase EditReaderCommand { get; private set; }
+
+        public CommandBase DeleteReaderCommand { get; private set; }
 
         public Lazy<IWindow> NewWindow { get; set; }
 

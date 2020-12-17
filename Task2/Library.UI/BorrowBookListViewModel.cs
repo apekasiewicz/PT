@@ -19,8 +19,8 @@ namespace Library.UI
             readerService = new ReaderService();
             bookService = new BookService();
 
-            BorrowBook = new CommandBase(o => { BorrowBookForReader(); }, o => true);
-            ReturnBook = new CommandBase(o => { ReturnBookByReader(); }, o => true);
+            BorrowBook = new CommandBase(BorrowBookForReader);
+            ReturnBook = new CommandBase(ReturnBookByReader);
 
             RefreshReaders();
             RefreshBooks();
