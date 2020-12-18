@@ -24,6 +24,7 @@ namespace Library.UI
             bookService = new BookService();
             AddReaderCommand = new CommandBase(ShowAddNewReader);
             EditReaderCommand = new CommandBase(ShowEditReader);
+            RefreshReadersCommand = new CommandBase(RefreshReaders);
             RefreshReaders();
         }
 
@@ -41,6 +42,7 @@ namespace Library.UI
             {
                 readers = value;
                 OnPropertyChanged("Readers");
+                RefreshReaders();
             }
         }
 
@@ -76,7 +78,11 @@ namespace Library.UI
         }
         private void RefreshEvents()
         {
-            Task.Run(() => this.Events = eventService.GetEventsForReaderByName(CurrentReader.reader_f_name, CurrentReader.reader_l_name));
+            if (CurrentReader != null)
+            {
+                Task.Run(() => this.Events = eventService.GetEventsForReaderByName(CurrentReader.reader_f_name, CurrentReader.reader_l_name));
+            }
+            
         }
 
         /*Display book for selected event */
@@ -123,6 +129,8 @@ namespace Library.UI
         public ICommand EditReaderCommand { get; private set; }
 
         public CommandBase DeleteReaderCommand { get; private set; }
+
+        public CommandBase RefreshReadersCommand { get; private set; }
 
         public Lazy<IWindow> AddWindow { get; set; }
 
