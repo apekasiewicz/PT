@@ -24,16 +24,13 @@ namespace Library.View
         public AddReaderView()
         {
             InitializeComponent();
+            ReaderViewModel readerViewModel = (ReaderViewModel)DataContext;
+            readerViewModel.MessageBoxShowDelegate = text => MessageBox.Show(text, "Button interaction", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         protected override void OnClosing(CancelEventArgs e)    //makes window be reusable
         {
             e.Cancel = true;
-            this.Hide();
-        }
-
-        private void AddReader()
-        {
             this.Hide();
         }
     }

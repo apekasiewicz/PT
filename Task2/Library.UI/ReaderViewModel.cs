@@ -15,6 +15,7 @@ namespace Library.UI
     {
         public ReaderViewModel()
         {
+            //actionText = "Reader Added";
             AddReaderCommand = new CommandBase(AddReader);
         }
 
@@ -46,11 +47,19 @@ namespace Library.UI
             }
         }
 
-        public ICommand AddReaderCommand { get; private set; }
+        public CommandBase AddReaderCommand { get; private set; }
 
         private void AddReader()
         {
-            ReaderService.AddReader(FName, LName);
+            bool added = ReaderService.AddReader(FName, LName);
+            if (added)
+            {
+                actionText = "Reader Added";
+            } else
+            {
+                actionText = "Reader already exists in the database";
+            }
+            MessageBoxShowDelegate(ActionText);
         }
 
         public string Error
@@ -70,10 +79,19 @@ namespace Library.UI
                         return "First name is required";
                     else if (this.fName.Length > 50)
                         return "First name must not exceed 50 characters";
-                    /*else if (Regex.IsMatch(this.fName, @"^\d+$")) s.All(c => (c >= 48 && c <= 57))
-                        return "First name cannot contain numeric characters";*/
                     else if (isNumeric(this.fName))
                         return "First name cannot contain numeric characters";
+                }
+                else if (columnName == "LName")
+                {
+                    if (this.lName == null)
+                        return "Please enter reader's last name";
+                    else if (this.lName.Trim() == string.Empty)
+                        return "Last name is required";
+                    else if (this.lName.Length > 50)
+                        return "Last name must not exceed 50 characters";
+                    else if (isNumeric(this.lName))
+                        return "Last name cannot contain numeric characters";
                 }
                 return null;
             }
@@ -90,5 +108,23 @@ namespace Library.UI
             }
             return false;
         }
+
+        private string actionText;
+        public string ActionText
+        {
+            get
+            {
+                return this.actionText;
+            }
+            set
+            {
+                this.actionText = value;
+                OnPropertyChanged("ActionText");
+            }
+        }
+
+        public CommandBase DisplayPopUpCommand { get; private set; }
+
+        public Action<string> MessageBoxShowDelegate { get; set; } = x => throw new ArgumentOutOfRangeException($"The delegate {nameof(MessageBoxShowDelegate)} must be assigned by the view layer");
     }
 }

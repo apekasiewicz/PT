@@ -17,7 +17,7 @@
                                 <Label Content="*" Foreground="Red"/>
                                 <AdornedElementPlaceholder/>
                             </StackPanel>
-                            <TextBlock Text="{Binding ErrorContent}"/>
+                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"/>
                         </StackPanel>
                     </ControlTemplate>
                 </Setter.Value>
@@ -38,8 +38,8 @@
 
 
 			<TextBlock Margin="100, 20, 100, 10 " Text="Last name" FontSize="16"/>
-            <TextBox Margin="100, 0, 190, 10" Text="{Binding LName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
-                     />
+            <TextBox x:Name="LName" Margin="100, 0, 190, 10" Text="{Binding LName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                     Style="{StaticResource TextErrorStyle}"/>
             
             <Button Width="120" Height="50" Margin="10, 50, 10, 10 " Command="{Binding AddReaderCommand}" Content="ADD READER">
                 <Button.Style>
