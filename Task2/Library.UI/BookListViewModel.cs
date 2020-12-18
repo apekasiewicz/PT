@@ -22,6 +22,7 @@ namespace Library.UI
             this.bookService = new BookService();
 
             AddBookCommand = new CommandBase(ShowAddNewBook);
+            DeleteBookCommand = new CommandBase(DeleteBook);
             RefreshBooksCommand = new CommandBase(RefreshBooks);
             RefreshBooks();
         }
@@ -76,7 +77,11 @@ namespace Library.UI
 
         private void RefreshEvents()
         {
-            Task.Run(() => this.Events = eventService.GetEventsForBookByTitle(CurrentBook.title));
+            if (CurrentBook != null)
+            {
+                Task.Run(() => this.Events = eventService.GetEventsForBookByTitle(CurrentBook.title));
+
+            }
         }
 
         /*Display reader for selected event */
@@ -121,6 +126,8 @@ namespace Library.UI
         /*ICommand */
         public ICommand AddBookCommand { get; private set; }
 
+        public CommandBase DeleteBookCommand { get; private set; }
+
         public CommandBase RefreshBooksCommand { get; private set; }
 
         public Lazy<IWindow> AddWindow { get; set; }
@@ -132,5 +139,13 @@ namespace Library.UI
             newWindow.Show();
         }
 
+        private void DeleteBook()
+        {
+            if (CurrentBook != null)
+            {
+                BookService.DeleteBook(CurrentBook.title);
+                RefreshBooks();
+            }
+        }
     }
 }
