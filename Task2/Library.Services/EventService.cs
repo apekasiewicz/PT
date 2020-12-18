@@ -93,25 +93,6 @@ namespace Library.Services
             }
         }
 
-        static public Event GetBorrowEventForBookAndReader(int readerId, int bookId)
-        {
-            using (var context = new LibraryDataContext())
-            {
-                Book book = context.Books.SingleOrDefault(b => b.book_id.Equals(bookId));
-                Reader reader = context.Readers.SingleOrDefault(r => r.reader_id.Equals(readerId));
-
-                Event ev = null;
-                foreach (Event e in context.Events.ToList())
-                {
-                    if (e.book == book.book_id && e.reader == readerId && e.is_borrowing_event)
-                    {
-                        ev = e;
-                    }
-                }
-                return ev;
-            }
-        }
-
         static public IEnumerable<Event> GetBorrowingEvents()
         {
             using (var context = new LibraryDataContext())
@@ -244,7 +225,7 @@ namespace Library.Services
         {
             using (var context = new LibraryDataContext())
             {
-                if (GetBorrowEventForBookAndReader(reader.reader_id, book.book_id) != null)
+                if (CheckEventForBookAndReader(reader.reader_id, book.book_id))
                 {
                     AddEvent(DateTime.Today, false, book.book_id, reader.reader_id);
                     book.quantity += 1;
@@ -252,6 +233,30 @@ namespace Library.Services
                     return true;
                 }
                 return false;
+            }
+        }
+
+        static public bool CheckEventForBookAndReader(int readerId, int bookId)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                Book book = context.Books.SingleOrDefault(b => b.book_id.Equals(bookId));
+                Reader reader = context.Readers.SingleOrDefault(r => r.reader_id.Equals(readerId));
+
+                List<Event> bEvents = new List<Event>();
+                List<Event> rEvents = new List<Event>();
+                foreach (Event e in context.Events.ToList())
+                {
+                    if (e.book == book.book_id && e.reader == readerId && e.is_borrowing_event)
+                    {
+                        bEvents.Add(e);
+                    }
+                    else if (e.book == book.book_id && e.reader == readerId && !e.is_borrowing_event)
+                    {
+                        rEvents.Add(e);
+                    }
+                }
+                return bEvents.Count() > rEvents.Count();
             }
         }
 
