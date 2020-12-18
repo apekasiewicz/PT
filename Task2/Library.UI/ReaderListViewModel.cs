@@ -41,7 +41,6 @@ namespace Library.UI
             {
                 readers = value;
                 OnPropertyChanged("Readers");
-                this.RefreshReaders();
             }
         }
 

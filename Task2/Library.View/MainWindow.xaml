@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="560" Width="600">
+        Title="MainWindow" Height="650" Width="600">
 	<Window.Resources>
 		<DataTemplate x:Key="ReadersList">
 			<local:ReaderListView/>

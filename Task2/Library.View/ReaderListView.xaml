@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Library.View" xmlns:vm="clr-namespace:Library.UI;assembly=Library.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="560" d:DesignWidth="600">
+             d:DesignHeight="600" d:DesignWidth="600">
 
     <UserControl.DataContext>
         <vm:ReaderListViewModel/>
