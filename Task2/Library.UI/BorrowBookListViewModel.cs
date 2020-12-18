@@ -3,6 +3,7 @@ using Library.Services;
 using Library.UI.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,6 @@ namespace Library.UI
 {
     public class BorrowBookListViewModel : ModelViewBase
     {
-
         private ReaderService readerService;
         private BookService bookService;
 
@@ -19,8 +19,8 @@ namespace Library.UI
             readerService = new ReaderService();
             bookService = new BookService();
 
-            BorrowBook = new CommandBase(BorrowBookForReader);
-            ReturnBook = new CommandBase(ReturnBookByReader);
+            BorrowBookCommand = new CommandBase(BorrowBook);
+            ReturnBookCommand = new CommandBase(ReturnBook);
 
             RefreshReaders();
             RefreshBooks();
@@ -92,19 +92,61 @@ namespace Library.UI
         }
 
         /*ICommand*/
-        public CommandBase BorrowBook { get; private set; }
+        public CommandBase BorrowBookCommand { get; private set; }
 
-        private void BorrowBookForReader()
+        private void BorrowBook()
         {
-            EventService.AddEvent(DateTime.Today, true, CurrentBook.book_id, CurrentReader.reader_id);
+            bool borrowed = EventService.BorrowBookForReader(currentBook, currentReader);
+
+            if (borrowed)
+            {
+                actionText = "Book " + CurrentBook.title + " was borrowed.";
+            }
+            else
+            {
+                actionText = "Book cannot be borrowed. No copies in the library.";
+            }
+            MessageBoxShowDelegate(ActionText);
         }
 
-        public CommandBase ReturnBook { get; private set; }
+        public CommandBase ReturnBookCommand { get; private set; }
 
-        private void ReturnBookByReader()
+        private void ReturnBook()
         {
-            EventService.AddEvent(DateTime.Today, false, CurrentBook.book_id, CurrentReader.reader_id);
+            bool returned = EventService.ReturnBookByReader(currentBook, currentReader);
+            if (returned)
+            {
+                actionText = "Book " + CurrentBook.title + " was returned to the library.";
+            }
+            else
+            {
+                actionText = "Reader " + CurrentReader.reader_f_name + " " +
+                    CurrentReader.reader_l_name + " does not have this title among the books borrowed from the library";
+            }
+            MessageBoxShowDelegate(ActionText);
         }
+
+
+
+        // pop up window
+
+        private string actionText;
+        public string ActionText
+        {
+            get
+            {
+                return this.actionText;
+            }
+            set
+            {
+                this.actionText = value;
+                OnPropertyChanged("ActionText");
+            }
+        }
+
+        public CommandBase DisplayPopUpCommand { get; private set; }
+
+        public Action<string> MessageBoxShowDelegate { get; set; } = x => throw new ArgumentOutOfRangeException($"The delegate {nameof(MessageBoxShowDelegate)} must be assigned by the view layer");
     }
 
 }

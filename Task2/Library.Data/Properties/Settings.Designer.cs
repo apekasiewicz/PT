@@ -26,7 +26,7 @@ namespace Library.Data.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-ID9HRR5;Initial Catalog=library;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DELL-LAT5490-2;Initial Catalog=library;Integrated Security=True")]
         public string libraryConnectionString {
             get {
                 return ((string)(this["libraryConnectionString"]));
