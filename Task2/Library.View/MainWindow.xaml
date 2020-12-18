@@ -10,9 +10,6 @@
 		<DataTemplate x:Key="ReadersList">
 			<local:ReaderListView/>
 		</DataTemplate>
-		<DataTemplate x:Key="BorrowBooksList">
-			<local:BorrowBookListView/>
-		</DataTemplate>
 		<DataTemplate x:Key="BorrowAndReturnBooksList">
 			<local:BorrowAndReturnListView/>
 		</DataTemplate>
@@ -25,11 +22,8 @@
 			<TabItem Header="Readers and Events">
                 <ContentControl Content="{Binding}" ContentTemplate="{StaticResource ReadersList}"/>
             </TabItem>
-            <TabItem Header="Books And Events">
-                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource BooksList}"/>
-            </TabItem>
-			<TabItem Header="Borrow Book">
-				<ContentControl Content="{Binding}" ContentTemplate="{StaticResource BorrowBooksList}" />
+			<TabItem Header="Books And Events">
+				<ContentControl Content="{Binding}" ContentTemplate="{StaticResource BooksList}"/>
 			</TabItem>
 			<TabItem Header="Borrow And Return Book">
 				<ContentControl Content="{Binding}" ContentTemplate="{StaticResource BorrowAndReturnBooksList}" />
