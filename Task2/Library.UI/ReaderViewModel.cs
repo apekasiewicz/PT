@@ -17,6 +17,7 @@ namespace Library.UI
         {
             //actionText = "Reader Added";
             AddReaderCommand = new CommandBase(AddReader);
+            EditReaderCommand = new CommandBase(EditReader);
         }
 
         private string fName;
@@ -62,6 +63,36 @@ namespace Library.UI
             MessageBoxShowDelegate(ActionText);
         }
 
+        private string id;
+        public string Id
+        {
+            get
+            {
+                return this.id;
+            }
+            set
+            {
+                this.id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+
+        public CommandBase EditReaderCommand { get; private set; }
+
+        private void EditReader()
+        {
+            bool edited = ReaderService.UpdateReader(int.Parse(Id), FName, LName);
+            if (edited)
+            {
+                actionText = "Reader edited";
+            }
+            else
+            {
+                actionText = "Such reader already exists in the database";
+            }
+            MessageBoxShowDelegate(ActionText);
+        }
+
         public string Error
         {
             get { return null;  }
@@ -92,6 +123,23 @@ namespace Library.UI
                         return "Last name must not exceed 50 characters";
                     else if (isNumeric(this.lName))
                         return "Last name cannot contain numeric characters";
+                } 
+                else if (columnName == "Id")
+                {
+                    int entered_id, max_id = ReaderService.GetMaxId();
+
+                    if (!int.TryParse(this.id, out entered_id))
+                    {
+                        return "ID must be an integer";
+                    }
+                     else
+                    {
+                        if (entered_id < 1)
+                            return "ID must be at least 1";
+                        else if (entered_id > max_id)
+                            return "ID must not excced " + max_id.ToString();
+                    }
+
                 }
                 return null;
             }
