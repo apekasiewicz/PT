@@ -93,6 +93,25 @@ namespace Library.Services
             }
         }
 
+        static public Event GetEventForBookAndReader(int readerId, int bookId)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                Book book = context.Books.SingleOrDefault(b => b.book_id.Equals(bookId));
+                Reader reader = context.Readers.SingleOrDefault(r => r.reader_id.Equals(readerId));
+
+                Event ev = null;
+                foreach (Event e in context.Events.ToList())
+                {
+                    if (e.book == book.book_id && e.reader == readerId)
+                    {
+                        ev = e;
+                    }
+                }
+                return ev;
+            }
+        }
+
         static public IEnumerable<Event> GetBorrowingEvents()
         {
             using (var context = new LibraryDataContext())
@@ -202,5 +221,40 @@ namespace Library.Services
                 return true;
             }
         }
+
+        static public bool BorrowBookForReader(Book book, Reader reader)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                if (book != null & reader != null)
+                {
+                    if (book.quantity > 0)
+                    {
+                        AddEvent(DateTime.Today, true, book.book_id, reader.reader_id);
+                        book.quantity -= 1;
+                        BookService.UpdateBookQuantity(book.book_id, (int)book.quantity);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        static public bool ReturnBookByReader(Book book, Reader reader)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                if (GetEventForBookAndReader(reader.reader_id, book.book_id) != null)
+                {
+                    AddEvent(DateTime.Today, false, book.book_id, reader.reader_id);
+                    book.quantity += 1;
+                    BookService.UpdateBookQuantity(book.book_id, (int)book.quantity);
+                    return true;
+                }
+                return false;
+            }
+        }
+
+
     }
 }

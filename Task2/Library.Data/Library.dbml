@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="library" Class="LibraryDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-ID9HRR5;Initial Catalog=library;Integrated Security=True" SettingsObjectName="Library.Data.Properties.Settings" SettingsPropertyName="libraryConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DELL-LAT5490-2;Initial Catalog=library;Integrated Security=True" SettingsObjectName="Library.Data.Properties.Settings" SettingsPropertyName="libraryConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Reader" Member="Readers">
     <Type Name="Reader">
       <Column Name="reader_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
