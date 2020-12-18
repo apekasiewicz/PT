@@ -93,7 +93,7 @@ namespace Library.Services
             }
         }
 
-        static public Event GetEventForBookAndReader(int readerId, int bookId)
+        static public Event GetBorrowEventForBookAndReader(int readerId, int bookId)
         {
             using (var context = new LibraryDataContext())
             {
@@ -103,7 +103,7 @@ namespace Library.Services
                 Event ev = null;
                 foreach (Event e in context.Events.ToList())
                 {
-                    if (e.book == book.book_id && e.reader == readerId)
+                    if (e.book == book.book_id && e.reader == readerId && e.is_borrowing_event)
                     {
                         ev = e;
                     }
@@ -244,7 +244,7 @@ namespace Library.Services
         {
             using (var context = new LibraryDataContext())
             {
-                if (GetEventForBookAndReader(reader.reader_id, book.book_id) != null)
+                if (GetBorrowEventForBookAndReader(reader.reader_id, book.book_id) != null)
                 {
                     AddEvent(DateTime.Today, false, book.book_id, reader.reader_id);
                     book.quantity += 1;
