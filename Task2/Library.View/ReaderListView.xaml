@@ -14,7 +14,17 @@
     <UserControl.Resources>
         <DataTemplate x:Key="EditButtons">
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnEditReader" Content="Edit" Command="{Binding Path=DataContext.EditReaderCommand, ElementName=ReadersList}" Margin="10, 0, 10, 0" Width="30" />
+                <Button x:Name="btnEditReader" Content="Edit" Command="{Binding Path=DataContext.EditReaderCommand, ElementName=ReadersList}" Margin="10, 0, 10, 0" Width="30">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                                    <Setter Property="IsEnabled" Value="false"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button x:Name="btnDeleteReader" Command="{Binding Path=DataContext.DeleteReaderCommand, ElementName=ReadersList}" Content="Delete"/>
             </StackPanel>
         </DataTemplate>

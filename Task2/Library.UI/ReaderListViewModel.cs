@@ -25,6 +25,7 @@ namespace Library.UI
             AddReaderCommand = new CommandBase(ShowAddNewReader);
             EditReaderCommand = new CommandBase(ShowEditReader);
             RefreshReadersCommand = new CommandBase(RefreshReaders);
+            DeleteReaderCommand = new CommandBase(DeleteReader);
             RefreshReaders();
         }
 
@@ -42,7 +43,6 @@ namespace Library.UI
             {
                 readers = value;
                 OnPropertyChanged("Readers");
-                RefreshReaders();
             }
         }
 
@@ -135,6 +135,15 @@ namespace Library.UI
         public Lazy<IWindow> AddWindow { get; set; }
 
         public Lazy<IWindow> EditWindow { get; set; }
+
+        private void DeleteReader()
+        {
+            if (CurrentReader != null)
+            {
+                ReaderService.DeleteReader(CurrentReader.reader_f_name, CurrentReader.reader_l_name);
+                RefreshReaders();
+            }
+        }
 
         private void ShowAddNewReader()
         {
