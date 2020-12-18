@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Library.UI;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -23,6 +24,14 @@ namespace Library.View
         public BookListView()
         {
             InitializeComponent();
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+			BookListViewModel bookListViewModel = (BookListViewModel)DataContext;
+            bookListViewModel.AddWindow = new Lazy<IWindow>(() => new AddBookView());
+            
         }
     }
 }

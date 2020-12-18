@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Library.UI
 {
-    public class BookListViewModel : ModelViewBase 
+    public class BookListViewModel : ModelViewBase
     {
         private BookService bookService;
         private EventService eventService;
@@ -19,6 +20,9 @@ namespace Library.UI
             this.readerService = new ReaderService();
             this.eventService = new EventService();
             this.bookService = new BookService();
+
+            AddBookCommand = new CommandBase(ShowAddNewBook);
+            RefreshBooksCommand = new CommandBase(RefreshBooks);
             RefreshBooks();
         }
 
@@ -112,5 +116,21 @@ namespace Library.UI
             else
                 this.Reader = null;
         }
+  
+
+        /*ICommand */
+        public ICommand AddBookCommand { get; private set; }
+
+        public CommandBase RefreshBooksCommand { get; private set; }
+
+        public Lazy<IWindow> AddWindow { get; set; }
+
+
+        private void ShowAddNewBook()
+        {
+            IWindow newWindow = AddWindow.Value;
+            newWindow.Show();
+        }
+
     }
 }

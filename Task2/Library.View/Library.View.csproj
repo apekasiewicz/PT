@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddBookView.xaml.cs">
+      <DependentUpon>AddBookView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddReaderView.xaml.cs">
       <DependentUpon>AddReaderView.xaml</DependentUpon>
     </Compile>
@@ -70,6 +73,10 @@
     <Compile Include="ReaderListView.xaml.cs">
       <DependentUpon>ReaderListView.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddBookView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddReaderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
