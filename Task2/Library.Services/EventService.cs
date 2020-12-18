@@ -222,7 +222,7 @@ namespace Library.Services
             }
         }
 
-        static public void BorrowBookForReader(Book book, Reader reader)
+        static public bool BorrowBookForReader(Book book, Reader reader)
         {
             using (var context = new LibraryDataContext())
             {
@@ -233,12 +233,14 @@ namespace Library.Services
                         AddEvent(DateTime.Today, true, book.book_id, reader.reader_id);
                         book.quantity -= 1;
                         BookService.UpdateBookQuantity(book.book_id, (int)book.quantity);
+                        return true;
                     }
                 }
             }
+            return false;
         }
 
-        static public void ReturnBookByReader(Book book, Reader reader)
+        static public bool ReturnBookByReader(Book book, Reader reader)
         {
             using (var context = new LibraryDataContext())
             {
@@ -247,7 +249,9 @@ namespace Library.Services
                     AddEvent(DateTime.Today, false, book.book_id, reader.reader_id);
                     book.quantity += 1;
                     BookService.UpdateBookQuantity(book.book_id, (int)book.quantity);
+                    return true;
                 }
+                return false;
             }
         }
 
