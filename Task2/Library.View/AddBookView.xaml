@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Library.View"
 		xmlns:vm="clr-namespace:Library.UI;assembly=Library.UI"
         mc:Ignorable="d"
-        Title="AddBookView" Height="450" Width="800">
+        Title="AddBookView" Height="550" Width="800">
 
 	<Window.Resources>
 		<Style x:Key="TextErrorStyle" TargetType="{x:Type TextBox}">
@@ -15,7 +15,7 @@
 					<ControlTemplate>
 						<StackPanel>
 							<StackPanel Orientation="Horizontal">
-								<Label Content="*" Foreground="Red"/>
+								<Label Content="*" Foreground="Red" />
 								<AdornedElementPlaceholder/>
 							</StackPanel>
 							<TextBlock Text="{Binding ErrorContent}" Foreground="Red"/>
@@ -32,36 +32,39 @@
 
 	<Grid>
 		<StackPanel>
-			<TextBlock Margin="100, 20, 100, 10" Text="Add book" FontWeight="Bold" FontSize="20"/>
+			<TextBlock Margin="100, 10, 100, 10" Text="Add book" FontWeight="Bold" FontSize="20"/>
 			
 			<TextBlock Margin="100, 0, 100, 10" Text="Title" FontSize="16"/>
 			<TextBox x:Name="Title" Margin="100, 0, 190, 10" Text="{Binding Title, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
                      Style="{StaticResource TextErrorStyle}"/>
 
-			<TextBlock Margin="100, 0, 100, 10 " Text="Author" FontSize="16"/>
+			<TextBlock Margin="100, 20, 100, 10 " Text="Author" FontSize="16"/>
 			<TextBox x:Name="Author" Margin="100, 0, 190, 10" Text="{Binding Author, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
                      Style="{StaticResource TextErrorStyle}"/>
 
-			<TextBlock Margin="100, 0, 100, 10 " Text="Publishement year" FontSize="16"/>
+			<TextBlock Margin="100, 20, 100, 10 " Text="Publishement year" FontSize="16"/>
 			<TextBox x:Name="Year" Margin="100, 0, 190, 10" Text="{Binding Year, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
                      Style="{StaticResource TextErrorStyle}"/>
 
-			<TextBlock Margin="100, 0, 100, 10 " Text="Genre" FontSize="16"/>
+			<TextBlock Margin="100, 20, 100, 10 " Text="Genre" FontSize="16"/>
 			<TextBox x:Name="Genre" Margin="100, 0, 190, 10" Text="{Binding Genre, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
                      Style="{StaticResource TextErrorStyle}"/>
 
-			<TextBlock Margin="100, 0, 100, 10 " Text="Quantity" FontSize="16"/>
+			<TextBlock Margin="100, 20, 100, 10 " Text="Quantity" FontSize="16"/>
 			<TextBox x:Name="Quantity" Margin="100, 0, 190, 10" Text="{Binding Quantity, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
                      Style="{StaticResource TextErrorStyle}"/>
-			<Button Width="120" Height="50" Margin="337,0,337,10" Command="{Binding AddBookCommand}" Content="ADD BOOK">
+			<Button Width="120" Height="50" Margin="300,0,300,10" Command="{Binding AddBookCommand}" Content="ADD BOOK">
 				<Button.Style>
 					<Style TargetType="{x:Type Button}">
 						<Setter Property="IsEnabled" Value="False"/>
 						<Style.Triggers>
 							<MultiDataTrigger>
 								<MultiDataTrigger.Conditions>
-									<Condition Binding="{Binding (Validation.HasError), ElementName=FName}" Value="false"/>
-									<Condition Binding="{Binding (Validation.HasError), ElementName=LName}" Value="false"/>
+									<Condition Binding="{Binding (Validation.HasError), ElementName=Title}" Value="false"/>
+									<Condition Binding="{Binding (Validation.HasError), ElementName=Author}" Value="false"/>
+									<Condition Binding="{Binding (Validation.HasError), ElementName=Year}" Value="false"/>
+									<Condition Binding="{Binding (Validation.HasError), ElementName=Genre}" Value="false"/>
+									<Condition Binding="{Binding (Validation.HasError), ElementName=Quantity}" Value="false"/>
 								</MultiDataTrigger.Conditions>
 								<Setter Property="IsEnabled" Value="True"/>
 							</MultiDataTrigger>
