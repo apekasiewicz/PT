@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace ServicesTest
 {
-	[TestClass]
-	public class EventServiceTest
-	{
+    [TestClass]
+    public class EventServiceTest
+    {
         /*
         [TestMethod]
         public void GetEventsFromDatabaseTest()
@@ -71,5 +71,69 @@ namespace ServicesTest
             Assert.AreEqual(events.Count(), 0);
         }
         */
+
+        [TestMethod]
+        public void BorrowBookEventTest()
+        {
+            Book book = BookService.GetBook("Harry Potter", "J.K. Rowling");
+            Reader reader = ReaderService.GetReader("Judith", "Rojas");
+            Assert.AreEqual(book.quantity, 3);
+
+            EventService.BorrowBookForReader(book, reader);
+            Assert.AreEqual(book.quantity, 2);
+            Assert.AreEqual(EventService.GetAllEventsNumber(), 6);
+        }
+
+
+        [TestMethod]
+        public void BorrowBookQuantityEqualTo0Test()
+        {
+            Book book = BookService.GetBook("Pan Tadeusz", "Adam Mickiewicz");
+            Reader reader = ReaderService.GetReader("Judith", "Rojas");
+            Assert.AreEqual(book.quantity, 0);
+            
+            EventService.BorrowBookForReader(book, reader);
+            Assert.AreEqual(book.quantity, 0);
+            Assert.AreEqual(EventService.GetAllEventsNumber(), 6);
+        }
+
+        [TestMethod]
+        public void BorrowBookNonExisitingBookTest()
+        {
+            Book book = BookService.GetBook("Harry Potter part 2", "J.K. Rowling");
+            Reader reader = ReaderService.GetReader("Judith", "Rojas");
+
+            EventService.BorrowBookForReader(book, reader);
+            Assert.AreEqual(EventService.GetAllEventsNumber(), 6);
+        }
+
+        [TestMethod]
+        public void ReturnBookEventForWrongReaderTest()
+        {
+            Book book = BookService.GetBook("Harry Potter", "J.K. Rowling");
+            Reader reader = ReaderService.GetReader("Charilize", "Padilla");
+
+            EventService.ReturnBookByReader(book, reader);
+            Assert.AreEqual(EventService.GetAllEventsNumber(), 6);
+        }
+
+        [TestMethod]
+        public void ReturnBookEventTest()
+        {
+            Book book = BookService.GetBook("Harry Potter", "J.K. Rowling");
+            Reader reader = ReaderService.GetReader("Judith", "Rojas");
+            Assert.AreEqual(book.quantity, 2);
+
+            EventService.ReturnBookByReader(book, reader);
+            Assert.AreEqual(book.quantity, 3);
+            Assert.AreEqual(EventService.GetAllEventsNumber(), 7);
+        }
+
+     
+
+
+
+
+
     }
 }
