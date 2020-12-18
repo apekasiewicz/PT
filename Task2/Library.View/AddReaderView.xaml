@@ -6,6 +6,24 @@
         xmlns:local="clr-namespace:Library.View" xmlns:vm="clr-namespace:Library.UI;assembly=Library.UI"
         mc:Ignorable="d"
         Title="AddReaderView" Height="450" Width="800">
+
+    <Window.Resources>
+        <Style x:Key="TextErrorStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="*" Foreground="Red"/>
+                                <AdornedElementPlaceholder/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding ErrorContent}"/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     
     <Window.DataContext>
         <vm:ReaderViewModel/>
@@ -15,13 +33,31 @@
 		<StackPanel>
 			<TextBlock Margin="100, 50, 100, 10" Text="Add reader" FontWeight="Bold" FontSize="20"/>
 			<TextBlock Margin="100, 50, 100, 10" Text="First name" FontSize="16"/>
-			<TextBox Margin="100, 0, 190, 10" Text="{Binding FName}" />
+			<TextBox x:Name="FName" Margin="100, 0, 190, 10" Text="{Binding Path=FName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                     Style="{StaticResource TextErrorStyle}"/>
 
 
 			<TextBlock Margin="100, 20, 100, 10 " Text="Last name" FontSize="16"/>
-			<TextBox Margin="100, 0, 190, 10" Text="{Binding LName}" />
-			<Button Width="120" Height="50" Margin="10, 50, 10, 10 " Command="{Binding AddReaderCommand}" Content="ADD READER" />
-		</StackPanel>
+            <TextBox Margin="100, 0, 190, 10" Text="{Binding LName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                     />
+            
+            <Button Width="120" Height="50" Margin="10, 50, 10, 10 " Command="{Binding AddReaderCommand}" Content="ADD READER">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=FName, Path=(Validation.HasError)}" Value="false"/>
+                                    <Condition Binding="{Binding ElementName=LName, Path=(Validation.HasError)}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
 
 	</Grid>
 </Window>
