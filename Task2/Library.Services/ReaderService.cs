@@ -16,15 +16,7 @@ namespace Library.Services
             }
         }
 
-        static public int GetAllReadersNumber()
-        {
-            using (var context = new LibraryDataContext())
-            {
-                return context.Readers.Count();
-            }
-        }
-
-        public static Reader GetReader(string fName, string lName)
+        static public Reader GetReader(string fName, string lName)
         {
             using (var context = new LibraryDataContext())
             {
@@ -58,7 +50,7 @@ namespace Library.Services
         {
             using (var context = new LibraryDataContext())
             {
-                if (GetAllReadersNumber() == 0)
+                if (context.Readers.Count() == 0)
                     return 0;
                 else
                     return context.Readers.OrderByDescending(p => p.reader_id).First().reader_id;

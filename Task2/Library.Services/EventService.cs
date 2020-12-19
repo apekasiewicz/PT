@@ -15,11 +15,16 @@ namespace Library.Services
             }
         }
  
-        public IEnumerable<Event> GetEventsForReaderByName(string fName, string lName)
+        static public IEnumerable<Event> GetEventsForReaderByName(string fName, string lName)
         {
             using (var context = new LibraryDataContext())
             {
                 Reader reader = ReaderService.GetReader(fName, lName);
+
+                if (reader == null)
+                {
+                    return null;
+                }
 
                 List<Event> result = new List<Event>();
                 foreach (Event e in context.Events.ToList())

@@ -80,7 +80,7 @@ namespace Library.UI
         {
             if (CurrentReader != null)
             {
-                Task.Run(() => this.Events = eventService.GetEventsForReaderByName(CurrentReader.reader_f_name, CurrentReader.reader_l_name));
+                Task.Run(() => this.Events = EventService.GetEventsForReaderByName(CurrentReader.reader_f_name, CurrentReader.reader_l_name));
             }
             
         }
