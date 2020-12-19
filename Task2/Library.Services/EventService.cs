@@ -58,7 +58,7 @@ namespace Library.Services
             }
         }
 
-        public IEnumerable<Event> GetEventsForBookById(int bookId)
+        static public IEnumerable<Event> GetEventsForBookById(int bookId)
         {
             using (var context = new LibraryDataContext())
             {
@@ -180,7 +180,34 @@ namespace Library.Services
             }
         }
 
-        
+
+        static public void DeleteEventsForReader(int readerId)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                IEnumerable<Event> events = context.Events.Where(e => e.reader == readerId);
+                foreach (Event e in events)
+                {
+                    context.Events.DeleteOnSubmit(e);
+                    context.SubmitChanges();
+                }
+            }
+        }
+
+        static public void DeleteEventsForBook(int bookId)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                IEnumerable<Event> events = context.Events.Where(e => e.book == bookId);
+                foreach (Event e in events)
+                {
+                    context.Events.DeleteOnSubmit(e);
+                    context.SubmitChanges();
+                }
+            }
+        }
+
+
         public bool UpdateEventTime(int id, DateTime time)
         {
             using (var context = new LibraryDataContext())

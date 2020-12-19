@@ -101,6 +101,7 @@ namespace Library.Services
             {
                 Reader reader = context.Readers.SingleOrDefault(i => i.reader_f_name.Equals(fName) 
                         && i.reader_l_name.Equals(lName));
+                EventService.DeleteEventsForReader(reader.reader_id);
                 context.Readers.DeleteOnSubmit(reader);
                 context.SubmitChanges();
                 return true;

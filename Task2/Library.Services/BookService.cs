@@ -159,6 +159,7 @@ namespace Library.Services
             using (var context = new LibraryDataContext())
             {
                 Book book = context.Books.FirstOrDefault(i => i.title == title);
+                EventService.DeleteEventsForBook(book.book_id);
                 context.Books.DeleteOnSubmit(book);
                 context.SubmitChanges();
                 return true;
