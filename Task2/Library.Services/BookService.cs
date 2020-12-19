@@ -15,14 +15,6 @@ namespace Library.Services
             }
         }
 
-        static public int GetAllBooksNumber()
-        {
-            using (var context = new LibraryDataContext())
-            {
-                return context.Books.Count();
-            }
-        }
-
         static public Book GetBook(string title, string author)
         {
             using (var context = new LibraryDataContext())
@@ -158,7 +150,7 @@ namespace Library.Services
         {
             using (var context = new LibraryDataContext())
             {
-                if (GetAllBooksNumber() == 0)
+                if (context.Books.Count() == 0)
                     return 0;
                 else
                     return context.Books.OrderByDescending(b => b.book_id).First().book_id;

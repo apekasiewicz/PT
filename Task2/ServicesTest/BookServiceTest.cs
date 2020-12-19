@@ -10,18 +10,15 @@ namespace ServicesTest
     [TestClass]
     public class BookServiceTest
     {
-
-        [TestMethod]
-        public void GetBooksFromDatabaseTest()
-        {
-            Assert.AreEqual(BookService.GetAllBooksNumber(), 5);
-        }
-
         [TestMethod]
         public void AddBookToDatabaseTest()
         {
             Assert.IsTrue(BookService.AddBook("J.K. Rowling", "Harry ------ Potter", 1997, "Fantasy", 5));
-            Assert.AreEqual(BookService.GetAllBooksNumber(), 6);
+            Assert.AreEqual(BookService.GetBook("Harry ------ Potter", "J.K. Rowling").author, "J.K. Rowling");
+            Assert.AreEqual(BookService.GetBook("Harry ------ Potter", "J.K. Rowling").title, "Harry ------ Potter");
+            Assert.AreEqual(BookService.GetBook("Harry ------ Potter", "J.K. Rowling").publishment_year, 1997);
+            Assert.AreEqual(BookService.GetBook("Harry ------ Potter", "J.K. Rowling").genre, "Fantasy");
+            Assert.AreEqual(BookService.GetBook("Harry ------ Potter", "J.K. Rowling").quantity, 5);
 
             //delete to restore original db
             Assert.IsTrue(BookService.DeleteBook("Harry ------ Potter"));
@@ -32,14 +29,12 @@ namespace ServicesTest
         public void AddBookToDatabaseTheSameTitleTest()
         {
             Assert.IsFalse(BookService.AddBook("J.K. Rowling", "Harry Potter", 1997, "Fantasy", 5));
-            Assert.AreEqual(BookService.GetAllBooksNumber(), 5);
         }
 
         [TestMethod]
         public void AddBookToDatabaseWrongQuantityTest()
         {
             Assert.IsFalse(BookService.AddBook("J.K. Rowling", "Harry Potter", 1997, "Fantasy", -5));
-            Assert.AreEqual(BookService.GetAllBooksNumber(), 5);
         }
 
         [TestMethod]
@@ -67,11 +62,9 @@ namespace ServicesTest
         public void DeleteBookByTitleTest()
         {
             Assert.IsTrue(BookService.AddBook("J.K. Rowling", "Harry ------ Potter", 1997, "Fantasy", 5));
-            Assert.AreEqual(BookService.GetAllBooksNumber(), 6);
 
             //delete to restore original db
             Assert.IsTrue(BookService.DeleteBook("Harry ------ Potter"));
-            Assert.AreEqual(BookService.GetAllBooksNumber(), 5);
         }
 
         /*[TestMethod]

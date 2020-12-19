@@ -1,6 +1,6 @@
 /*Drops*/
 
-DROP TABLE	Event;
+DROP TABLE Event;
 DROP TABLE Book;
 DROP TABLE Reader;
 

@@ -81,7 +81,6 @@ namespace ServicesTest
 
             EventService.BorrowBookForReader(book, reader);
             Assert.AreEqual(book.quantity, 2);
-            Assert.AreEqual(EventService.GetAllEventsNumber(), 6);
         }
 
 
@@ -94,7 +93,6 @@ namespace ServicesTest
             
             EventService.BorrowBookForReader(book, reader);
             Assert.AreEqual(book.quantity, 0);
-            Assert.AreEqual(EventService.GetAllEventsNumber(), 6);
         }
 
         [TestMethod]
@@ -104,7 +102,6 @@ namespace ServicesTest
             Reader reader = ReaderService.GetReader("Judith", "Rojas");
 
             EventService.BorrowBookForReader(book, reader);
-            Assert.AreEqual(EventService.GetAllEventsNumber(), 6);
         }
 
         [TestMethod]
@@ -114,7 +111,6 @@ namespace ServicesTest
             Reader reader = ReaderService.GetReader("Charilize", "Padilla");
 
             EventService.ReturnBookByReader(book, reader);
-            Assert.AreEqual(EventService.GetAllEventsNumber(), 6);
         }
 
         [TestMethod]
@@ -126,14 +122,7 @@ namespace ServicesTest
 
             EventService.ReturnBookByReader(book, reader);
             Assert.AreEqual(book.quantity, 3);
-            Assert.AreEqual(EventService.GetAllEventsNumber(), 7);
         }
-
-     
-
-
-
-
 
     }
 }

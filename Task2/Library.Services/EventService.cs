@@ -14,32 +14,7 @@ namespace Library.Services
                 return context.Events.ToList();
             }
         }
-
-        static public int GetAllEventsNumber()
-        {
-            using (var context = new LibraryDataContext())
-            {
-                return context.Events.Count();
-            }
-        }
-
-        static public IEnumerable<Event> GetEventsForReaderById(int readerId)
-        {
-            using (var context = new LibraryDataContext())
-            {
-                List<Event> result = new List<Event>();
-                foreach (Event e in context.Events)
-                {
-                    if (e.reader == readerId)
-                    {
-                        result.Add(e);
-                    }
-                }
-                return result;
-            }
-        }
-
-        // ReaderService can be maybe used? 
+ 
         public IEnumerable<Event> GetEventsForReaderByName(string fName, string lName)
         {
             using (var context = new LibraryDataContext())
