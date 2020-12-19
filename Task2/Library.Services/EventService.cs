@@ -38,22 +38,6 @@ namespace Library.Services
             }
         }
 
-        static public IEnumerable<Event> GetEventsForBookById(int bookId)
-        {
-            using (var context = new LibraryDataContext())
-            {
-                List<Event> result = new List<Event>();
-                foreach (Event e in context.Events)
-                {
-                    if (e.book == bookId)
-                    {
-                        result.Add(e);
-                    }
-                }
-                return result;
-            }
-        }
-
         // BookService can be maybe used? 
         public IEnumerable<Event> GetEventsForBookByTitle(string title)
         {

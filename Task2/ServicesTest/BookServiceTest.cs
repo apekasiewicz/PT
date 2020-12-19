@@ -67,65 +67,37 @@ namespace ServicesTest
             Assert.IsTrue(BookService.DeleteBook("Harry ------ Potter"));
         }
 
-        /*[TestMethod]
-        public void UpdateBookTitleTest()
-        {
-            Assert.IsTrue(BookService.UpdateBookTitle(44, "The Notebook part 2"));
-            Book book1 = BookService.GetBook("The Notebook", "Nicholas Sparks");
-            Assert.IsNull(book1);
-            Book book2 = BookService.GetBook("The Notebook part 2", "Nicholas Sparks");
-            Assert.IsNotNull(book2);
-
-            //update to restore original db
-            Assert.IsTrue(BookService.UpdateBookTitle(44, "The Notebook"));
-        }
-
-        [TestMethod]
-        public void UpdateBookAuthorTest()
-        {
-            Assert.IsTrue(BookService.UpdateBookAuthor(44, "Nicholas Sparks +"));
-            Book book1 = BookService.GetBook("The Notebook", "Nicholas Sparks");
-            Assert.IsNull(book1);
-            Book book2 = BookService.GetBook("The Notebook", "Nicholas Sparks +");
-            Assert.IsNotNull(book2);
-
-            //update to restore original db
-            Assert.IsTrue(BookService.UpdateBookAuthor(44, "Nicholas Sparks"));
-        }
-
-
-        [TestMethod]
-        public void UpdateBookGenreTest()
-        {
-            Assert.IsTrue(BookService.UpdateBookGenre(44, "Drama"));
-            Book book1 = BookService.GetBook("The Notebook", "Nicholas Sparks");
-            Assert.AreEqual(book1.genre, "Drama");
-            Assert.AreEqual(BookService.GetBooksByGenre("Drama").Count(), 2);
-
-            //update to restore original db
-            Assert.IsTrue(BookService.UpdateBookGenre(44, "Romance"));
-        }
-
         [TestMethod]
         public void UpdateBookQuantityTest()
         {
-            Assert.IsTrue(BookService.UpdateBookQuantity(44, 10));
-            Book book1 = BookService.GetBook("The Notebook", "Nicholas Sparks");
+            Assert.IsTrue(BookService.AddBook("J.K. Rowling", "Harry ------ Potter", 1997, "Fantasy", 5));
+            Book book = BookService.GetBook("Harry ------ Potter", "J.K. Rowling");
+
+            Assert.IsTrue(BookService.UpdateBookQuantity(book.book_id, 10));
+            Book book1 = BookService.GetBook("Harry ------ Potter", "J.K. Rowling");
             Assert.AreEqual(book1.quantity, 10);
 
             //update to restore original db
-            Assert.IsTrue(BookService.UpdateBookQuantity(44, 6));
+            Assert.IsTrue(BookService.DeleteBook("Harry ------ Potter"));
         }
 
         [TestMethod]
-        public void UpdateBookYearTest()
+        public void UpdateBookTest()
         {
-            Assert.IsTrue(BookService.UpdateBookYear(44, 2020));
-            Book book1 = BookService.GetBook("The Notebook", "Nicholas Sparks");
-            Assert.AreEqual(book1.publishment_year, 2020);
+            Assert.IsTrue(BookService.AddBook("J.K. Rowling", "Harry ------ Potter", 1997, "Fantasy", 5));
+            Book book = BookService.GetBook("Harry ------ Potter", "J.K. Rowling");
+            Assert.IsTrue(BookService.UpdateBook(book.book_id, "Harry", "Rowling", 1997, "Fantasy", 5));
+            Assert.IsNull(BookService.GetBook("Harry ------ Potter", "J.K. Rowling"));
+            Book book1 = BookService.GetBook("Harry", "Rowling");
+            Assert.IsNotNull(book1);
+            Assert.AreEqual(book1.author, "Rowling");
+            Assert.AreEqual(book1.title, "Harry");
+            Assert.AreEqual(book1.quantity, 5);
+            Assert.AreEqual(book1.publishment_year, 1997);
+            Assert.AreEqual(book1.genre, "Fantasy");
 
-            //update to restore original db
-            Assert.IsTrue(BookService.UpdateBookYear(44, 1997));
-        }*/
+            //restore original db
+            Assert.IsTrue(BookService.DeleteBook("Harry"));
+        }
     }
 }

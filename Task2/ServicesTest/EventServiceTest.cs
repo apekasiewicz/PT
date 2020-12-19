@@ -10,67 +10,64 @@ namespace ServicesTest
     [TestClass]
     public class EventServiceTest
     {
-        /*
         [TestMethod]
-        public void GetEventsFromDatabaseTest()
+        public void AddEventForNonExistingReaderToDatabaseTest()
         {
-            Assert.AreEqual(EventService.GetAllEventsNumber(), 5);
+            Assert.IsFalse(EventService.AddEvent(DateTime.Now, true, 40, 154));
         }
 
         [TestMethod]
         public void AddEventToDatabaseTest()
         {
-            Assert.IsTrue(EventService.AddEvent(DateTime.Now, true, 40, 54));
-            Assert.AreEqual(EventService.GetAllEventsNumber(), 6);
+            Assert.IsTrue(ReaderService.AddReader("Britney", "Spears"));
+            Reader reader = ReaderService.GetReader("Britney", "Spears");
+
+            Assert.IsTrue(BookService.AddBook("Awesome Author", "Awesome Title", 2020, "Cute", 10));
+            Book book = BookService.GetBook("Awesome Title", "Awesome Author");
+
+            Assert.IsTrue(EventService.AddEvent(DateTime.Now, true, book.book_id, reader.reader_id));
 
             //delete to restore original db
-            Assert.IsTrue(EventService.DeleteEvent(EventService.GetEvents().ElementAt(5).event_id));
+            Assert.IsTrue(EventService.DeleteEvent(reader.reader_id, book.book_id));
+            Assert.IsTrue(ReaderService.DeleteReader(reader.reader_f_name, reader.reader_l_name));
+            Assert.IsTrue(BookService.DeleteBook(book.title));
         }
 
         [TestMethod]
-        public void AddEventForNonExistingReaderToDatabaseTest()
+        public void GetEventsForReaderByNameTest()
         {
-            Assert.IsFalse(EventService.AddEvent(DateTime.Now, true, 40, 154));
-            Assert.AreEqual(EventService.GetAllEventsNumber(), 5);
-        }
+            Assert.IsTrue(ReaderService.AddReader("Britney", "Spears"));
+            Reader reader = ReaderService.GetReader("Britney", "Spears");
 
-        [TestMethod]
-        public void GetEventsForReaderByIdTest()
-        {
-            IEnumerable<Event> events = EventService.GetEventsForReaderById(EventService.GetEvents().ElementAt(0).reader);
-            Assert.AreEqual(events.Count(), 1);
+            Assert.IsTrue(BookService.AddBook("Awesome Author", "Awesome Title", 2020, "Cute", 10));
+            Book book = BookService.GetBook("Awesome Title", "Awesome Author");
+
+            EventService.BorrowBookForReader(book, reader);
+            EventService.ReturnBookByReader(book, reader);
+
+            IEnumerable<Event> events = EventService.GetEventsForReaderByName("Britney", "Spears");
+            Assert.AreEqual(events.Count(), 2);
             Assert.AreEqual(events.ElementAt(0).is_borrowing_event, true);
-        }
+            Assert.AreEqual(events.ElementAt(1).is_borrowing_event, false);
 
-        [TestMethod]
-        public void GetEventForReaderByIdTest()
-        {
-            IEnumerable<Event> events = EventService.GetEventsForReaderById(EventService.GetEvents().ElementAt(0).reader);
-            Assert.AreEqual(events.Count(), 1);
-            Assert.AreEqual(events.ElementAt(0).is_borrowing_event, true);
+            //restore db
+            Assert.IsTrue(ReaderService.DeleteReader(reader.reader_f_name, reader.reader_l_name));
+            Assert.IsTrue(BookService.DeleteBook(book.title));
         }
 
         [TestMethod]
         public void GetBorrowingEventsTest()
         {
             IEnumerable<Event> events = EventService.GetBorrowingEvents();
-            Assert.AreEqual(events.Count(), 3);
+            Assert.IsNotNull(events);
         }
 
         [TestMethod]
         public void GetReturningEventsTest()
         {
             IEnumerable<Event> events = EventService.GetReturningEvents();
-            Assert.AreEqual(events.Count(), 2);
+            Assert.IsNotNull(events);
         }
-
-        [TestMethod]
-        public void GetEventsByDateTest()
-        {
-            IEnumerable<Event> events = EventService.GetEventsByDate(DateTime.Now);
-            Assert.AreEqual(events.Count(), 0);
-        }
-        */
 
         [TestMethod]
         public void BorrowBookEventTest()
