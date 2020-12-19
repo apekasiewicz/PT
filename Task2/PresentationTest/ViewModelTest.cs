@@ -94,28 +94,5 @@ namespace PresentationTest
             Thread.Sleep(3000);
             Assert.IsTrue(eventRefreshEventRaised);
         }
-
-        [TestMethod]
-        public void RefreshBookCurrentEvent()
-        {
-            ReaderListViewModel vm = new ReaderListViewModel();
-
-            Thread.Sleep(3000);
-
-            var bookRefreshEventRaised = false;
-            vm.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == "Book")
-                {
-                    bookRefreshEventRaised = true;
-                }
-            };
-
-            vm.CurrentEvent = vm.Events.Skip(1).First();
-            Assert.IsNotNull(vm.CurrentEvent);
-
-            Thread.Sleep(3000);
-            Assert.IsTrue(bookRefreshEventRaised);
-        }
     }
 }
