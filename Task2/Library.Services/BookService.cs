@@ -83,54 +83,6 @@ namespace Library.Services
             }
         }
 
-        static public bool UpdateBookAuthor(int _id, string author) //not sure if id will work with the view
-        {
-            using (var context = new LibraryDataContext())
-            {
-                Book book = context.Books.SingleOrDefault(i => i.book_id == _id);
-                //if (book != null) always not null?
-                //{
-                    book.author = author;
-                    context.SubmitChanges();
-                    return true;
-                //}
-                //return false;
-            }
-        }
-
-        static public bool UpdateBookTitle(int _id, string title)
-        {
-            using (var context = new LibraryDataContext())
-            {
-                Book book = context.Books.SingleOrDefault(i => i.book_id == _id);
-                book.title = title;
-                context.SubmitChanges();
-                return true;
-            }
-        }
-
-        static public bool UpdateBookYear(int _id, int year)
-        {
-            using (var context = new LibraryDataContext())
-            {
-                Book book = context.Books.SingleOrDefault(i => i.book_id == _id);
-                book.publishment_year = year;
-                context.SubmitChanges();
-                return true;
-            }
-        }
-
-        static public bool UpdateBookGenre(int _id, string genre)
-        {
-            using (var context = new LibraryDataContext())
-            {
-                Book book = context.Books.SingleOrDefault(i => i.book_id == _id);
-                book.genre = genre;
-                context.SubmitChanges();
-                return true;
-            }
-        }
-
         static public bool UpdateBookQuantity(int _id, int q)
         {
             using (var context = new LibraryDataContext())
