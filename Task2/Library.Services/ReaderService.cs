@@ -54,6 +54,17 @@ namespace Library.Services
             }
         }
 
+        static public int GetMaxId()
+        {
+            using (var context = new LibraryDataContext())
+            {
+                if (GetAllReadersNumber() == 0)
+                    return 0;
+                else
+                    return context.Readers.OrderByDescending(p => p.reader_id).First().reader_id;
+            }
+        }
+
         static public bool AddReader(string fName, string lName)
         {
             using (var context = new LibraryDataContext())
@@ -73,25 +84,19 @@ namespace Library.Services
             }
         }
 
-        static public bool UpdateReaderFName(int id, string fName)
+        static public bool UpdateReader(int id, string fName, string lName)
         {
             using (var context = new LibraryDataContext())
             {
                 Reader reader = context.Readers.SingleOrDefault(i => i.reader_id == id);
-                reader.reader_f_name = fName;
-                context.SubmitChanges();
-                return true;
-            }
-        }
-
-        static public bool UpdateReaderLName(int id, string lName)
-        {
-            using (var context = new LibraryDataContext())
-            {
-                Reader reader = context.Readers.SingleOrDefault(i => i.reader_id == id);
-                reader.reader_l_name = lName;
-                context.SubmitChanges();
-                return true;
+                if (GetReader(fName, lName) == null) 
+                {
+                    reader.reader_f_name = fName;
+                    reader.reader_l_name = lName;
+                    context.SubmitChanges();
+                    return true;
+                }
+                return false;
             }
         }
 

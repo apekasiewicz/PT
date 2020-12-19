@@ -5,22 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library.View" xmlns:vm="clr-namespace:Library.UI;assembly=Library.UI"
         mc:Ignorable="d"
-        Title="EditReaderView" Height="450" Width="800">
+        Title="EditReaderView" Height="500" Width="800">
+
+    <Window.Resources>
+        <Style x:Key="TextErrorStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="*" Foreground="Red"/>
+                                <AdornedElementPlaceholder/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
     <Window.DataContext>
-        <vm:ReaderListViewModel/>
+        <vm:ReaderViewModel/>
     </Window.DataContext>
-    
+
     <Grid>
         <StackPanel>
-            <TextBlock Margin="100, 50, 100, 10" Text="Edit reader" FontWeight="Bold" FontSize="20"/>
-            <TextBlock Margin="100, 50, 100, 10" Text="First name" FontSize="16"/>
-            <TextBox Margin="100, 0, 190, 10" Text="{Binding CurrentReader.reader_f_name}" />
+            <TextBlock Margin="100, 30, 100, 10" Text="Edit reader" FontWeight="Bold" FontSize="20"/>
+
+            <TextBlock Margin="100, 30, 100, 10" Text="ID to edit" FontSize="16"/>
+            <TextBox x:Name="Id" Margin="100, 0, 190, 10" Text="{Binding Path=Id, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                     Style="{StaticResource TextErrorStyle}"/>
+
+            <TextBlock Margin="100, 20, 100, 10" Text="First name" FontSize="16"/>
+            <TextBox x:Name="FName" Margin="100, 0, 190, 10" Text="{Binding Path=FName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                     Style="{StaticResource TextErrorStyle}"/>
 
 
             <TextBlock Margin="100, 20, 100, 10 " Text="Last name" FontSize="16"/>
-            <TextBox Margin="100, 0, 190, 10" Text="{Binding CurrentReader.reader_l_name}" />
-            <Button Width="120" Height="50" Margin="10, 50, 10, 10 " Content="EDIT READER" />
+            <TextBox x:Name="LName" Margin="100, 0, 190, 10" Text="{Binding Path=LName, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                     Style="{StaticResource TextErrorStyle}" />
+            <Button Width="120" Height="50" Margin="10, 50, 10, 10 " Command="{Binding EditReaderCommand}" Content="EDIT READER">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=Id, Path=(Validation.HasError)}" Value="false"/>
+                                    <Condition Binding="{Binding ElementName=FName, Path=(Validation.HasError)}" Value="false"/>
+                                    <Condition Binding="{Binding ElementName=LName, Path=(Validation.HasError)}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

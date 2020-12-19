@@ -24,6 +24,8 @@ namespace Library.View
         public EditReaderView()
         {
             InitializeComponent();
+            ReaderViewModel readerViewModel = (ReaderViewModel)DataContext;
+            readerViewModel.MessageBoxShowDelegate = text => MessageBox.Show(text, "Button interaction", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         protected override void OnClosing(CancelEventArgs e)    //makes window be reusable
