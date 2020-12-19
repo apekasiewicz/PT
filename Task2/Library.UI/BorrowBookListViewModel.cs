@@ -22,8 +22,9 @@ namespace Library.UI
             BorrowBookCommand = new CommandBase(BorrowBook);
             ReturnBookCommand = new CommandBase(ReturnBook);
 
-            RefreshReaders();
+            
             RefreshBooks();
+            RefreshReaders();
         }
 
         private void RefreshReaders()
@@ -61,7 +62,6 @@ namespace Library.UI
             }
         }
 
-        //selected book
         private Book currentBook;
         public Book CurrentBook
         {
@@ -72,7 +72,7 @@ namespace Library.UI
             set
             {
                 this.currentBook = value;
-                OnPropertyChanged("Book");
+                OnPropertyChanged("CurrentBook");
             }
         }
 
@@ -96,7 +96,7 @@ namespace Library.UI
 
         private void BorrowBook()
         {
-            bool borrowed = EventService.BorrowBookForReader(currentBook, currentReader);
+            bool borrowed = EventService.BorrowBookForReader(CurrentBook, CurrentReader);
 
             if (borrowed)
             {
@@ -113,7 +113,7 @@ namespace Library.UI
 
         private void ReturnBook()
         {
-            bool returned = EventService.ReturnBookByReader(currentBook, currentReader);
+            bool returned = EventService.ReturnBookByReader(CurrentBook, CurrentReader);
             if (returned)
             {
                 actionText = "Book " + CurrentBook.title + " was returned to the library.";

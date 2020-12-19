@@ -13,21 +13,9 @@
 	</UserControl.DataContext>
 
 	<StackPanel>
-		<TextBlock FontSize="16" Margin="18, 10, 10, 10"><Run Text="Choose reader:"/></TextBlock>
-		<ListView x:Name="ReadersList" ItemsSource="{Binding Readers}"  SelectedItem="{Binding CurrentReader, Mode=TwoWay}" Margin="10, 10, 10, 10">
-			<ListView.View>
-				<GridView>
-					<GridView.Columns>
-						<GridViewColumn Header="First Name" DisplayMemberBinding="{Binding reader_f_name}" Width="200"/>
-						<GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding reader_l_name}" Width="200"/>
-					</GridView.Columns>
-
-				</GridView>
-			</ListView.View>
-		</ListView>
 
 		<TextBlock FontSize="16" Margin="18, 10, 10, 10"><Run Text="Choose book:"/></TextBlock>
-		<ListView x:Name="BooksList" ItemsSource="{Binding Books}"  SelectedItem="{Binding CurrentBook, Mode=TwoWay}" Margin="10, 10, 10, 10">
+		<ListView x:Name="BooksList" ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}" Margin="10, 10, 10, 10">
 			<ListView.View>
 				<GridView>
 					<GridView.Columns>
@@ -40,8 +28,52 @@
 				</GridView>
 			</ListView.View>
 		</ListView>
+		
+		<TextBlock FontSize="16" Margin="18, 10, 10, 10"><Run Text="Choose reader:"/></TextBlock>
+		<ListView x:Name="ReadersList" ItemsSource="{Binding Readers}" SelectedItem="{Binding CurrentReader}" Margin="10, 10, 10, 10">
+			<ListView.View>
+				<GridView>
+					<GridView.Columns>
+						<GridViewColumn Header="First Name" DisplayMemberBinding="{Binding reader_f_name}" Width="200"/>
+						<GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding reader_l_name}" Width="200"/>
+					</GridView.Columns>
+				</GridView>
+			</ListView.View>
+		</ListView>
 
-		<Button x:Name="borrowBook" Content="Borrow this book" Command="{Binding BorrowBookCommand}"  Height="30" Margin="10, 10, 10, 10" />
-		<Button x:Name="returnBook" Content="Return this book" Command="{Binding ReturnBookCommand}"  Height="30" Margin="10, 10, 10, 10" />
+		
+
+		<Button x:Name="borrowBook" Content="Borrow this book" Command="{Binding BorrowBookCommand}"  Height="30" Margin="10, 10, 10, 10">
+			<Button.Style>
+				<Style TargetType="{x:Type Button}">
+					<Setter Property="IsEnabled" Value="True"/>
+					<Style.Triggers>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding CurrentReader}" Value="{x:Null}"/>
+							</MultiDataTrigger.Conditions>
+							<Setter Property="IsEnabled" Value="False"/>
+						</MultiDataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Button.Style>
+		</Button>
+
+		<Button x:Name="returnBook" Content="Return this book" Command="{Binding ReturnBookCommand}"  Height="30" Margin="10, 10, 10, 10">
+			<Button.Style>
+				<Style TargetType="{x:Type Button}">
+					<Setter Property="IsEnabled" Value="True"/>
+					<Style.Triggers>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding CurrentReader}" Value="{x:Null}"/>
+							</MultiDataTrigger.Conditions>
+							<Setter Property="IsEnabled" Value="False"/>
+						</MultiDataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Button.Style>
+
+		</Button>
 	</StackPanel>
 </UserControl> 

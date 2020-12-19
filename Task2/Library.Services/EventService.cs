@@ -234,7 +234,7 @@ namespace Library.Services
         {
             using (var context = new LibraryDataContext())
             {
-                if (book != null & reader != null)
+                if (book != null && reader != null)
                 {
                     if (book.quantity > 0)
                     {
@@ -252,12 +252,15 @@ namespace Library.Services
         {
             using (var context = new LibraryDataContext())
             {
-                if (CheckEventForBookAndReader(reader.reader_id, book.book_id))
+                if (book != null && reader != null)
                 {
-                    AddEvent(DateTime.Today, false, book.book_id, reader.reader_id);
-                    book.quantity += 1;
-                    BookService.UpdateBookQuantity(book.book_id, (int)book.quantity);
-                    return true;
+                    if (CheckEventForBookAndReader(reader.reader_id, book.book_id))
+                    {
+                        AddEvent(DateTime.Today, false, book.book_id, reader.reader_id);
+                        book.quantity += 1;
+                        BookService.UpdateBookQuantity(book.book_id, (int)book.quantity);
+                        return true;
+                    }
                 }
                 return false;
             }
