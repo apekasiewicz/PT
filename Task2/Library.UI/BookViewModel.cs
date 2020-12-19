@@ -12,6 +12,7 @@ namespace Library.UI
         public BookViewModel()
         {
             AddBookCommand = new CommandBase(AddBook);
+            EditBookCommand = new CommandBase(EditBook);
         }
 
         private string title;
@@ -86,17 +87,25 @@ namespace Library.UI
             }
         }
 
+        private string id;
+        public string Id
+        {
+            get
+            {
+                return this.id;
+            }
+            set
+            {
+                this.id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+
         public CommandBase AddBookCommand { get; private set; }
 
 		private void AddBook()
         {
-            int bYear = 0;
-            int bQuantity = 0;
-
-            Int32.TryParse(Year, out bYear);
-            Int32.TryParse(Quantity, out bQuantity);
-
-            bool added = BookService.AddBook(Title, Author, bYear, Genre, bQuantity);
+            bool added = BookService.AddBook(Title, Author, int.Parse(Year), Genre, int.Parse(Quantity));
             if (added)
             {
                 actionText = "Book added";
@@ -107,6 +116,24 @@ namespace Library.UI
             }
             MessageBoxShowDelegate(ActionText);
         }
+
+        public CommandBase EditBookCommand { get; private set; }
+
+        private void EditBook()
+        {
+            bool edited = BookService.UpdateBook(int.Parse(Id), Title, Author, int.Parse(Year),
+                Genre, int.Parse(Quantity));
+            if (edited)
+            {
+                actionText = "Book edited";
+            }
+            else
+            {
+                actionText = "Such book already exists in the database";
+            }
+            MessageBoxShowDelegate(ActionText);
+        }
+
 
         public string Error
         {
@@ -173,6 +200,22 @@ namespace Library.UI
                         return "Quantity must be non-negative integer";
                     else if (this.quantity.Length > 4)
                         return "Quantity must not exceed 4 characters";
+                }
+                else if (columnName == "Id")
+                {
+                    int entered_id, max_id = BookService.GetMaxId();
+
+                    if (!int.TryParse(this.id, out entered_id))
+                    {
+                        return "ID must be an integer";
+                    }
+                    else
+                    {
+                        if (entered_id < 1)
+                            return "ID must be at least 1";
+                        else if (entered_id > max_id)
+                            return "ID must not excced " + max_id.ToString();
+                    }
                 }
                 return null;
             }

@@ -31,7 +31,7 @@ namespace Library.View
             base.OnInitialized(e);
 			BookListViewModel bookListViewModel = (BookListViewModel)DataContext;
             bookListViewModel.AddWindow = new Lazy<IWindow>(() => new AddBookView());
-            
+            bookListViewModel.EditWindow = new Lazy<IWindow>(() => new EditBookView());
         }
     }
 }

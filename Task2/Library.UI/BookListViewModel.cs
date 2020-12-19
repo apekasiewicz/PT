@@ -22,6 +22,7 @@ namespace Library.UI
             this.bookService = new BookService();
 
             AddBookCommand = new CommandBase(ShowAddNewBook);
+            EditBookCommand = new CommandBase(ShowEditBook);
             DeleteBookCommand = new CommandBase(DeleteBook);
             RefreshBooksCommand = new CommandBase(RefreshBooks);
             RefreshBooks();
@@ -126,12 +127,15 @@ namespace Library.UI
         /*ICommand */
         public ICommand AddBookCommand { get; private set; }
 
+        public ICommand EditBookCommand { get; private set; }
+
         public CommandBase DeleteBookCommand { get; private set; }
 
         public CommandBase RefreshBooksCommand { get; private set; }
 
         public Lazy<IWindow> AddWindow { get; set; }
 
+        public Lazy<IWindow> EditWindow { get; set; }
 
         private void ShowAddNewBook()
         {
@@ -146,6 +150,11 @@ namespace Library.UI
                 BookService.DeleteBook(CurrentBook.title);
                 RefreshBooks();
             }
+        }
+        private void ShowEditBook()
+        {
+            IWindow newWindow = EditWindow.Value;
+            newWindow.Show();
         }
     }
 }

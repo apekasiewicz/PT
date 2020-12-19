@@ -35,7 +35,7 @@
 			<TextBlock Margin="100, 10, 100, 10" Text="Add book" FontWeight="Bold" FontSize="20"/>
 			
 			<TextBlock Margin="100, 0, 100, 10" Text="Title" FontSize="16"/>
-			<TextBox x:Name="Title" Margin="100, 0, 190, 10" Text="{Binding Title, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+			<TextBox x:Name="BTitle" Margin="100, 0, 190, 10" Text="{Binding Title, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
                      Style="{StaticResource TextErrorStyle}"/>
 
 			<TextBlock Margin="100, 20, 100, 10 " Text="Author" FontSize="16"/>
@@ -60,7 +60,7 @@
 						<Style.Triggers>
 							<MultiDataTrigger>
 								<MultiDataTrigger.Conditions>
-									<Condition Binding="{Binding (Validation.HasError), ElementName=Title}" Value="false"/>
+									<Condition Binding="{Binding (Validation.HasError), ElementName=BTitle}" Value="false"/>
 									<Condition Binding="{Binding (Validation.HasError), ElementName=Author}" Value="false"/>
 									<Condition Binding="{Binding (Validation.HasError), ElementName=Year}" Value="false"/>
 									<Condition Binding="{Binding (Validation.HasError), ElementName=Genre}" Value="false"/>
