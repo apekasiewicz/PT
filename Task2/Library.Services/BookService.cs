@@ -154,6 +154,37 @@ namespace Library.Services
             }
         }
 
+        static public int GetMaxId()
+        {
+            using (var context = new LibraryDataContext())
+            {
+                if (GetAllBooksNumber() == 0)
+                    return 0;
+                else
+                    return context.Books.OrderByDescending(b => b.book_id).First().book_id;
+            }
+        }
+
+        static public bool UpdateBook(int id, string title, string author,
+            int year, string genre, int quantity)
+        {
+            using (var context = new LibraryDataContext())
+            {
+                Book book = context.Books.SingleOrDefault(b => b.book_id == id);
+                if (GetBook(title, author) == null)
+                {
+                    book.title = title;
+                    book.author = author;
+                    book.publishment_year = year;
+                    book.genre = genre;
+                    book.quantity = quantity;
+                    context.SubmitChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
         static public bool DeleteBook(string title)
         {
             using (var context = new LibraryDataContext())
