@@ -61,7 +61,7 @@ namespace Library.Services
         {
             using (var context = new LibraryDataContext())
             {
-                if (GetReader(fName, lName) == null)
+                if (GetReader(fName, lName) == null && !fName.Equals(null) && !lName.Equals(null))
                 {
                     Reader newReader = new Reader
                     {

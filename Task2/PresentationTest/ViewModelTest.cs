@@ -1,6 +1,7 @@
 ﻿using Library.UI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -50,6 +51,8 @@ namespace PresentationTest
         public void AddReaderPopUpWasShownTest()
         {
             ReaderViewModel vm = new ReaderViewModel();
+            ReaderListViewModel _vm = new ReaderListViewModel();
+
             int _boxShowCount = 0;
             vm.MessageBoxShowDelegate = (messageBoxText) =>
             {
@@ -57,9 +60,25 @@ namespace PresentationTest
                 Assert.AreEqual("Reader Added", messageBoxText);
             };
             vm.ActionText = "Reader Added";
+            vm.FName = "Test";
+            vm.LName = "Test";
+
             Assert.IsTrue(vm.AddReaderCommand.CanExecute(null));
+            Assert.IsTrue(_vm.RefreshReadersCommand.CanExecute(null));
+            Assert.IsTrue(_vm.DeleteReaderCommand.CanExecute(null));
+
             vm.AddReaderCommand.Execute(null);
             Assert.AreEqual(1, _boxShowCount);
+
+            _vm.RefreshReadersCommand.Execute(null);
+
+            Thread.Sleep(3000);
+            Assert.IsTrue(_vm.Readers.Count() > 5);
+
+            _vm.CurrentReader = _vm.Readers.LastOrDefault();
+            Assert.IsNotNull(_vm.CurrentReader);
+
+            _vm.DeleteReaderCommand.Execute(null);
         }
 
         [TestMethod]

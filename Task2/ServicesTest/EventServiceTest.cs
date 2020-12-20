@@ -84,7 +84,8 @@ namespace ServicesTest
         [TestMethod]
         public void BorrowBookQuantityEqualTo0Test()
         {
-            Book book = BookService.GetBook("Pan Tadeusz", "Adam Mickiewicz");
+            BookService.AddBook("a", "t", 1999, "g", 0);
+            Book book = BookService.GetBook("t", "a");
             Reader reader = ReaderService.GetReader("Judith", "Rojas");
             Assert.AreEqual(book.quantity, 0);
             

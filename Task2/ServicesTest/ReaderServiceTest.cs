@@ -10,7 +10,6 @@ namespace ServicesTest
 	[TestClass]
 	public class ReaderServiceTest
 	{
-
         [TestMethod]
         public void AddReaderToDatabaseTest()
         {

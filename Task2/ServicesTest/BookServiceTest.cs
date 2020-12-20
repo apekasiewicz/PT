@@ -48,17 +48,6 @@ namespace ServicesTest
         }
 
         [TestMethod]
-        public void GetBooksByGenreTest()
-        {
-            IEnumerable<Book> books = BookService.GetBooksByGenre("Adventure");
-            Assert.AreEqual(books.Count(), 1);
-
-            Assert.AreEqual(books.ElementAt(0).title, "Lord of the Rings");
-            Assert.AreEqual(books.ElementAt(0).quantity, 5);
-            Assert.AreEqual(books.ElementAt(0).genre, "Adventure");
-        }
-
-        [TestMethod]
         public void DeleteBookByTitleTest()
         {
             Assert.IsTrue(BookService.AddBook("J.K. Rowling", "Harry ------ Potter", 1997, "Fantasy", 5));
