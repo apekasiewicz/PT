@@ -49,15 +49,7 @@ namespace Library.Services
         {
             using (var context = new LibraryDataContext())
             {
-                List<Book> result = new List<Book>();
-                foreach (Book b in context.Books)
-                {
-                    if (b.genre.Equals(g))
-                    {
-                        result.Add(b);
-                    }
-                }
-                return result;
+                return context.Books.Where(book => book.genre.Equals(g)).ToList();
             }
         }
 
